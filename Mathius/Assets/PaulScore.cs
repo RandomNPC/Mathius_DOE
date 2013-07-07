@@ -31,9 +31,9 @@ public class PaulScore : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		nearest_alien();
-		if(lives<= 0){
-			FileIO newFile = gameObject.GetComponent("FileIO") as FileIO;
-			newFile.save();
+		if(lives<= 0){//Original File IO save location.
+			//FileIO newFile = gameObject.GetComponent("FileIO") as FileIO;
+			//newFile.save();
 			Application.LoadLevel("GameOver");
 		}
 	}
