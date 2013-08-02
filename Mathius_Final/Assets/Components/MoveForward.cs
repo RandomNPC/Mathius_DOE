@@ -10,6 +10,6 @@ public class MoveForward : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(0.4f,0.0f,0.0f);
+		gameObject.transform.Translate(0.4f,0.0f,0.0f);
 	}
 }

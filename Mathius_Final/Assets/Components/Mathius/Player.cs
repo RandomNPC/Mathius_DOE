@@ -10,11 +10,9 @@ public class Player : MonoBehaviour {
 	
 	public GameObject explosion;
 	private Vector3 delta;
-	private MasterController mc;
 	
 	// Use this for initialization
 	void Start () {
-		mc = GameObject.Find("Brain").GetComponent<MasterController>();
 		delta = new Vector3(0.0f,0.0f,0.0f);
 	}
 	
@@ -40,7 +38,7 @@ public class Player : MonoBehaviour {
 		if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
-		mc.setBounds(delta);
+		MasterController.BRAIN.m().set_bounds(delta);
 	}
 	
 	public void moveMathius(byte direction){
@@ -51,7 +49,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void OnCollisionEnter(Collision data){
-		mc.onMathiusCollision(data);
+		MasterController.BRAIN.onMathiusCollision(data);
 	}
 	
 	public void crashTrajectory_mathius(){

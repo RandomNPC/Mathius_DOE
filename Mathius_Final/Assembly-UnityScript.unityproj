@@ -46,24 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Components\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
      <Compile Include="Assets\Components\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\Includes\atsWavingGrass vertexAlpha.cginc" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\Ressources\ShadersBuiltin\Camera-DepthTexture.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorLeavesRendertexSnow.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\Ressources\ShadersBuiltin\Camera-DepthNormalTexture.shader" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\atsV3WavingGrassSnow vertexAlpha.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeSnow.cginc" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\atsV3WavingGrassBillboardSnow.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorBarkOptimizedSnow.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Terrain\TerrainReplacementAtsV3Snow.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Readme.txt" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorBarkRendertexSnow.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\Tree.cginc" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\snowShaderBumpedDiffuse.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorLeavesOptimizedSnow.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Shaders\AlphaTest-DiffuseDoubleSide.shader" />
-     <None Include="Assets\Maps\Mathius-Snow\Forest Grounds - Terrain Texture Pack\atsV3 UnityTerrainSnow Package\Shaders\Trees\BillboardTreeSnow.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

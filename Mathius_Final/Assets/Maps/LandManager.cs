@@ -4,35 +4,16 @@ using System.Collections;
 public class LandManager : MonoBehaviour{
 
 	private GameObject structure;
-	
+	private BuildingPlacer bp;
 	
 	void Start(){
-		structure = Resources.Load("wrak_budova") as GameObject;
+		Vector3 dim = gameObject.GetComponent<Terrain>().terrainData.size;
 		
-		Vector3 dim_land = gameObject.GetComponent<Terrain>().terrainData.size;
-		Vector3 dim_building = structure.GetComponent<BoxCollider>().size;
-		
-		float center = gameObject.transform.position.x+dim_land.x/2;
-		float bounds = dim_land.x/2-100; //-100 cause of water area(dont want buildings in water)
-	
-		place_building(center-bounds+(dim_building.x/2),center+bounds,Random.Range(1,200),dim_building.x,dim_land.z);
-		add_allocator(dim_land);
+		Object[] structure = Resources.LoadAll("wrak_budova",typeof(Object));
+		bp = new BuildingPlacer(structure,gameObject);
+		bp.place_buildings_recursively();
+		add_allocator(dim);
 	}
-	
-	private void place_building(float lower,float upper,float delta,float length,float width){
-		
-		float rand = Random.Range (lower,lower+delta);
-
-		GameObject building = Instantiate(structure,new Vector3(rand,0.0f,width/2),Quaternion.identity) as GameObject;
-		
-		building.transform.parent = gameObject.transform;
-		building.name = "Building";	
-		delta = Random.Range(1,200);
-		
-		if((rand+length+delta)<upper)place_building(rand+length,upper,delta,length,width); 
-	}
-
-
 	
 	private void add_allocator(Vector3 dim_land){
 		GameObject allocator = new GameObject("Allocator");
@@ -43,6 +24,37 @@ public class LandManager : MonoBehaviour{
 		bc.isTrigger = true;
 		
 		bc.transform.parent = gameObject.transform;
+	}
+	
+	private class BuildingPlacer : Object{
+		
+		private Object[] _buildings;
+		private float _pos;
+		private Vector3 _dim;
+		private GameObject _land;
+		
+		public BuildingPlacer(Object[] structure,GameObject land){
+			_buildings = structure;
+			_pos = 100.0f;
+			_dim = land.GetComponent<Terrain>().terrainData.size;
+			_land = land;
+		}
+		
+		public void place_buildings_recursively(){
+			GameObject structure = (GameObject)_buildings[Random.Range(0,(_buildings.Length-1))];
+			float length = structure.GetComponent<BoxCollider>().size.x;
+			float delta = Random.Range(1,200);
+			_pos += length/2;
+			if(_pos >= (_dim.x-length-100))return;
+			_pos = Random.Range(_pos,_pos+delta);
+			GameObject s = (GameObject)Instantiate(structure,new Vector3(_pos+_land.transform.position.x,0.0f,_dim.z/2),Quaternion.identity);
+			s.name = "Building";
+			s.transform.parent = _land.transform;
+			_pos += length/2;
+			place_buildings_recursively();
+		}
+		
+		
 	}
 
 }
