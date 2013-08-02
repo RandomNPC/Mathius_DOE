@@ -10,7 +10,7 @@ public class PreferencesManager{
 	
 	public PreferencesManager(){
 		_terrains = (byte)PlayerPrefs.GetInt("using_terrains",0);
-		_operations = (byte)PlayerPrefs.GetInt("using_operations",0);
+		_operations = (byte)PlayerPrefs.GetInt("using_operations",15);
 		_tileNum = PlayerPrefs.GetInt("num_of_terrains",1);
 		_eqFormat = PlayerPrefs.GetInt("using_eqFormat",0);
 	}
