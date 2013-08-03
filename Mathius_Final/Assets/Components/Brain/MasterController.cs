@@ -17,6 +17,7 @@ public class MasterController : MonoBehaviour {
 	private ScoreManager sHelper;
 	private HighScoreManager hHelper;
 	private Alien aHelper;
+	private PCInterface pcHelper;
 	
 	public static MasterController BRAIN;
 	
@@ -31,6 +32,8 @@ public class MasterController : MonoBehaviour {
 		sHelper = new ScoreManager(mHelper);
 		hHelper = new HighScoreManager();
 		aHelper = new Alien(_alien);
+		pcHelper = new PCInterface();
+		pcHelper.set_using_PCI(false);
 	}
 	
 	//Events
@@ -92,5 +95,6 @@ public class MasterController : MonoBehaviour {
 	public TileManager tm(){return tHelper;}
 	public HighScoreManager hsm(){return hHelper;}
 	public Alien al(){return aHelper;}
+	public PCInterface pci(){return pcHelper;}
 }
 

@@ -31,6 +31,7 @@ public class GameOverUI : MonoBehaviour {
 			case State.INPUT:
 				print ("I GOT HIGHSCORE");
 				_highScore.hS().set_name("BOB");
+				_highScore.saveScores();
 				_state = State.DISPLAY;
 				break;
 			case State.DISPLAY:

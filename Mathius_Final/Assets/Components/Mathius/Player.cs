@@ -3,17 +3,21 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 	
+	public const byte MATHIUS_NO_MOVE = 0x0;
 	public const byte MATHIUS_LEFT = 0x01;
 	public const byte MATHIUS_RIGHT = 0x02;
 	public const byte MATHIUS_UP = 0x04;
 	public const byte MATHIUS_DOWN = 0x08;
 	
+	
 	public GameObject explosion;
 	private Vector3 delta;
+	private PCInterface pc;
 	
 	// Use this for initialization
 	void Start () {
 		delta = new Vector3(0.0f,0.0f,0.0f);
+		pc = MasterController.BRAIN.pci();
 	}
 	
 	// Update is called once per frame
@@ -32,16 +36,20 @@ public class Player : MonoBehaviour {
 		if(mpos.x>cpos.x+delta.x){moveMathius(MATHIUS_LEFT);}
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
 		
-		if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
-		if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
-		if(Input.GetKey("s")){moveMathius(MATHIUS_DOWN);}
-		if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
+		if(pc.get_using_PCI()){
+			moveMathius(pc.get_direction());
+		} else{
+			if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
+			if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
+			if(Input.GetKey("s")){moveMathius(MATHIUS_DOWN);}
+			if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
+		}
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
 		MasterController.BRAIN.m().set_bounds(delta);
 	}
 	
-	public void moveMathius(byte direction){
+	private void moveMathius(byte direction){
 		if((direction & MATHIUS_UP)== MATHIUS_UP){gameObject.transform.Translate(0.0f,1.0f,0.0f);}
 		if((direction & MATHIUS_LEFT)== MATHIUS_LEFT){gameObject.transform.Translate(-1.0f,0.0f,0.0f);}
 		if((direction & MATHIUS_DOWN)== MATHIUS_DOWN){gameObject.transform.Translate(0.0f,-1.0f,0.0f);}

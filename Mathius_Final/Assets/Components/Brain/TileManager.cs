@@ -24,7 +24,6 @@ public class TileManager : Object {
 		_map = (_map==null) ? _maps[Random.Range(0,_maps.Length-1)] : _map;
 	
 		GameObject _land = (GameObject) Instantiate(_map,new Vector3(_pos,0.0f,0.0f),Quaternion.identity);
-		MonoBehaviour.print(_land.name.Substring(0,_land.name.IndexOf("(")));
 		_land.name = "Surface " + _tile++;
 		_land.AddComponent<LandManager>();
 		_land.AddComponent<SpawnAlien>();

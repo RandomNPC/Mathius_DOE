@@ -21,9 +21,6 @@ public class Alien : Object {
 		Vector3 _terrain = _land.GetComponent<Terrain>().terrainData.size;
 		Vector3 _alien_dim = _alien.transform.Find("AlianBody").GetComponent<MeshFilter>().sharedMesh.bounds.size;
 		float _delta = MasterController.BRAIN.m().get_bounds().y- _alien_dim.y/2;
-		
-		MonoBehaviour.print(_delta);
-		MonoBehaviour.print(MasterController.BRAIN.m().get_bounds().y);
 		GameObject alien = (GameObject)Instantiate(_alien,
 												   new Vector3(cam.x+_terrain.x/2,
 															   Random.Range(cam.y+_alien_dim.y/2,cam.y+_delta), //cam.y -_delta clips thru the floor

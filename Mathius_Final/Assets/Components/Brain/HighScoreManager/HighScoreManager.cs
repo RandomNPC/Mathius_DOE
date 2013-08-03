@@ -8,19 +8,26 @@ public class HighScoreManager{
 	private List<HighScore> _scores;
 	private bool _isHighScore;
 	private HighScore hs;
+	private int _pos;
 	
 	public HighScoreManager(){
-		_scores = new List<HighScore>(MAX_ENTRIES);
+		_scores = new List<HighScore>();
 		_isHighScore = false;
 		hs = null;
+		_pos = -1;
 	}
 	
 	public void loadScores(){
-		for(int k = 1; k<=MAX_ENTRIES; k++){
+		
+		int k = 0;
+		
+		while(true){
+			if(!PlayerPrefs.HasKey("Player " + k)) break;
 			HighScore hs = new HighScore(PlayerPrefs.GetInt("Player " + k,0),
 										 PlayerPrefs.GetString("Player " + k,"MAB")
 										);
 			_scores.Add(hs);
+			k++;
 		}
 	}
 	
@@ -29,14 +36,13 @@ public class HighScoreManager{
 		_scores.Add(hs);
 		sortScores();
 		
-		int pos = 0;
 		try{
-			pos = _scores.IndexOf(hs);
+			_pos = _scores.IndexOf(hs);
 		}catch{
-			pos = MAX_ENTRIES+1;
+			_pos = _scores.Count;
 		}
 		
-		if(pos> MAX_ENTRIES){_scores.Remove(hs);}
+		if(_pos> (_scores.Count-1)){_scores.Remove(hs);}
 		else{
 			_isHighScore = true;
 		}
@@ -60,8 +66,12 @@ public class HighScoreManager{
 	}
 	
 	public void saveScores(){
-		for(int k = 1; k <= MAX_ENTRIES; k++){
+		for(int k = 0; k < Mathf.Min(_scores.Count,MAX_ENTRIES); k++){
 			HighScore hse = _scores[k];
+			
+			MonoBehaviour.print(k);
+			MonoBehaviour.print(_scores[k].get_name());
+			MonoBehaviour.print(_scores[k].get_score());
 			PlayerPrefs.SetInt("Player "+k,hse.get_score());
 			PlayerPrefs.SetString("Player "+k,hse.get_name());
 			PlayerPrefs.Save();
