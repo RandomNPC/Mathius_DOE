@@ -50,8 +50,9 @@ public class ScoreManager{
 		_streak_build++;
 		if(_streak_build >=_streakCriteria){ 
 			_isOnStreak = true;
+			return;
 		}
-		if(_correct>_streakCriteria){
+		if(_isOnStreak){
 			_streak++;
 		}
 	}

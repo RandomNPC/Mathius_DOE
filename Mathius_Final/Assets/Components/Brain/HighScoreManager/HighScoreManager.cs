@@ -9,6 +9,8 @@ public class HighScoreManager{
 	private bool _isHighScore;
 	private HighScore hs;
 	private int _pos;
+	private static string[] _players = {"PAT","SAM","TED","SUE","DAN","MAY","SAL","MAI","JOY","ZAC"};
+	private static int[] _players_score = {10000,9000,8000,7000,6000,5000,4000,3000,2000,0};
 	
 	public HighScoreManager(){
 		_scores = new List<HighScore>();
@@ -18,17 +20,14 @@ public class HighScoreManager{
 	}
 	
 	public void loadScores(){
-		
-		int k = 0;
-		
-		while(true){
-			if(!PlayerPrefs.HasKey("Player " + k)) break;
-			HighScore hs = new HighScore(PlayerPrefs.GetInt("Player " + k,0),
-										 PlayerPrefs.GetString("Player " + k,"MAB")
-										);
-			_scores.Add(hs);
-			k++;
-		}
+			_scores.Clear();
+			for(int k = 0; k<MAX_ENTRIES; k++){
+				HighScore hs = new HighScore(PlayerPrefs.GetInt("Player H" + k,_players_score[k]),
+											 PlayerPrefs.GetString("Player " + k,_players[k])
+											);
+				_scores.Add(hs);
+				//MonoBehaviour.print("Player: "+ _players[k] + ", Score: " + _players_score[k]);
+			}
 	}
 	
 	public void addScore(int score){
@@ -42,7 +41,7 @@ public class HighScoreManager{
 			_pos = _scores.Count;
 		}
 		
-		if(_pos> (_scores.Count-1)){_scores.Remove(hs);}
+		if(_pos> (_scores.Count)){_scores.Remove(hs);}
 		else{
 			_isHighScore = true;
 		}
@@ -55,24 +54,25 @@ public class HighScoreManager{
 			foreach(HighScore hse in _scores){
 				if(highest==null) highest = hse;
 				else{
-					if(highest.get_score() >= hse.get_score()){highest = hse;}
+					if(highest.get_score() > hse.get_score()){highest = hse;}
 				}
 			}
 			temp.Add(highest);
 			_scores.Remove(highest);
+
 		}
 		_scores = temp;
+		_scores.Reverse();
 		temp = null;
 	}
 	
 	public void saveScores(){
-		for(int k = 0; k < Mathf.Min(_scores.Count,MAX_ENTRIES); k++){
+		for(int k = 0; k < MAX_ENTRIES; k++){
 			HighScore hse = _scores[k];
 			
-			MonoBehaviour.print(k);
-			MonoBehaviour.print(_scores[k].get_name());
-			MonoBehaviour.print(_scores[k].get_score());
-			PlayerPrefs.SetInt("Player "+k,hse.get_score());
+			//MonoBehaviour.print("Player H"+k+": " +_scores[k].get_name() + ", Score: " + _scores[k].get_score());
+			PlayerPrefs.SetInt("Player H"+k,hse.get_score());
+			PlayerPrefs.Save();
 			PlayerPrefs.SetString("Player "+k,hse.get_name());
 			PlayerPrefs.Save();
 		}
