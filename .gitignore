@@ -5,6 +5,5 @@ Library
 *.userprefs
 Temp
 *.pidb
-Mathius-Desert
-Mathius-Earth
+Mathius-*
 *.unitypackage

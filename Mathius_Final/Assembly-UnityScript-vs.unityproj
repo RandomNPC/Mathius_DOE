@@ -46,7 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Components\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
      <Compile Include="Assets\Components\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
+     <Compile Include="Assets\Maps\Mathius-Forest1\0000 ats V2 package\ats vertexLitShader Package\Script\setupVertexLitShaderV2.js" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+     <None Include="Assets\Maps\Mathius-Zack\0000 terrain snow\atsV3 UnityTerrainSnow Package\Shaders\snowShaderBumpedDiffuse.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Shaders\AlphaTest-DiffuseDoubleSide.shader" />
   </ItemGroup>

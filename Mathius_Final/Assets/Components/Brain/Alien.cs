@@ -11,7 +11,7 @@ public class Alien : Object {
 	public Alien(GameObject alien){
 		_alien = alien;
 		_spawn_time = 3.0f;
-		_z_axis = 344.0f;
+		_z_axis = 150.0f;
 		_on_transition = false;
 	}
 	

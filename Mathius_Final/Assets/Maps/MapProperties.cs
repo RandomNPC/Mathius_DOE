@@ -7,7 +7,7 @@ public class MapProperties : MonoBehaviour {
 	public bool use_buildings;
 	
 	void Start(){
-		z_axis = 344.0f;
+		z_axis = 150.0f;
 		use_buildings = true;
 	}
 	
