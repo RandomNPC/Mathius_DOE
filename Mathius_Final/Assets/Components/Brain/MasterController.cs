@@ -52,7 +52,7 @@ public class MasterController : MonoBehaviour {
 	
 	public void onGameStart(){
 		mHelper.spawn_mathius(0.0f,15.0f,344.0f);
-		mHelper.set_lives(0);
+		mHelper.set_lives(5);
 		mHelper.set_answer();
 		sHelper.set_streakCriteria(3);
 		sHelper.reset_score();
