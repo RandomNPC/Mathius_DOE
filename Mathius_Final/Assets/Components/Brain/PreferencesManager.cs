@@ -9,7 +9,7 @@ public class PreferencesManager{
 	private int _eqFormat;
 	
 	public PreferencesManager(){
-		_terrains = (byte)PlayerPrefs.GetInt("using_terrains",0);
+		_terrains = (byte)PlayerPrefs.GetInt("using_terrains",1);
 		_operations = (byte)PlayerPrefs.GetInt("using_operations",0);
 		_tileNum = PlayerPrefs.GetInt("num_of_terrains",1);
 		_eqFormat = PlayerPrefs.GetInt("using_eqFormat",0);

@@ -11,12 +11,16 @@ public class TileManager : Object {
 	private GameObject _map;
 	
 	
-	public TileManager(GameObject[] maplist){
+	public TileManager(){
 		_prev = null;
 		_next = null;
 		_pos = 0.0f;
 		_tile = 0;
 		_map = null;
+		_maps = null;
+	}
+	
+	public void setTerrains(GameObject[] maplist){
 		_maps = maplist;
 	}
 	

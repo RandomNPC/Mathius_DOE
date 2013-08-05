@@ -9,7 +9,6 @@ public class MasterController : MonoBehaviour {
 	
 	public GameObject _mathius;
 	public GameObject _alien;
-	public GameObject[] maps;
 	
 	private PreferencesManager pHelper;
 	private Mathius mHelper;
@@ -28,7 +27,7 @@ public class MasterController : MonoBehaviour {
 		
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
-		tHelper = new TileManager(maps);
+		tHelper = new TileManager();
 		sHelper = new ScoreManager(mHelper);
 		hHelper = new HighScoreManager();
 		aHelper = new Alien(_alien);
@@ -51,6 +50,7 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onGameStart(){
+		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(5);
 		mHelper.set_answer();

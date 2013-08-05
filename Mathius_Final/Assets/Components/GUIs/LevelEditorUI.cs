@@ -157,7 +157,6 @@ public class LevelEditorUI : MonoBehaviour {
 		if(opToggleTxt4){temp = (byte)(temp | EquationGenerator.DIVISION);}
 		PlayerPrefs.SetInt("using_operations",(int)temp);
 		PlayerPrefs.Save();
-		print (temp);
 		return temp;
 	}
 	
