@@ -9,13 +9,15 @@ public class TileManager : Object {
 	public int _tile;
 	private GameObject[] _maps;
 	private GameObject _map;
+	private PreferencesManager _pfm;
 	
 	
-	public TileManager(){
+	public TileManager(PreferencesManager pfm){
 		_prev = null;
 		_next = null;
 		_pos = 0.0f;
 		_tile = 0;
+		_pfm = pfm;
 		_map = null;
 		_maps = null;
 	}
@@ -29,6 +31,9 @@ public class TileManager : Object {
 	
 		GameObject _land = (GameObject) Instantiate(_map,new Vector3(_pos,0.0f,0.0f),Quaternion.identity);
 		_land.name = "Surface " + _tile++;
+		if(_tile.Equals(_pfm.get_tileNum())){//We reached the last set of land tiles, now setup a trigger
+			MasterController.BRAIN.onReachedTargetTile();	
+		}
 		_land.AddComponent<LandManager>();
 		_land.AddComponent<SpawnAlien>();
 		_land.AddComponent<MapPropertiesHelper>();

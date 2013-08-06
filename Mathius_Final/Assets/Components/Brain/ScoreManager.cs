@@ -48,7 +48,7 @@ public class ScoreManager{
 	public void onCorrectAnswer(){
 		_correct++;
 		_streak_build++;
-		if(_streak_build >=_streakCriteria){ 
+		if(_streak_build >=_streakCriteria && !_isOnStreak){ 
 			_isOnStreak = true;
 			return;
 		}

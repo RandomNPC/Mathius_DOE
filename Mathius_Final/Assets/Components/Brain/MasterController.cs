@@ -27,7 +27,7 @@ public class MasterController : MonoBehaviour {
 		
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
-		tHelper = new TileManager();
+		tHelper = new TileManager(pHelper);
 		sHelper = new ScoreManager(mHelper);
 		hHelper = new HighScoreManager();
 		aHelper = new Alien(_alien);
@@ -54,8 +54,8 @@ public class MasterController : MonoBehaviour {
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(5);
 		mHelper.set_answer();
-		sHelper.set_streakCriteria(3);
 		sHelper.reset_score();
+		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
 	}
@@ -68,6 +68,10 @@ public class MasterController : MonoBehaviour {
 		else{
 			sHelper.onWrongAnswer();
 		}
+	}
+	
+	public void onReachedTargetTile(){ //we reached the last tile (TileManager.cs)
+		print("We reached the target tile: " + pHelper.get_tileNum());
 	}
 	
 	public void onMathiusCollision(Collision data){
