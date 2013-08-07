@@ -1,10 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-#pragma warning disable 0168 // variable declared but not used.
-#pragma warning disable 0219 // variable assigned but not used.
-#pragma warning disable 0414 
-
 public class ScoreManager{
 	
 	private int _wrong;

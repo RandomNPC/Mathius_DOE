@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -8,15 +9,18 @@ public class GameOverUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	private int _score;
 	private HighScoreManager _highScore;
+	private HighScoreInitials _hsi;
 	private State _state;
 	
 		
 		
 	void Start(){
-
 		_score = MasterController.BRAIN.sm().get_score();
 		_highScore = MasterController.BRAIN.hsm();
 		if(_highScore.get_isHighScore()){//if it is a highscore!
+			_hsi = MasterController.BRAIN.hsi();
+			_hsi.onSucess_SwipedLeftToRight += new EventHandler(onSuccess_SwipedLeftToRight);
+			_hsi.onSucess_SwipedRightToLeft += new EventHandler(onSuccess_SwipedRightToLeft);
 			_state = State.INPUT;
 		}else{
 			_state = State.DISPLAY;
@@ -50,7 +54,13 @@ public class GameOverUI : MonoBehaviour {
 		}
 		
 	}
+
+	private void onSuccess_SwipedLeftToRight(object sender, EventArgs e){
+		
+	}
 	
-	
+	private void onSuccess_SwipedRightToLeft(object sender, EventArgs e){
+		
+	}
 	
 }

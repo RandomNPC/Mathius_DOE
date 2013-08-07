@@ -1,10 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-#pragma warning disable 0168 // variable declared but not used.
-#pragma warning disable 0219 // variable assigned but not used.
-#pragma warning disable 0414 
-
 public class MasterController : MonoBehaviour {
 	
 	public GameObject _mathius;
@@ -15,6 +11,7 @@ public class MasterController : MonoBehaviour {
 	private TileManager tHelper;
 	private ScoreManager sHelper;
 	private HighScoreManager hHelper;
+	private HighScoreInitials iHelper;
 	private Alien aHelper;
 	private PCInterface pcHelper;
 	
@@ -33,6 +30,7 @@ public class MasterController : MonoBehaviour {
 		aHelper = new Alien(_alien);
 		pcHelper = new PCInterface();
 		pcHelper.set_using_PCI(false);
+		iHelper = new HighScoreInitials(3);
 	}
 	
 	//Events
@@ -71,7 +69,7 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onReachedTargetTile(){ //we reached the last tile (TileManager.cs)
-		print("We reached the target tile: " + pHelper.get_tileNum());
+		
 	}
 	
 	public void onMathiusCollision(Collision data){
@@ -101,5 +99,6 @@ public class MasterController : MonoBehaviour {
 	public HighScoreManager hsm(){return hHelper;}
 	public Alien al(){return aHelper;}
 	public PCInterface pci(){return pcHelper;}
+	public HighScoreInitials hsi(){return iHelper;}
 }
 
