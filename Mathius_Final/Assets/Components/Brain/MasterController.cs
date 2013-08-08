@@ -60,7 +60,10 @@ public class MasterController : MonoBehaviour {
 	
 	public void onAlienShot(char val, GameObject alien){
 		if(char.GetNumericValue(val).Equals(alien.GetComponent<AlienManager>().answer)){
+			GameObject land_ref = alien.transform.parent.gameObject;
+			Vector3 alien_pos = alien.transform.position;
 			Destroy(alien);	
+			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 			sHelper.onCorrectAnswer();
 		}
 		else{
