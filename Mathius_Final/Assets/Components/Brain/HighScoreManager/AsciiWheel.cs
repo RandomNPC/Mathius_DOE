@@ -29,6 +29,7 @@ public class AsciiWheel{
 		}
 	}
 	
-	public char get_val(){return (char)_pos;}
+	public char get_val(){
+		return (char)_pos;}
 	public void reset_val(){_pos=48;}
 }

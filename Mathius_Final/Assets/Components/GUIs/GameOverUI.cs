@@ -30,18 +30,37 @@ public class GameOverUI : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-		
+		GUI.skin = thisMetalGUISkin;
 		switch(_state){
 			case State.INPUT:
-				print ("I GOT HIGHSCORE");
-				_highScore.hS().set_name("BOB");
-				_highScore.saveScores();
-				_state = State.DISPLAY;
+				float intDivider = Screen.height/100;
+				float widthDivider = Screen.width/100;
+				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
+				GUI.Label(new Rect((Screen.width/5),(15*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("HIGHSCORE"),GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect((Screen.width/5),(27*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
+				GUI.Label(new Rect((Screen.width/5),(45*intDivider),(3*(Screen.width/5)),(10*intDivider)), (_hsi.initials()),GUI.skin.GetStyle("box"));
+				if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("ENTER") ,GUI.skin.GetStyle("box") ) ){
+					_highScore.hS().set_name(_hsi.initials());
+					_highScore.saveScores();
+					_state = State.DISPLAY;
+				}
+				if(GUI.Button(new Rect(widthDivider*30, intDivider*50,widthDivider*15, intDivider*5),("LEFT"),GUI.skin.GetStyle("button"))){
+					_hsi.onSwipeRightToLeft();
+				}
+				if(GUI.Button(new Rect(widthDivider*60, intDivider*50,widthDivider*15, intDivider*5),("RIGHT"),GUI.skin.GetStyle("button"))){
+					_hsi.onSwipeLeftToRight();
+				}
+				if(GUI.Button(new Rect(widthDivider*45, intDivider*45,widthDivider*15, intDivider*5),("UP"),GUI.skin.GetStyle("button"))){
+					_hsi.onSwipeUp();
+				}
+				if(GUI.Button(new Rect(widthDivider*45, intDivider*55,widthDivider*15, intDivider*5),("DOWN"),GUI.skin.GetStyle("button"))){
+					_hsi.onSwipeDown();
+				}
+			
 				break;
 			case State.DISPLAY:
-				float intDivider = Screen.height/100;
-				GUI.skin = thisMetalGUISkin;
-				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
+				intDivider = Screen.height/100;
+				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect((Screen.width/5),(25*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("GAMEOVER"),GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect((Screen.width/5),(47*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
