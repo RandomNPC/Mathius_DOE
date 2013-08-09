@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //left to right = move pos++
 //right to left = move pos--
@@ -10,7 +11,7 @@ using System.Collections;
 
 public class HighScoreInitials{
 	
-	private AsciiWheel[] _slots;
+	private List<AsciiWheel> _slots;	
 	private AsciiWheel _ref;
 	private int _pos;
 	
@@ -19,13 +20,17 @@ public class HighScoreInitials{
 	
 	public HighScoreInitials(int slots){
 		if(slots <= 0) throw new IndexOutOfRangeException();
-		_slots = new AsciiWheel[slots];
-		_ref = _slots[0];
+		_slots = new List<AsciiWheel>();
+		for(int z = 0; z < slots; z++){
+			AsciiWheel newWheel = new AsciiWheel();
+			_slots.Add(newWheel);
+		}
 		_pos = 0;
+		_ref = _slots[0];
 	}
 	
 	public void onSwipeLeftToRight(){
-		if(_pos >= (_slots.Length-1)){
+		if(_pos < (_slots.Count-1)){
 			_pos++;
 			onSucess_SwipedLeftToRight(this,new EventArgs());
 		}
@@ -53,10 +58,16 @@ public class HighScoreInitials{
 	
 	public char[] initialsArray(){
 		string temp = "";
-		foreach(AsciiWheel val in _slots){
-			temp += char.ToString(val.get_val());
-		}
-		
-		return temp.ToCharArray(0,_slots.Length);
+		foreach(AsciiWheel name in _slots){
+			temp += name.get_val().ToString();
+			}
+		return temp.ToCharArray();
+	}
+	public string initials(){
+		string temp = "";
+		foreach(AsciiWheel name in _slots){
+			temp += name.get_val().ToString();
+			}
+		return temp;
 	}
 }

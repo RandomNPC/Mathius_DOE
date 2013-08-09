@@ -50,7 +50,7 @@ public class MasterController : MonoBehaviour {
 	public void onGameStart(){
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
-		mHelper.set_lives(5);
+		mHelper.set_lives(1);
 		mHelper.set_answer();
 		sHelper.reset_score();
 		sHelper.set_streakCriteria(3);
