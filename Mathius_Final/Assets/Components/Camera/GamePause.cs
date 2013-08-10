@@ -4,9 +4,14 @@ using System.Collections;
 public class GamePause : MonoBehaviour {
 	
 	private bool gameDisabled;
+	private bool gameEnd;
+	
+	public static GamePause PAUSE;
 	
 	void Start(){
 		gameDisabled = false;
+		gameEnd = false;
+		PAUSE = gameObject.GetComponent<GamePause>();
 	}
 	
 	void Update () {
@@ -46,23 +51,27 @@ public class GamePause : MonoBehaviour {
 	}
 	
 	public void ResumeGame(){
+		//logic here before I unfreeze everything
+		
 		GameObject[] obj = GameObject.FindGameObjectsWithTag("Pause");
 		foreach(GameObject g in obj){
 			GameObject inactive = g.transform.parent.gameObject;
-			inactive.GetComponent<MoveForward>().enabled = true;
+			if(!gameEnd)inactive.GetComponent<MoveForward>().enabled = true;
 			if(inactive.name.Contains("Alian")){
 				inactive.GetComponent<AlienMovement>().enabled = true;
 			}
 			if(inactive.name.Contains("MathiusEarthCam")){
 				inactive.GetComponentInChildren<Player>().enabled = true;
-				inactive.GetComponentInChildren<Gun>().enabled = true;
+				if(!gameEnd)inactive.GetComponentInChildren<Gun>().enabled = true;
 			}
 			
 		}
-		
+		if(gameEnd) return;
 		obj = GameObject.FindGameObjectsWithTag("World");
 		foreach(GameObject k in obj){
 			k.GetComponent<SpawnAlien>().enabled = true;
 		}
 	}
+	
+	public void set_gameEnd(bool status){gameEnd = status;}
 }

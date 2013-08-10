@@ -10,6 +10,7 @@ public class ScoreManager{
 	private int _streak_build;
 	private string _equation;
 	private bool _isOnStreak;
+	private int _problems_to_clear;
 	private Mathius _mathius;
 	
 	private const int CORRECT_ANSWER = 100;
@@ -25,6 +26,7 @@ public class ScoreManager{
 		_isOnStreak = false;
 		_equation = "";
 		_mathius = instance;
+		_problems_to_clear = 0;
 	}
 	
 	public void reset_score(){
@@ -43,6 +45,8 @@ public class ScoreManager{
 	
 	public void onCorrectAnswer(){
 		_correct++;
+		_problems_to_clear--;
+		if(_problems_to_clear <= 0){MasterController.BRAIN.onReachProblemsSolved();}
 		_streak_build++;
 		if(_streak_build >=_streakCriteria && !_isOnStreak){ 
 			_isOnStreak = true;
@@ -66,4 +70,6 @@ public class ScoreManager{
 	public int get_answer(){return _mathius.get_answer();}
 	public int get_lives(){return _mathius.get_lives();}
 	public int get_streak(){return _streak;}
+	public void set_problems_remaining(int num){_problems_to_clear = num;}
+	public int get_problems_remaining(){return _problems_to_clear;}
 }

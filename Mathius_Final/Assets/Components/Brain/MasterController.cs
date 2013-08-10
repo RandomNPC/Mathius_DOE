@@ -7,6 +7,8 @@ public class MasterController : MonoBehaviour {
 	public GameObject _alien;
 	public Texture[] _mathiusTextures;
 	
+	public GameObject end;
+	
 	private PreferencesManager pHelper;
 	private Mathius mHelper;
 	private TileManager tHelper;
@@ -51,11 +53,13 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onGameStart(){
+		GamePause.PAUSE.set_gameEnd(false);
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(1);
 		mHelper.set_answer();
 		sHelper.reset_score();
+		sHelper.set_problems_remaining(2);
 		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
@@ -66,7 +70,7 @@ public class MasterController : MonoBehaviour {
 			GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
 			Destroy(alien);	
-			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
+			//gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 			sHelper.onCorrectAnswer();
 		}
 		else{
@@ -76,6 +80,23 @@ public class MasterController : MonoBehaviour {
 	
 	public void onReachedTargetTile(){ //we reached the last tile (TileManager.cs)
 		
+	}
+	
+	public void onReachProblemsSolved(){ //completed all the problems required to clear level (ScoreManager.cs)
+
+		GameObject[] worlds = GameObject.FindGameObjectsWithTag("World");
+		foreach(GameObject world in worlds){world.GetComponent<SpawnAlien>().enabled = false;}
+		
+		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alian");
+		foreach(GameObject alien in aliens){Destroy(alien);}
+		
+		GameObject cam = GameObject.Find("MathiusEarthCam");
+		cam.GetComponent<MoveForward>().enabled = false;
+		Instantiate(end,new Vector3(cam.transform.position.x+10.0f,
+									cam.transform.position.y,
+									150.0f),
+									Quaternion.identity);
+		GamePause.PAUSE.set_gameEnd(true);
 	}
 	
 	public void onMathiusCollision(Collision data){
