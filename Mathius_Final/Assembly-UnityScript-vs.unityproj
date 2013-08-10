@@ -54,6 +54,7 @@
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
      <None Include="Assets\Maps\Mathius-Zack\0000 terrain snow\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorLeavesRendertexSnow.shader" />
      <None Include="Assets\Maps\Mathius-Zack\0000 terrain snow\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorBarkOptimizedSnow.shader" />
+     <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Destroyed City\Shaders\AlphaTest-DiffuseDoubleSide.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
