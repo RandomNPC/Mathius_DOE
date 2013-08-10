@@ -59,7 +59,7 @@ public class MasterController : MonoBehaviour {
 		mHelper.set_lives(1);
 		mHelper.set_answer();
 		sHelper.reset_score();
-		sHelper.set_problems_remaining(2);
+		sHelper.set_problems_remaining(10);
 		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
@@ -69,9 +69,10 @@ public class MasterController : MonoBehaviour {
 		if(char.GetNumericValue(val).Equals(alien.GetComponent<AlienManager>().answer)){
 			GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
+			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
 			Destroy(alien);	
 			//gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
-			sHelper.onCorrectAnswer();
+			sHelper.onCorrectAnswer(op);
 		}
 		else{
 			sHelper.onWrongAnswer();

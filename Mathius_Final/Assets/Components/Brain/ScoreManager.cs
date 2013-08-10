@@ -11,11 +11,15 @@ public class ScoreManager{
 	private string _equation;
 	private bool _isOnStreak;
 	private int _problems_to_clear;
+	private int _bonus_points;
 	private Mathius _mathius;
 	
 	private const int CORRECT_ANSWER = 100;
 	private const int WRONG_ANSWER = 10;
-	
+	private const int ADDITION_BONUS = 1;
+	private const int SUBTRACTION_BONUS = 2;
+	private const int MULTIPLICATION_BONUS = 3;
+	private const int DIVISION_BONUS = 4;
 	
 	public ScoreManager(Mathius instance){
 		_wrong = 0;
@@ -27,6 +31,7 @@ public class ScoreManager{
 		_equation = "";
 		_mathius = instance;
 		_problems_to_clear = 0;
+		_bonus_points = 0;
 	}
 	
 	public void reset_score(){
@@ -37,13 +42,32 @@ public class ScoreManager{
 		_streak_build = 0;
 		_equation = "";
 		_isOnStreak = false;
+		_bonus_points = 0;
 	}
 	
 	public void set_streakCriteria(int criteria){
 		_streakCriteria = criteria;
 	}
 	
-	public void onCorrectAnswer(){
+	public void onCorrectAnswer(EquationGenerator.EquationOperation operation){
+		
+		switch(operation){
+			case EquationGenerator.EquationOperation.ADDITION:
+				_bonus_points += ADDITION_BONUS;
+				break;
+			case EquationGenerator.EquationOperation.SUBTRACTION:	
+				_bonus_points += SUBTRACTION_BONUS;
+				break;
+			case EquationGenerator.EquationOperation.MULTIPLICATION:
+				_bonus_points += MULTIPLICATION_BONUS;
+				break;
+			case EquationGenerator.EquationOperation.DIVISION:
+				_bonus_points += DIVISION_BONUS;
+				break;
+			default:
+				break;
+		}
+		
 		_correct++;
 		_problems_to_clear--;
 		if(_problems_to_clear <= 0){MasterController.BRAIN.onReachProblemsSolved();}
@@ -66,7 +90,7 @@ public class ScoreManager{
 	
 	public void set_equation(string equation){_equation = equation;}
 	public string get_equation(){return _equation;}
-	public int get_score(){return (CORRECT_ANSWER*_correct - WRONG_ANSWER*_wrong);}
+	public int get_score(){return (CORRECT_ANSWER*_correct - WRONG_ANSWER*_wrong + _bonus_points);}
 	public int get_answer(){return _mathius.get_answer();}
 	public int get_lives(){return _mathius.get_lives();}
 	public int get_streak(){return _streak;}

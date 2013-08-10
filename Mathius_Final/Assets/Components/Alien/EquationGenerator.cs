@@ -2,9 +2,17 @@ using UnityEngine;
 using System.Collections;
 
 public class EquationGenerator{
-
+	
+	public enum EquationOperation{
+		ADDITION,
+		SUBTRACTION,
+		MULTIPLICATION,
+		DIVISION,
+	}
+	
 	private int solution;
 	private string equation;
+	private EquationOperation operation;
 	
 	private int displayMode;
 	private ArrayList operations;
@@ -28,15 +36,19 @@ public class EquationGenerator{
 		
 		if((ops & ADDITION) == ADDITION){
 			operations.Add("+");
+			operation = EquationOperation.ADDITION;
 		}
 		if((ops & SUBTRACTION) == SUBTRACTION){
 			operations.Add("-");
+			operation = EquationOperation.SUBTRACTION;
 		}
 		if((ops & MULTIPLICATION) == MULTIPLICATION){
 			operations.Add("x");
+			operation = EquationOperation.MULTIPLICATION;
 		}
 		if((ops & DIVISION) == DIVISION){
 			operations.Add("/");
+			operation = EquationOperation.DIVISION;
 		}
 	}
 	
@@ -141,4 +153,5 @@ public class EquationGenerator{
 	}
 	
 	public int answer(){return solution;}
+	public EquationOperation eqOperation(){return operation;}
 }
