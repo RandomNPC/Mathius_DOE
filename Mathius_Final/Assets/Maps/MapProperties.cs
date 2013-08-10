@@ -3,12 +3,7 @@ using System.Collections;
 
 public class MapProperties : MonoBehaviour {
 
-	public float z_axis;
-	public bool use_buildings;
-	
-	void Start(){
-		z_axis = 150.0f;
-		use_buildings = true;
-	}
+	public float z_axis = 150.0f;
+	public bool use_buildings = true;
 	
 }

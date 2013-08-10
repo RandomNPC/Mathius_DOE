@@ -27,7 +27,7 @@ public class TileManager : Object {
 	}
 	
 	public void generateNextTerrain(){
-		_map = (_map==null) ? _maps[Random.Range(0,_maps.Length-1)] : _map;
+		_map = (_map==null) ? _maps[(int)Random.Range(0,_maps.Length-1)] : _map;
 	
 		GameObject _land = (GameObject) Instantiate(_map,new Vector3(_pos,0.0f,0.0f),Quaternion.identity);
 		_land.name = "Surface " + _tile++;

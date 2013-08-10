@@ -5,6 +5,7 @@ public class MasterController : MonoBehaviour {
 	
 	public GameObject _mathius;
 	public GameObject _alien;
+	public Texture[] _mathiusTextures;
 	
 	private PreferencesManager pHelper;
 	private Mathius mHelper;
@@ -14,6 +15,7 @@ public class MasterController : MonoBehaviour {
 	private HighScoreInitials iHelper;
 	private Alien aHelper;
 	private PCInterface pcHelper;
+	private Selector<Texture> stHelper;
 	
 	public static MasterController BRAIN;
 	
@@ -31,6 +33,7 @@ public class MasterController : MonoBehaviour {
 		pcHelper = new PCInterface();
 		pcHelper.set_using_PCI(false);
 		iHelper = new HighScoreInitials(3);
+		stHelper = new Selector<UnityEngine.Texture>(_mathiusTextures);
 	}
 	
 	//Events
@@ -103,5 +106,6 @@ public class MasterController : MonoBehaviour {
 	public Alien al(){return aHelper;}
 	public PCInterface pci(){return pcHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
+	public Selector<Texture> sT(){return stHelper;}
 }
 

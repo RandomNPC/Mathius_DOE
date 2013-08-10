@@ -36,4 +36,5 @@ public class Mathius : Object{
 	}
 	public void set_bounds(Vector3 bounds){_bounds = bounds;}
 	public Vector3 get_bounds(){return _bounds;}
+	public void set_texture(Texture texture){_mathius.renderer.material.mainTexture = texture;}
 }
