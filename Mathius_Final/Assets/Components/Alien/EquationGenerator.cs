@@ -26,7 +26,6 @@ public class EquationGenerator{
 	public const int MIXED = 2;
 		
 	public EquationGenerator(byte ops,int displayMode){
-		
 		operations = new ArrayList();
 		
 		operations.Clear();
@@ -36,19 +35,15 @@ public class EquationGenerator{
 		
 		if((ops & ADDITION) == ADDITION){
 			operations.Add("+");
-			operation = EquationOperation.ADDITION;
 		}
 		if((ops & SUBTRACTION) == SUBTRACTION){
 			operations.Add("-");
-			operation = EquationOperation.SUBTRACTION;
 		}
 		if((ops & MULTIPLICATION) == MULTIPLICATION){
 			operations.Add("x");
-			operation = EquationOperation.MULTIPLICATION;
 		}
 		if((ops & DIVISION) == DIVISION){
 			operations.Add("/");
-			operation = EquationOperation.DIVISION;
 		}
 	}
 	
@@ -130,13 +125,16 @@ public class EquationGenerator{
 		switch(operation){
 			case "+":
 				EqFormat(temp,operation);
+				operation = EquationOperation.ADDITION;
 				break;
 			case "-":
 				EqFormat(temp,operation);
+				operation = EquationOperation.SUBTRACTION;
 				break;
 			case "x":
 				if(temp<1) temp = (int)Random.Range(1,9);
 				EqFormat(temp,operation);
+				operation = EquationOperation.MULTIPLICATION;
 				break;
 			case "/":
 				while(true){
@@ -145,6 +143,7 @@ public class EquationGenerator{
 						temp = (int)Random.Range(1,9);
 				}
 				EqFormat(temp,operation);
+				operation = EquationOperation.DIVISION;
 				break;
 			default: //wtf
 				break;
