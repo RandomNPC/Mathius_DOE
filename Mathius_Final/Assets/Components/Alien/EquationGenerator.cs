@@ -119,21 +119,21 @@ public class EquationGenerator{
 	}
 	
 	public string Equation(){
-		string operation = operations[(int)Random.Range(0,(operations.Count-1))] as string;
+		string _operation = operations[(int)Random.Range(0,(operations.Count-1))] as string;
 		int temp = (int)Random.Range(0,10);
 		
-		switch(operation){
+		switch(_operation){
 			case "+":
-				EqFormat(temp,operation);
+				EqFormat(temp,_operation);
 				operation = EquationOperation.ADDITION;
 				break;
 			case "-":
-				EqFormat(temp,operation);
+				EqFormat(temp,_operation);
 				operation = EquationOperation.SUBTRACTION;
 				break;
 			case "x":
 				if(temp<1) temp = (int)Random.Range(1,9);
-				EqFormat(temp,operation);
+				EqFormat(temp,_operation);
 				operation = EquationOperation.MULTIPLICATION;
 				break;
 			case "/":
@@ -142,7 +142,7 @@ public class EquationGenerator{
 						solution = (int)Random.Range(1,9);
 						temp = (int)Random.Range(1,9);
 				}
-				EqFormat(temp,operation);
+				EqFormat(temp,_operation);
 				operation = EquationOperation.DIVISION;
 				break;
 			default: //wtf

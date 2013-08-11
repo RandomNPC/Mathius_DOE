@@ -48,6 +48,7 @@ public class GamePause : MonoBehaviour {
 		foreach(GameObject k in obj){
 			k.GetComponent<SpawnAlien>().enabled = false;
 		}
+		Mathius_UI.MUI.changeMenuState(Mathius_UI.GAMESTATE.PAUSE);
 	}
 	
 	public void ResumeGame(){
@@ -71,6 +72,7 @@ public class GamePause : MonoBehaviour {
 		foreach(GameObject k in obj){
 			k.GetComponent<SpawnAlien>().enabled = true;
 		}
+		Mathius_UI.MUI.changeMenuState(Mathius_UI.GAMESTATE.RESUME);
 	}
 	
 	public void set_gameEnd(bool status){gameEnd = status;}
