@@ -67,12 +67,13 @@ public class GamePause : MonoBehaviour {
 			}
 			
 		}
+		Mathius_UI.MUI.changeMenuState(Mathius_UI.GAMESTATE.RESUME);
 		if(gameEnd) return;
 		obj = GameObject.FindGameObjectsWithTag("World");
 		foreach(GameObject k in obj){
 			k.GetComponent<SpawnAlien>().enabled = true;
 		}
-		Mathius_UI.MUI.changeMenuState(Mathius_UI.GAMESTATE.RESUME);
+		
 	}
 	
 	public void set_gameEnd(bool status){gameEnd = status;}
