@@ -26,7 +26,6 @@ public class HighScoreManager{
 											 PlayerPrefs.GetString("Player " + k,_players[k])
 											);
 				_scores.Add(hs);
-				//MonoBehaviour.print("Player: "+ _players[k] + ", Score: " + _players_score[k]);
 			}
 	}
 	
@@ -41,7 +40,10 @@ public class HighScoreManager{
 			_pos = _scores.Count;
 		}
 		
-		if(_pos> (_scores.Count)){_scores.Remove(hs);}
+		if(_pos>=(_scores.Count-1)){
+			_scores.Remove(hs);
+			_isHighScore = false;
+		}
 		else{
 			_isHighScore = true;
 		}
@@ -70,7 +72,6 @@ public class HighScoreManager{
 		for(int k = 0; k < MAX_ENTRIES; k++){
 			HighScore hse = _scores[k];
 			
-			//MonoBehaviour.print("Player H"+k+": " +_scores[k].get_name() + ", Score: " + _scores[k].get_score());
 			PlayerPrefs.SetInt("Player H"+k,hse.get_score());
 			PlayerPrefs.Save();
 			PlayerPrefs.SetString("Player "+k,hse.get_name());

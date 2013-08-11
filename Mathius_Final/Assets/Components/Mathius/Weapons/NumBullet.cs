@@ -35,13 +35,13 @@ public class NumBullet : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		if(collision.gameObject.name.Contains("Alian")){
-			GameObject.Find("Brain").GetComponent<MasterController>().onAlienShot(variable,collision.gameObject);
+			MasterController.BRAIN.onAlienShot(variable,collision.gameObject);
 		}
-		die();
+		Destroy(gameObject);
 	}
 
 	void OnBecameInvisible() {
-		die();
+		Destroy(gameObject);
 	}
 
 	public void updateTexture() {
@@ -57,12 +57,5 @@ public class NumBullet : MonoBehaviour {
 			case '8': gameObject.renderer.material.mainTexture = TEight; break;
 			case '9': gameObject.renderer.material.mainTexture = TNine; break;
 		}
-	}
-
-	void think() {
-	}
-
-	void die() {
-		Destroy(gameObject);
 	}
 }

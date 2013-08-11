@@ -17,7 +17,7 @@ public class MasterController : MonoBehaviour {
 	private HighScoreInitials iHelper;
 	private Alien aHelper;
 	private PCInterface pcHelper;
-	//private Selector<Texture> stHelper;
+	private Selector<Texture> stHelper;
 	
 	public static MasterController BRAIN;
 	
@@ -35,7 +35,7 @@ public class MasterController : MonoBehaviour {
 		pcHelper = new PCInterface();
 		pcHelper.set_using_PCI(false);
 		iHelper = new HighScoreInitials(3);
-		//stHelper = new Selector<UnityEngine.Texture>(_mathiusTextures);
+		stHelper = new Selector<UnityEngine.Texture>(_mathiusTextures);
 	}
 	
 	//Events
@@ -59,7 +59,7 @@ public class MasterController : MonoBehaviour {
 		mHelper.set_lives(1);
 		mHelper.set_answer();
 		sHelper.reset_score();
-		sHelper.set_problems_remaining(10);
+		sHelper.set_problems_remaining(100);
 		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
@@ -71,7 +71,7 @@ public class MasterController : MonoBehaviour {
 			Vector3 alien_pos = alien.transform.position;
 			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
 			Destroy(alien);	
-			//gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
+			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 			sHelper.onCorrectAnswer(op);
 		}
 		else{
@@ -103,7 +103,11 @@ public class MasterController : MonoBehaviour {
 	public void onMathiusCollision(Collision data){
 		if(data.gameObject.name.Contains("Alian")){
 			if(mHelper.get_answer().Equals(data.gameObject.GetComponent<AlienManager>().answer)){
-				Destroy(data.gameObject);
+				GameObject alien = data.gameObject;
+				GameObject land_ref = alien.transform.parent.gameObject;
+				Vector3 alien_pos = alien.transform.position;
+				Destroy(alien);
+				gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 				mHelper.set_answer();
 				mHelper.set_lives(mHelper.get_lives()+1);
 			}
@@ -128,6 +132,6 @@ public class MasterController : MonoBehaviour {
 	public Alien al(){return aHelper;}
 	public PCInterface pci(){return pcHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
-	//public Selector<Texture> sT(){return stHelper;}
+	public Selector<Texture> sT(){return stHelper;}
 }
 
