@@ -3,15 +3,15 @@ using System.Collections;
 
 public class LandManager : MonoBehaviour{
 
-	private GameObject structure;
 	private BuildingPlacer bp;
 	
 	void Start(){
 		Vector3 dim = gameObject.GetComponent<Terrain>().terrainData.size;
-		
 		Object[] structure = Resources.LoadAll("wrak_budova",typeof(Object));
-		bp = new BuildingPlacer(structure,gameObject);
-		bp.place_buildings_recursively();
+		if(MapPropertiesHelper.SET.spawn_buildings()){
+			bp = new BuildingPlacer(structure,gameObject);
+			bp.place_buildings_recursively();
+		}
 		add_allocator(dim);
 	}
 	

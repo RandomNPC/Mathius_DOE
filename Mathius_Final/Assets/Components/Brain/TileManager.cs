@@ -34,9 +34,9 @@ public class TileManager : Object {
 		if(_tile.Equals(_pfm.get_tileNum())){//We reached the last set of land tiles, now setup a trigger
 			MasterController.BRAIN.onReachedTargetTile();	
 		}
+		_land.AddComponent<MapPropertiesHelper>();
 		_land.AddComponent<LandManager>();
 		_land.AddComponent<SpawnAlien>();
-		_land.AddComponent<MapPropertiesHelper>();
 		_pos += _land.GetComponent<Terrain>().terrainData.size.x/2;
 		_map = _maps[Random.Range(0,_maps.Length-1)];
 		_pos +=_map.GetComponent<Terrain>().terrainData.size.x/2;

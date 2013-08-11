@@ -1,18 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-#pragma warning disable 0168 // variable declared but not used.
-#pragma warning disable 0219 // variable assigned but not used.
-#pragma warning disable 0414 
-
 public class MapPropertiesHelper : MonoBehaviour {
 	
 	private bool spawnBuildings;
 	private float z_axis;
-
+	
 	private bool start_transition;
 	
+	public static MapPropertiesHelper SET;
+	
 	void Start () {
+		SET = gameObject.GetComponent<MapPropertiesHelper>();
 		draw_moveTrigger();
 		spawnBuildings = gameObject.GetComponent<MapProperties>().use_buildings;
 		z_axis = gameObject.GetComponent<MapProperties>().z_axis;
@@ -20,7 +19,6 @@ public class MapPropertiesHelper : MonoBehaviour {
 	}
 	
 	void Update(){
-		spawnBuildings = gameObject.GetComponent<MapProperties>().use_buildings;
 		z_axis = gameObject.GetComponent<MapProperties>().z_axis;
 		if(start_transition){
 			float mpos_z = GameObject.Find ("Mathius").transform.position.z;
@@ -53,5 +51,6 @@ public class MapPropertiesHelper : MonoBehaviour {
 		MasterController.BRAIN.al().set_on_transition(start_transition);
 	}
 	
+	public bool spawn_buildings(){return spawnBuildings;}
 	
 }

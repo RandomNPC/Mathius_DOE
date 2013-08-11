@@ -11,7 +11,7 @@ public class ItemDropManager : MonoBehaviour {
 	}
 	
 	public void drop_item(Vector3 position, GameObject parent){
-		
+		_spawn = null;
 		if(_items.Length<=0) return;
 		float total = 0.0f;
 		
