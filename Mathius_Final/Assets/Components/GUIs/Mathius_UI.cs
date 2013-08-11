@@ -8,7 +8,6 @@ public class Mathius_UI : MonoBehaviour {
 		PAUSE
 	}
 	
-	
 	private GAMESTATE gs;
 	private ScoreManager stats;
 	public GUISkin thisMetalGUISkin;
