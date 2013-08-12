@@ -7,6 +7,7 @@ public class AlienMovement : MonoBehaviour {
 	private int oscilate;
 	private int oscPlace;
 	private int tracker;
+	private float scale;
 	
 	// Use this for initialization
 	void Start (){
@@ -14,13 +15,15 @@ public class AlienMovement : MonoBehaviour {
 		oscilate = 10;
 		oscPlace = 0;
 		tracker = 0;
+		scale = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
+		scale = GameSpeed.SPEED.get_gameSpeed();
 		switch(state){
 			case 1: //sine wave
-				transform.Translate(-1, 0, 0);
+				transform.Translate(-scale, 0, 0);
 				if (oscPlace < oscilate)
 				{
 					transform.Translate(0, 1, 0);
@@ -35,12 +38,12 @@ public class AlienMovement : MonoBehaviour {
 				}
 				break;
 			case 2: // straight line
-				transform.Translate(-1,0,0);
+				transform.Translate(-scale,0,0);
 				break;
-			case 3: //random stepping
+			case 3://random stepping
 				{ // step up
-					transform.Translate(-1,0,0);
-					switch(Random.Range(1,2)){
+					transform.Translate(-scale,0,0);
+					switch(Random.Range(1,3)){
 						case 1: //up
 							if(tracker<1){
 								transform.Translate(0,1,0);
@@ -48,6 +51,7 @@ public class AlienMovement : MonoBehaviour {
 							}
 							break;
 						case 2: //down
+						case 3:
 							if(tracker>-1){
 								transform.Translate(0,-1,0);
 								tracker--;
