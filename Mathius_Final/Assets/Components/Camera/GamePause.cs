@@ -71,7 +71,7 @@ public class GamePause : MonoBehaviour {
 		obj = GameObject.FindGameObjectsWithTag("World");
 		foreach(GameObject k in obj){
 			if(!gameEnd)k.GetComponent<SpawnAlien>().enabled = true;
-			k.GetComponentInChildren<BoxCollider>().enabled = false;
+			if(gameEnd)k.GetComponentInChildren<BoxCollider>().enabled = false;
 		}
 		
 	}
