@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		delta = new Vector3(0.0f,0.0f,0.0f);
-		pc = MasterController.BRAIN.pci();
+		pc = PCInterface.PC;
 	}
 	
 	// Update is called once per frame
@@ -36,8 +36,8 @@ public class Player : MonoBehaviour {
 		if(mpos.x>cpos.x+delta.x){moveMathius(MATHIUS_LEFT);}
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
 		
-		if(pc.get_using_PCI()){
-			moveMathius(pc.get_direction());
+		if(pc.get_using_PCI()){//move mathius
+			
 		} else{
 			if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
 			if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
