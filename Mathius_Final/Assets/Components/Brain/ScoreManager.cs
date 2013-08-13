@@ -16,10 +16,10 @@ public class ScoreManager{
 	
 	private const int CORRECT_ANSWER = 100;
 	private const int WRONG_ANSWER = 10;
-	private const int ADDITION_BONUS = 1;
-	private const int SUBTRACTION_BONUS = 2;
-	private const int MULTIPLICATION_BONUS = 3;
-	private const int DIVISION_BONUS = 4;
+	private const int ADDITION_BONUS = 100;
+	private const int SUBTRACTION_BONUS = 200;
+	private const int MULTIPLICATION_BONUS = 300;
+	private const int DIVISION_BONUS = 400;
 	
 	public ScoreManager(Mathius instance){
 		_wrong = 0;
