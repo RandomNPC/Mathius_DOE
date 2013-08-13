@@ -8,7 +8,7 @@ public class GamePause : MonoBehaviour {
 	
 	public static GamePause PAUSE;
 	
-	void Start(){
+	void Awake(){
 		gameDisabled = false;
 		gameEnd = false;
 		PAUSE = gameObject.GetComponent<GamePause>();
