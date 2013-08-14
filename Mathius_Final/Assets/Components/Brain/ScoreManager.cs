@@ -88,6 +88,10 @@ public class ScoreManager{
 		_streak = 0;
 	}
 	
+	public void addBonusPoints(int morePoints){
+		_bonus_points += morePoints;
+	}
+	
 	public void set_equation(string equation){_equation = equation;}
 	public string get_equation(){return _equation;}
 	public int get_score(){return (CORRECT_ANSWER*_correct - WRONG_ANSWER*_wrong + _bonus_points);}
@@ -96,4 +100,5 @@ public class ScoreManager{
 	public int get_streak(){return _streak;}
 	public void set_problems_remaining(int num){_problems_to_clear = num;}
 	public int get_problems_remaining(){return _problems_to_clear;}
+	
 }

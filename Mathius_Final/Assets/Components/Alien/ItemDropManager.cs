@@ -14,17 +14,16 @@ public class ItemDropManager : MonoBehaviour {
 		_spawn = null;
 		if(_items.Length<=0) return;
 		float total = 0.0f;
-		
 		foreach(GameObject item in _items){
-			total += item.GetComponent<PowerUpManager>().dropChance;	
+			total += item.GetComponent<PowerUpManager>().dropChance;
 		}
 		
 		float random = Random.value * total;
-		
 		foreach(GameObject item in _items){
 			float chance = item.GetComponent<PowerUpManager>().dropChance;
 			if(random < chance){
 				_spawn = item;
+				print("drop this:" + item);
 			} else{
 				random -= chance;
 			}
@@ -32,7 +31,7 @@ public class ItemDropManager : MonoBehaviour {
 		if(_spawn == null) return; //no gameObject has been dropped.
 		
 		GameObject _item = (GameObject)Instantiate(_spawn,
-												   new Vector3(position.x,position.y,position.y),
+												   new Vector3(position.x,position.y,position.z),
 			 									   Quaternion.identity);
 		_item.name = "Powerup";
 		_item.transform.parent = parent.transform;
