@@ -6,6 +6,7 @@ public class MasterController : MonoBehaviour {
 	public GameObject _mathius;
 	public GameObject _alien;
 	public Texture[] _mathiusTextures;
+	public Material[] _skyBoxes;
 	
 	public GameObject end;
 	
@@ -18,6 +19,7 @@ public class MasterController : MonoBehaviour {
 	private Alien aHelper;
 	private PCInterface pcHelper;
 	private Selector<Texture> stHelper;
+	private SkyBoxManager sbHelper;
 	
 	public static MasterController BRAIN;
 	
@@ -25,7 +27,7 @@ public class MasterController : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("MainMenu");
 		BRAIN = gameObject.GetComponent<MasterController>();
-		
+		sbHelper = new SkyBoxManager(_skyBoxes[0],_skyBoxes[1]);
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
 		tHelper = new TileManager(pHelper);
@@ -53,7 +55,7 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onGameStart(){
-		GamePause.PAUSE.set_gameEnd(false);
+		
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(1);
@@ -63,6 +65,7 @@ public class MasterController : MonoBehaviour {
 		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
+		GamePause.PAUSE.set_gameEnd(false);
 	}
 	
 	public void onAlienShot(char val, GameObject alien){
@@ -133,5 +136,6 @@ public class MasterController : MonoBehaviour {
 	public PCInterface pci(){return pcHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
 	public Selector<Texture> sT(){return stHelper;}
+	public SkyBoxManager sbm(){return sbHelper;}
 }
 

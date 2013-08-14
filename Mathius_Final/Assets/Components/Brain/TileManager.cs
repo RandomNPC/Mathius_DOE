@@ -30,6 +30,8 @@ public class TileManager : Object {
 		_map = (_map==null) ? _maps[(int)Random.Range(0,_maps.Length-1)] : _map;
 	
 		GameObject _land = (GameObject) Instantiate(_map,new Vector3(_pos,0.0f,0.0f),Quaternion.identity);
+		MasterController.BRAIN.sbm().mapSkyBox(_land.name);
+		//insert name here
 		_land.name = "Surface " + _tile++;
 		if(_tile.Equals(_pfm.get_tileNum())){//We reached the last set of land tiles, now setup a trigger
 			MasterController.BRAIN.onReachedTargetTile();	
