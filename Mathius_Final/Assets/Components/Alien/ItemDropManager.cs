@@ -32,7 +32,7 @@ public class ItemDropManager : MonoBehaviour {
 		if(_spawn == null) return; //no gameObject has been dropped.
 		
 		GameObject _item = (GameObject)Instantiate(_spawn,
-												   new Vector3(position.x,position.y,position.y),
+												   new Vector3(position.x,position.y,position.z),
 			 									   Quaternion.identity);
 		_item.name = "Powerup";
 		_item.transform.parent = parent.transform;

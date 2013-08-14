@@ -96,4 +96,5 @@ public class ScoreManager{
 	public int get_streak(){return _streak;}
 	public void set_problems_remaining(int num){_problems_to_clear = num;}
 	public int get_problems_remaining(){return _problems_to_clear;}
+	public void add_bonus_points(int points){_bonus_points += points;}
 }
