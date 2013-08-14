@@ -17,6 +17,8 @@ public class LevelEditorUI : MonoBehaviour {
 	private bool opToggleTxt2;
 	private bool opToggleTxt3;
 	private bool opToggleTxt4;
+	private int winNum;
+	public float hSliderValue = 0.0f;
 	private int formatInt;
 	private string[] formatArray;
 	private string[] terrainNames;
@@ -25,6 +27,7 @@ public class LevelEditorUI : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		winNum =1;
 		
 		loadSettingsFromPreferences();
 		
@@ -43,10 +46,11 @@ public class LevelEditorUI : MonoBehaviour {
 	void OnGUI(){
 		float intDivider = Screen.height/100;
 		float widthDivider = Screen.width/100;
+		//hSliderValue = 0.0F;
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
 		GUI.skin = thisMetalGUISkin;
 		//Title
-		GUI.Label(titleRect, ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
+		GUI.Label(titleRect, ("Level Editor"),GUI.skin.GetStyle("label"));
 		//First Label
 		GUI.Label(new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5), ("Number of Terrains : "),GUI.skin.GetStyle("button"));
 		//Terrain Decrementer
@@ -90,7 +94,7 @@ public class LevelEditorUI : MonoBehaviour {
 		opToggleTxt3 = GUI.Toggle(new Rect(widthDivider*20, intDivider*65, 100, 30), opToggleTxt3, "X");
 		opToggleTxt4 = GUI.Toggle(new Rect(widthDivider*60, intDivider*65, 100, 30), opToggleTxt4, "%");
 		//Eqaution Format
-		GUI.Label(new Rect(widthDivider*20, intDivider*70,widthDivider*50, intDivider*5), ("Equation Format: "),GUI.skin.GetStyle("button"));
+		GUI.Label(new Rect(widthDivider*20, intDivider*70,widthDivider*50, intDivider*5), ("Format: "),GUI.skin.GetStyle("button"));
 		//Equation Decrementer
 		if(GUI.Button(new Rect(widthDivider*40, intDivider*70,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
 			if(formatInt>0){
@@ -105,6 +109,27 @@ public class LevelEditorUI : MonoBehaviour {
 				formatInt ++;
 			}
 		}
+		//Win Int
+		GUI.Label(new Rect(widthDivider*20, intDivider*75,widthDivider*50, intDivider*5), ("Number to win? "),GUI.skin.GetStyle("button"));
+		//Win Decrementer
+		if(GUI.Button(new Rect(widthDivider*50, intDivider*75,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
+			if(winNum>1){
+				winNum --;
+			}
+		}
+		//Win num
+		GUI.Label(new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5), ("" +winNum),GUI.skin.GetStyle("toggle"));
+		//win Incrementer
+		if(GUI.Button(new Rect(widthDivider*60, intDivider*75,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
+			if(winNum>=1){
+				winNum ++;
+			}
+		}
+		//Alien Speed
+		GUI.Label(new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5), ("Alien Speed: "+hSliderValue),GUI.skin.GetStyle("button"));
+		Rect slider = new Rect (widthDivider*50, intDivider*80, widthDivider*20, intDivider*2);
+		hSliderValue = GUI.HorizontalSlider(slider, hSliderValue, 0.0F, 100.0F);
+		
 	}
 	
 	private void loadSettingsFromPreferences(){

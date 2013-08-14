@@ -24,6 +24,7 @@ public class Menu_UI : MonoBehaviour {
 		}
 		if(GUI.Button (new Rect((Screen.width/3),(46*intDivider),(2*(Screen.width/5)),(10*intDivider)), ("Options"),GUI.skin.GetStyle("box"))){
 				Debug.Log("Options Clicked");
+				Application.LoadLevel("Options");
 		}
 		
 		if(GUI.Button (new Rect(Screen.width/3,(57*intDivider), (2*(Screen.width/5)), (10*intDivider)), ("High Score"),GUI.skin.GetStyle("box"))){

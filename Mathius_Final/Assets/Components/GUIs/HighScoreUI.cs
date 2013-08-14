@@ -8,8 +8,8 @@ public class HighScoreUI : MonoBehaviour {
 	void OnGUI(){
 		float intDivider = Screen.height/100;
 		GUI.skin = thisMetalGUISkin;
-		GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
-		GUI.Label(new Rect((Screen.width/5),(25*intDivider),(50*(Screen.width/100)),(10*intDivider)), ("HIGH Scores!"),GUI.skin.GetStyle("box"));
+		GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)), ("High Scores"),GUI.skin.GetStyle("label"));
+		//GUI.Label(new Rect((Screen.width/5),(25*intDivider),(50*(Screen.width/100)),(10*intDivider)), ("HIGH Scores!"),GUI.skin.GetStyle("box"));
 		GUI.Label(new Rect((Screen.width/55),(35*intDivider),(50*(Screen.width/100)),(9*intDivider)), ("1:\t\t\t" + PlayerPrefs.GetInt("Player H0") +" "+ PlayerPrefs.GetString("Player 0","A")),GUI.skin.GetStyle("box"));
 		GUI.Label(new Rect((Screen.width/55),(45*intDivider),(50*(Screen.width/100)),(9*intDivider)), ("2:\t\t\t" + PlayerPrefs.GetInt("Player H1",1)+" "+ PlayerPrefs.GetString("Player 1","B")),GUI.skin.GetStyle("box"));
 		GUI.Label(new Rect((Screen.width/55),(55*intDivider),(50*(Screen.width/100)),(9*intDivider)), ("3:\t\t\t" + PlayerPrefs.GetInt("Player H2",2) +" "+ PlayerPrefs.GetString("Player 2","C")),GUI.skin.GetStyle("box"));
