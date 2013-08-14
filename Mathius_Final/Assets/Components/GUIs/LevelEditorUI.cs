@@ -18,17 +18,19 @@ public class LevelEditorUI : MonoBehaviour {
 	private bool opToggleTxt3;
 	private bool opToggleTxt4;
 	private int winNum;
-	public float hSliderValue = 0.0f;
+	public float hSliderValue;
 	private int formatInt;
 	private string[] formatArray;
 	private string[] terrainNames;
 	private Dictionary<string,int> format;
 	private MasterController mc;
+	private ScoreManager sm;
 	
 	// Use this for initialization
 	void Start () {
-		winNum =1;
-		
+		sm = MasterController.BRAIN.sm();
+		winNum = MasterController.BRAIN.pm().get_numWin();
+		hSliderValue = MasterController.BRAIN.pm().get_alienSpeed();
 		loadSettingsFromPreferences();
 		
 		terrainNames = new string[]{"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
@@ -74,6 +76,10 @@ public class LevelEditorUI : MonoBehaviour {
 			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
 			MasterController.BRAIN.pm().set_terrains(using_terrains());
 			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
+			MasterController.BRAIN.pm().set_numWin(winNum);
+			PlayerPrefs.SetInt("win_number",winNum);
+			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
+			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
 			Application.LoadLevel("MainMenu");
 		}
 		
@@ -118,7 +124,7 @@ public class LevelEditorUI : MonoBehaviour {
 			}
 		}
 		//Win num
-		GUI.Label(new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5), ("" +winNum),GUI.skin.GetStyle("toggle"));
+		GUI.Label(new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5), ("" + winNum),GUI.skin.GetStyle("toggle"));
 		//win Incrementer
 		if(GUI.Button(new Rect(widthDivider*60, intDivider*75,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
 			if(winNum>=1){
@@ -126,9 +132,9 @@ public class LevelEditorUI : MonoBehaviour {
 			}
 		}
 		//Alien Speed
-		GUI.Label(new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5), ("Alien Speed: "+hSliderValue),GUI.skin.GetStyle("button"));
+		GUI.Label(new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5), ("Alien Speed: "+(Mathf.Round(hSliderValue *100f)/100f)),GUI.skin.GetStyle("button"));
 		Rect slider = new Rect (widthDivider*50, intDivider*80, widthDivider*20, intDivider*2);
-		hSliderValue = GUI.HorizontalSlider(slider, hSliderValue, 0.0F, 100.0F);
+		hSliderValue = GUI.HorizontalSlider(slider, hSliderValue, 0.0F, 1.0F);
 		
 	}
 	

@@ -49,7 +49,6 @@ public class CreditsUI : MonoBehaviour {
 					gs = GAMESTATE.ONE;}
 				break;
 			case GAMESTATE.ONE://Hackathon Teams
-				print("GameState One");
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));	
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *10),"Hackathon Team 1",GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 32, widthDivider * 70, intDivider *10),"Anthony Jones	Programmer",GUI.skin.GetStyle("button"));

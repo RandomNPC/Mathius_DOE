@@ -30,7 +30,7 @@ public class ScoreManager{
 		_isOnStreak = false;
 		_equation = "";
 		_mathius = instance;
-		_problems_to_clear = 0;
+		_problems_to_clear = PlayerPrefs.GetInt("win_number",25);
 		_bonus_points = 0;
 	}
 	

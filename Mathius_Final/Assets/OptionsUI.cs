@@ -56,11 +56,11 @@ public class OptionsUI : MonoBehaviour {
 		GUI.Label(new Rect(widthDivider*20, intDivider*38,widthDivider*50, intDivider*5), ("Mute: "),GUI.skin.GetStyle("button"));
 		toggleTxt2 = GUI.Toggle(new Rect(widthDivider*55, intDivider*39, 100, 30), toggleTxt2, "");
 		
-		GUI.Label(new Rect(widthDivider*20, intDivider*42,widthDivider*50, intDivider*5), ("Music: " + musicSliderValue),GUI.skin.GetStyle("button"));
+		GUI.Label(new Rect(widthDivider*20, intDivider*42,widthDivider*50, intDivider*5), ("Music: " + (Mathf.Round(musicSliderValue *100f)/100f)),GUI.skin.GetStyle("button"));
 		Rect slider1 = new Rect (widthDivider*50, intDivider*43, widthDivider*20, intDivider*2);
 		musicSliderValue = GUI.HorizontalSlider(slider1, musicSliderValue, 0.0F, 100.0F);
 		
-		GUI.Label(new Rect(widthDivider*20, intDivider*46,widthDivider*50, intDivider*5), ("Effects: " + effectSliderValue),GUI.skin.GetStyle("button"));
+		GUI.Label(new Rect(widthDivider*20, intDivider*46,widthDivider*50, intDivider*5), ("Effects: " + (Mathf.Round(effectSliderValue*100f)/100f)),GUI.skin.GetStyle("button"));
 		Rect slider = new Rect (widthDivider*50, intDivider*47, widthDivider*20, intDivider*2);
 		effectSliderValue = GUI.HorizontalSlider(slider, effectSliderValue, 0.0F, 100.0F);
 		
