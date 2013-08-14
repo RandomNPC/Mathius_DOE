@@ -4,7 +4,6 @@ using System.Collections;
 public class PowerUpManager : MonoBehaviour {
 
 	public string powerUpScript;
-	public Texture powerUpTexture;
 	public float dropChance;
 	
 	void OnTriggerEnter(Collider obj){
@@ -15,9 +14,5 @@ public class PowerUpManager : MonoBehaviour {
 			ship.AddComponent(powerUpScript);
 		}
 		Destroy(gameObject);
-	}
-	
-	void Update(){
-		gameObject.renderer.material.mainTexture = powerUpTexture;
 	}
 }
