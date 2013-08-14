@@ -61,7 +61,7 @@ public class MasterController : MonoBehaviour {
 		mHelper.set_lives(1);
 		mHelper.set_answer();
 		sHelper.reset_score();
-		sHelper.set_problems_remaining(1);
+		sHelper.set_problems_remaining(100);
 		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
