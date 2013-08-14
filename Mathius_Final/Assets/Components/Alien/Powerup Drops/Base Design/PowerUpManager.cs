@@ -1,19 +1,18 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 public class PowerUpManager : MonoBehaviour {
 
-	public MonoScript powerUpScript;
+	public string powerUpScript;
 	public Texture powerUpTexture;
 	public float dropChance;
 	
 	void OnTriggerEnter(Collider obj){
 		if(!obj.name.Contains("Mathius")) return;	
 		//attach script to Mathius
-		if(powerUpScript!=null){
+		if(powerUpScript!=""){
 			GameObject ship = GameObject.Find("Mathius") as GameObject;
-			ship.AddComponent(powerUpScript.GetClass());
+			ship.AddComponent(powerUpScript);
 		}
 		Destroy(gameObject);
 	}
