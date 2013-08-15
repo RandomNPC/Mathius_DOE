@@ -35,7 +35,7 @@ public class GameOverUI : MonoBehaviour {
 			case State.INPUT:
 				float intDivider = Screen.height/100;
 				float widthDivider = Screen.width/100;
-				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
+				//GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("HIGHSCORE"),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect((Screen.width/5),(15*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("HIGHSCORE"),GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect((Screen.width/5),(27*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect((Screen.width/5),(45*intDivider),(3*(Screen.width/5)),(10*intDivider)), (_hsi.initials()),GUI.skin.GetStyle("box"));
@@ -60,8 +60,8 @@ public class GameOverUI : MonoBehaviour {
 				break;
 			case State.DISPLAY:
 				intDivider = Screen.height/100;
-				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
-				GUI.Label(new Rect((Screen.width/5),(25*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("GAMEOVER"),GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(10*intDivider)), ("GAMEOVER"),GUI.skin.GetStyle("label"));
+				//GUI.Label(new Rect((Screen.width/5),(25*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("GAMEOVER"),GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect((Screen.width/5),(47*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
 						Debug.Log("Mathius Clicked");
