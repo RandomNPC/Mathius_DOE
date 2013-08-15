@@ -33,7 +33,7 @@ public class NumBullet : MonoBehaviour {
 		rigidbody.velocity=	200 / mag * vel;
 	}
 
-	void OnCollisionEnter(Collision collision) {
+	void OnTriggerEnter(Collider collision) {
 		if(collision.gameObject.name.Contains("Alian")){
 			MasterController.BRAIN.onAlienShot(variable,collision.gameObject);
 		}

@@ -102,22 +102,24 @@ public class MasterController : MonoBehaviour {
 		GamePause.PAUSE.set_gameEnd(true);
 	}
 	
-	public void onMathiusCollision(Collision data){
+	public void onMathiusCollision(Collider data){
 		if(data.gameObject.name.Contains("Alian")){
 			if(mHelper.get_answer().Equals(data.gameObject.GetComponent<AlienManager>().answer)){
-				GameObject alien = data.gameObject;
-				GameObject land_ref = alien.transform.parent.gameObject;
-				Vector3 alien_pos = alien.transform.position;
-				Destroy(alien);
+				GameObject alien_ref = data.gameObject;
+				GameObject land_ref = alien_ref.transform.parent.gameObject;
+				Vector3 alien_pos = alien_ref.transform.position;
+				Destroy(data.gameObject);
 				gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 				mHelper.set_answer();
 				mHelper.set_lives(mHelper.get_lives()+1);
 			}
-			else{ 
+			else{
+				data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
 				GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
 			}
 		}
 		else{
+			if(!data.gameObject.name.Contains("Surface")) return;
 			GameObject.Find("Mathius").GetComponent<Player>().destroy_mathius();
 			mHelper.set_lives(mHelper.get_lives()-1);
 			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;

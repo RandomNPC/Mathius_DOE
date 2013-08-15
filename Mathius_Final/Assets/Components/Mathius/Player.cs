@@ -56,10 +56,6 @@ public class Player : MonoBehaviour {
 		if((direction & MATHIUS_RIGHT)== MATHIUS_RIGHT){gameObject.transform.Translate(1.0f,0.0f,0.0f);}
 	}
 	
-	private void OnCollisionEnter(Collision data){
-		MasterController.BRAIN.onMathiusCollision(data);
-	}
-	
 	public void crashTrajectory_mathius(){
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		gameObject.GetComponent<Rigidbody>().AddForce(0.0f,-10.0f,0.0f);
@@ -69,5 +65,10 @@ public class Player : MonoBehaviour {
 		Vector3 explode = gameObject.transform.position;
 		Instantiate(explosion,new Vector3(explode.x,explode.y,explode.z),Quaternion.identity);
 		Destroy(gameObject);
+	}
+	
+	void OnTriggerEnter(Collider col){
+		if(col.gameObject.name.Contains("Powerup")) return;
+		MasterController.BRAIN.onMathiusCollision(col);
 	}
 }

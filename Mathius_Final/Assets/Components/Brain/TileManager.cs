@@ -33,6 +33,7 @@ public class TileManager : Object {
 		MasterController.BRAIN.sbm().mapSkyBox(_land.name);
 		//insert name here
 		_land.name = "Surface " + _tile++;
+		_land.GetComponent<TerrainCollider>().isTrigger = true;
 		if(_tile.Equals(_pfm.get_tileNum())){//We reached the last set of land tiles, now setup a trigger
 			MasterController.BRAIN.onReachedTargetTile();	
 		}

@@ -8,11 +8,7 @@ public class PowerUpManager : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider obj){
 		if(!obj.name.Contains("Mathius")) return;	
-		//attach script to Mathius
-		if(powerUpScript!=""){
-			GameObject ship = GameObject.Find("Mathius") as GameObject;
-			ship.AddComponent(powerUpScript);
-		}
+		if(powerUpScript!="")obj.gameObject.AddComponent(powerUpScript);
 		Destroy(gameObject);
 	}
 }

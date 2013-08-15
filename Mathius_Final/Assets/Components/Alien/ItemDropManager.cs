@@ -21,7 +21,6 @@ public class ItemDropManager : MonoBehaviour {
 			 									   Quaternion.identity);
 				_item.name = "Powerup";
 				_item.transform.parent = parent.transform;
-				print("drop this:" + item.name);
 				return;
 			} else{
 				random -= chance;

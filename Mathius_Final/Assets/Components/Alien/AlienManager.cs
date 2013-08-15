@@ -15,5 +15,4 @@ public class AlienManager : MonoBehaviour {
 		answer = eq.answer();
 		operation = eq.eqOperation();
 	}
-
 }
