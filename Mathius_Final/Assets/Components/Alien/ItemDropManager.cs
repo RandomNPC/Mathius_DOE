@@ -4,14 +4,8 @@ using System.Collections;
 public class ItemDropManager : MonoBehaviour {
 
 	public GameObject[] _items;
-	private GameObject _spawn;
-	
-	void Start(){
-		_spawn = null;
-	}
 	
 	public void drop_item(Vector3 position, GameObject parent){
-		_spawn = null;
 		if(_items.Length<=0) return;
 		float total = 0.0f;
 		foreach(GameObject item in _items){
@@ -22,20 +16,16 @@ public class ItemDropManager : MonoBehaviour {
 		foreach(GameObject item in _items){
 			float chance = item.GetComponent<PowerUpManager>().dropChance;
 			if(random < chance){
-				_spawn = item;
-				print("drop this:" + item);
+				GameObject _item = (GameObject)Instantiate(item,
+												   new Vector3(position.x,position.y,position.z),
+			 									   Quaternion.identity);
+				_item.name = "Powerup";
+				_item.transform.parent = parent.transform;
+				print("drop this:" + item.name);
+				return;
 			} else{
 				random -= chance;
 			}
 		}
-		if(_spawn == null) return; //no gameObject has been dropped.
-		
-		GameObject _item = (GameObject)Instantiate(_spawn,
-												   new Vector3(position.x,position.y,position.z),
-			 									   Quaternion.identity);
-		_item.name = "Powerup";
-		_item.transform.parent = parent.transform;
-	}
-	
-	
+	}	
 }

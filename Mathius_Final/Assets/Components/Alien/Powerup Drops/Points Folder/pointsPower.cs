@@ -4,8 +4,8 @@ using System.Collections;
 public class pointsPower : MonoBehaviour {
 
 	void Start () {
-		MasterController.BRAIN.sm().addBonusPoints(1000);
-			
+		ScoreManager points = MasterController.BRAIN.sm();	
+		points.add_bonus_points(250);
 	}
 
 }
