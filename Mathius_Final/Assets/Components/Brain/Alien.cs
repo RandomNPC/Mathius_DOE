@@ -34,7 +34,4 @@ public class Alien : Object {
 	public float get_spawn_time(){return _spawn_time;}
 	public void set_z_axis(float z){_z_axis = z;}
 	
-	//MapPropertiesHelper.cs. Aliens don't spawn while Mathius is in transition
-	public void set_on_transition(bool state){_on_transition = state;}
-	
 }

@@ -4,9 +4,6 @@ using System.Collections;
 public class MapPropertiesHelper : MonoBehaviour {
 	
 	private bool spawnBuildings;
-	private float z_axis;
-	
-	private bool start_transition;
 	
 	public static MapPropertiesHelper SET;
 	
@@ -14,25 +11,6 @@ public class MapPropertiesHelper : MonoBehaviour {
 		SET = gameObject.GetComponent<MapPropertiesHelper>();
 		draw_moveTrigger();
 		spawnBuildings = gameObject.GetComponent<MapProperties>().use_buildings;
-		z_axis = gameObject.GetComponent<MapProperties>().z_axis;
-		start_transition = false;
-	}
-	
-	void Update(){
-		z_axis = gameObject.GetComponent<MapProperties>().z_axis;
-		if(start_transition){
-			float mpos_z = GameObject.Find ("Mathius").transform.position.z;
-			
-			if((int)mpos_z>(int)z_axis){
-				GameObject.Find("MathiusEarthCam").transform.Translate(0.0f,0.0f,-1.0f);
-			}else if((int)mpos_z<(int)z_axis){
-				GameObject.Find("MathiusEarthCam").transform.Translate(0.0f,0.0f,1.0f);
-			}else{
-				start_transition = false;
-				MasterController.BRAIN.al().set_on_transition(start_transition);
-				Destroy(gameObject.GetComponent<MapPropertiesHelper>());
-			}
-		}
 	}
 	
 	private void draw_moveTrigger(){
@@ -47,8 +25,7 @@ public class MapPropertiesHelper : MonoBehaviour {
 	}
 	
 	public void onTransitionTrigger(){
-		start_transition = true;
-		MasterController.BRAIN.al().set_on_transition(start_transition);
+
 	}
 	
 	public bool spawn_buildings(){return spawnBuildings;}
