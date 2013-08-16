@@ -16,9 +16,7 @@ public class Gun : MonoBehaviour {
 	void Update() {
 		if(!onCD){
 			if(pc.get_using_PCI()){
-				if(pc.get_fire_bullet()){
-					fireNum(pc.get_bullet_to_fire());
-				}
+				//fire bullet
 			}
 			else{
 				if(Input.GetKeyDown(KeyCode.Alpha1) || (Input.GetKeyDown(KeyCode.Keypad1))){fireNum("1");}
