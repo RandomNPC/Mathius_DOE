@@ -27,11 +27,8 @@ public class MasterController : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("MainMenu");
 		BRAIN = gameObject.GetComponent<MasterController>();
-<<<<<<< HEAD
 		sbHelper = new SkyBoxManager(_skyBoxes[0],_skyBoxes[1]);
-=======
 		pcHelper = new PCInterface(gameObject);
->>>>>>> origin/Paul-Perceptual-Incomplete
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
 		tHelper = new TileManager(pHelper);
@@ -141,12 +138,8 @@ public class MasterController : MonoBehaviour {
 	public HighScoreManager hsm(){return hHelper;}
 	public Alien al(){return aHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
-<<<<<<< HEAD
 	//public Selector<Texture> sT(){return stHelper;}
 	public SkyBoxManager sbm(){return sbHelper;}
-=======
-	public Selector<Texture> sT(){return stHelper;}
 	public PCInterface pci(){return pcHelper;}
->>>>>>> origin/Paul-Perceptual-Incomplete
 }
 
