@@ -21,7 +21,7 @@ public class ScoreManager{
 	private const int MULTIPLICATION_BONUS = 300;
 	private const int DIVISION_BONUS = 400;
 	
-	public ScoreManager(Mathius instance){
+	public ScoreManager(Mathius instance, PreferencesManager prefs){
 		_wrong = 0;
 		_correct = 0;
 		_streak = 0;
@@ -30,7 +30,7 @@ public class ScoreManager{
 		_isOnStreak = false;
 		_equation = "";
 		_mathius = instance;
-		_problems_to_clear = PlayerPrefs.GetInt("win_number",25);
+		_problems_to_clear = prefs.get_numWin();
 		_bonus_points = 0;
 	}
 	

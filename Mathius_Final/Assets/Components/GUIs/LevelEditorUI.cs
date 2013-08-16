@@ -72,14 +72,13 @@ public class LevelEditorUI : MonoBehaviour {
 		//Equation Incrementer
 		if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
 		Debug.Log("Mathius Clicked");
-			MasterController.BRAIN.pm().set_operations(using_operations());
-			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
-			MasterController.BRAIN.pm().set_terrains(using_terrains());
-			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
-			MasterController.BRAIN.pm().set_numWin(winNum);
-			PlayerPrefs.SetInt("win_number",winNum);
-			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
-			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+			PreferencesManager pref = MasterController.BRAIN.pm();
+			pref.set_operations(using_operations());
+			pref.set_tileNum(terrainNum);
+			pref.set_terrains(using_terrains());
+			pref.set_eqFormat(format[formatArray[formatInt]]);
+			pref.set_numWin(winNum);
+			pref.set_alienSpeed(hSliderValue);
 			Application.LoadLevel("MainMenu");
 		}
 		
@@ -159,13 +158,7 @@ public class LevelEditorUI : MonoBehaviour {
 		
 	}
 	
-	public int num_of_terrains(){
-		PlayerPrefs.SetInt("num_of_terrains",terrainNum);
-		PlayerPrefs.Save();
-		return terrainNum;
-	}
-	
-	public byte using_terrains(){
+	private byte using_terrains(){
 		byte temp = 0x0;
 		if(toggleTxt1){temp = (byte)(temp | TerrainManager.TERRAIN_1);}
 		if(toggleTxt2){temp = (byte)(temp | TerrainManager.TERRAIN_2);}
@@ -175,26 +168,15 @@ public class LevelEditorUI : MonoBehaviour {
 		if(toggleTxt6){temp = (byte)(temp | TerrainManager.TERRAIN_6);}
 		if(toggleTxt7){temp = (byte)(temp | TerrainManager.TERRAIN_7);}
 		if(toggleTxt8){temp = (byte)(temp | TerrainManager.TERRAIN_8);}
-		PlayerPrefs.SetInt("using_terrains",(int)temp);
-		PlayerPrefs.Save();
 		return temp;
 	}
 	
-	public byte using_operations(){
+	private byte using_operations(){
 		byte temp = 0x00;
 		if(opToggleTxt1){temp = (byte)(temp | EquationGenerator.ADDITION);}
 		if(opToggleTxt2){temp = (byte)(temp | EquationGenerator.SUBTRACTION);}
 		if(opToggleTxt3){temp = (byte)(temp | EquationGenerator.MULTIPLICATION);}
 		if(opToggleTxt4){temp = (byte)(temp | EquationGenerator.DIVISION);}
-		PlayerPrefs.SetInt("using_operations",(int)temp);
-		PlayerPrefs.Save();
 		return temp;
 	}
-	
-	public int using_eqFormat(){
-		PlayerPrefs.SetInt("using_eqFormat",formatInt);
-		PlayerPrefs.Save();
-		return format[formatArray[formatInt]];
-	}
-	
 }

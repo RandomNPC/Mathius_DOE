@@ -31,7 +31,7 @@ public class MasterController : MonoBehaviour {
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
 		tHelper = new TileManager(pHelper);
-		sHelper = new ScoreManager(mHelper);
+		sHelper = new ScoreManager(mHelper,pHelper);
 		hHelper = new HighScoreManager();
 		aHelper = new Alien(_alien);
 		pcHelper = new PCInterface();
