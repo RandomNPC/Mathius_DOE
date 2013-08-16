@@ -16,6 +16,7 @@ public class MasterController : MonoBehaviour {
 	private HighScoreManager hHelper;
 	private HighScoreInitials iHelper;
 	private Alien aHelper;
+	private PCInterface pcHelper;
 	private Selector<Texture> stHelper;
 	
 	public static MasterController BRAIN;
@@ -24,7 +25,7 @@ public class MasterController : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("MainMenu");
 		BRAIN = gameObject.GetComponent<MasterController>();
-		
+		pcHelper = new PCInterface(gameObject);
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
 		tHelper = new TileManager(pHelper);
@@ -33,6 +34,10 @@ public class MasterController : MonoBehaviour {
 		aHelper = new Alien(_alien);
 		iHelper = new HighScoreInitials(3);
 		stHelper = new Selector<UnityEngine.Texture>(_mathiusTextures);
+	}
+	
+	void Update(){
+		if(pcHelper.get_using_PCI())pcHelper.PollPCUpdates();
 	}
 	
 	//Events
@@ -129,5 +134,6 @@ public class MasterController : MonoBehaviour {
 	public Alien al(){return aHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
 	public Selector<Texture> sT(){return stHelper;}
+	public PCInterface pci(){return pcHelper;}
 }
 

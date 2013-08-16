@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour {
 	private PCInterface pc;
 
 	void Start() {
-		pc = PCInterface.PC;
+		pc = MasterController.BRAIN.pci();
 	}
 
 	void Update() {

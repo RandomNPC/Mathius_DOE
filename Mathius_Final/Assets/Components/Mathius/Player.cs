@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		delta = new Vector3(0.0f,0.0f,0.0f);
-		pc = PCInterface.PC;
+		pc = MasterController.BRAIN.pci();
 	}
 	
 	// Update is called once per frame
