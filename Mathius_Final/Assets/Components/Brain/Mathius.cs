@@ -8,8 +8,10 @@ public class Mathius : Object{
 	private Vector3 _bounds;
 	private int _lives;
 	private int _answer;
+	private Texture _texture;
 	
 	public Mathius(GameObject mathius){
+		_texture = null;
 		_mathius = mathius;
 		_mpos = new Vector3(0.0f,0.0f,0.0f);
 		_bounds = new Vector3(0.0f,0.0f,0.0f);
@@ -36,5 +38,7 @@ public class Mathius : Object{
 	}
 	public void set_bounds(Vector3 bounds){_bounds = bounds;}
 	public Vector3 get_bounds(){return _bounds;}
-	public void set_texture(Texture texture){_mathius.renderer.material.mainTexture = texture;}
+	public void set_texture(Texture texture){_texture = texture;}// GameObject.Find("Mathius Model").renderer.material.SetTexture("_MainTex",texture);}
+	public Texture get_texture(){return _texture;}
+
 }

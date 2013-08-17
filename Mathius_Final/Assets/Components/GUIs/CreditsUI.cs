@@ -11,12 +11,24 @@ public class CreditsUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	public static Mathius_UI MUI;
 	private string derp;
+	private float creditTimer;
 	
 	void Start(){
 		stats = MasterController.BRAIN.sm();
 		gs = 0;
 		MUI = gameObject.GetComponent<Mathius_UI>();
 		derp = "";
+		creditTimer = 5.0f;
+	}
+	void Update(){
+		if(creditTimer>0){
+			creditTimer -= Time.deltaTime;
+		}
+		if (creditTimer<= 0){
+			gs++;
+			creditTimer = 5.0f;
+		}
+		
 	}
 	
 	void OnGUI(){
@@ -26,7 +38,9 @@ public class CreditsUI : MonoBehaviour {
 		GUI.skin = thisMetalGUISkin;
 		if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
 					gs++;
-					derp += "noob";}
+					derp += "noob";
+					creditTimer = 5.0f;}
+		
 		switch(gs){
 			case 0://Main Team
 				print(gs + derp);
@@ -56,7 +70,7 @@ public class CreditsUI : MonoBehaviour {
 				GUI.Label(new Rect(widthDivider*20, intDivider* 38, widthDivider * 70, intDivider *10),"Alejandro Ramierez	Programmer/Design",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 41, widthDivider * 70, intDivider *10),"Mike Smith	Design",GUI.skin.GetStyle("button"));
 				
-				GUI.Label(new Rect(widthDivider*15, intDivider* 45, widthDivider * 70, intDivider *10),"Super Computing",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 45, widthDivider * 70, intDivider *10),"SIGCSE Team",GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 55, widthDivider * 70, intDivider *10),"Michial Green II	Programmer/Design",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 58, widthDivider * 70, intDivider *10),"Alexis Liu	Programmer/Design",GUI.skin.GetStyle("button"));
 				

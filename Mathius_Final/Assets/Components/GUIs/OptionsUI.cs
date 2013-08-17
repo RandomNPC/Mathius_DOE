@@ -15,6 +15,7 @@ public class OptionsUI : MonoBehaviour {
 	private Selector<Texture> texture1;
 	// Use this for initialization
 	void Start () {
+		colorInt = MasterController.BRAIN.pm().get_mathiusTexture();
 		texture1 = GameObject.Find("MathiusModel").GetComponent<Mathius_ColorChange>().getTexture();
 	}
 	
@@ -47,6 +48,7 @@ public class OptionsUI : MonoBehaviour {
 			if(colorInt>0){
 				colorInt --;
 				texture1.prev();
+				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
 			}
 		}
 		//Equation int
@@ -56,6 +58,7 @@ public class OptionsUI : MonoBehaviour {
 			if( colorInt<7){
 				colorInt ++;
 				texture1.next();
+				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
 			}
 		}
 		
