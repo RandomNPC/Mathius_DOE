@@ -45,18 +45,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Components\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
-     <Compile Include="Assets\Maps\Mathius-Volcano\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" />
-     <Compile Include="Assets\Maps\Mathius-Volcano\Standard Assets\Character Controllers\Sources\Scripts\FPSInputController.js" />
-     <Compile Include="Assets\Maps\Mathius-Volcano\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
-     <Compile Include="Assets\Maps\Mathius-Volcano\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" />
-     <Compile Include="Assets\Maps\Mathius-Volcano\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" />
+     <Compile Include="Assets\Maps\Mathius-forest1package\Mathius-Forest\0000 ats V2 package\ats vertexLitShader Package\Script\setupVertexLitShaderV2.js" />
      <None Include="Assets\Components\Sounds\SoundManagerTutorial.txt" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
-     <None Include="Assets\Maps\Mathius-Volcano\Flow Free\Shaders\Flow Free\Flow_Diffuse_Free.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
- <Reference Include="Flow">
- <HintPath>Assets\Maps\Mathius-Volcano\Flow Free\Script\Flow.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
