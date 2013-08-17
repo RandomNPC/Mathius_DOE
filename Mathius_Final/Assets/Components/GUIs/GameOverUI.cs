@@ -11,7 +11,6 @@ public class GameOverUI : MonoBehaviour {
 	private HighScoreManager _highScore;
 	private HighScoreInitials _hsi;
 	private State _state;
-	
 		
 		
 	void Start(){
@@ -81,5 +80,6 @@ public class GameOverUI : MonoBehaviour {
 	private void onSuccess_SwipedRightToLeft(object sender, EventArgs e){
 		
 	}
+	
 	
 }

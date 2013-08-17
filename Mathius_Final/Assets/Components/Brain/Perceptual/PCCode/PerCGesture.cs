@@ -69,7 +69,7 @@ public class PerCGesture : MonoBehaviour {
 												//first acquiring the frame
 		
 		if(myPipe.QueryGeoNode(trackedLimb,out nodeInfo)){//out causes the function to change the data within nodeInfo
-			//Debug.Log ("hand found! X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y);
+			Debug.Log ("hand found! X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
 		}
 		if(myPipe.QueryGesture(trackedLimb,out movement)){//out causes the function to change the data within movement
 			if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_DOWN) swipeDown = true;

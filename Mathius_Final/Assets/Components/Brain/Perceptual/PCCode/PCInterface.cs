@@ -15,7 +15,7 @@ public class PCInterface{
 	private float[] _handpos;
 	
 	public PCInterface(GameObject instance){
-		_using_PCI = true;
+		_using_PCI = false;
 		_gesture = instance.GetComponent<PerCGesture>();
 		_voice = instance.GetComponent<PerCVoice>();
 		_handpos = new float[2]{0,0};
