@@ -25,7 +25,7 @@ public class MasterController : MonoBehaviour {
 	
 	void Awake() {//This is the start of the Game. Period.
 		DontDestroyOnLoad(gameObject);
-		Application.LoadLevel("MainMenu");
+		Application.LoadLevel("SplashScreen");
 		BRAIN = gameObject.GetComponent<MasterController>();
 		sbHelper = new SkyBoxManager(_skyBoxes[0],_skyBoxes[1]);
 		pcHelper = new PCInterface(gameObject);
@@ -41,6 +41,7 @@ public class MasterController : MonoBehaviour {
 	
 	void Update(){
 		if(pcHelper.get_using_PCI())pcHelper.PollPCUpdates();
+		//GameObject.Find("Mathius Model").GetComponent<MeshRenderer>().material.mainTexture = _mathiusTextures[pHelper.get_mathiusTexture()];
 	}
 	
 	//Events

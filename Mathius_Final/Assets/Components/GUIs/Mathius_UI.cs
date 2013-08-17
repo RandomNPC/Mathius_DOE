@@ -30,6 +30,10 @@ public class Mathius_UI : MonoBehaviour {
 				GUI.Label(new Rect((Screen.width/100)*71,(3*intDivider),((Screen.width/4)),(18*intDivider)), ("Answers Left: "+ stats.get_problems_remaining()),GUI.skin.GetStyle("button"));
 				GUI.Label (new Rect((Screen.width/3) ,(75*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Mathius Number: "+ stats.get_answer()) ,GUI.skin.GetStyle("button"));
 				GUI.Label (new Rect((Screen.width/3) ,(80*intDivider) ,(4*(Screen.width/10)) ,(14*intDivider) ) ,("Next: "+ stats.get_equation()) ,GUI.skin.GetStyle("window"));
+				if(GUI.Button (new Rect((Screen.width/3) ,(94*intDivider) ,(4*(Screen.width/10)) ,(10*intDivider) ) ,("Pause") ,GUI.skin.GetStyle("box") ) ){
+					GameObject.Find("MathiusEarthCam").GetComponent<GamePause>().PauseGame();
+					//changeMenuState(GAMESTATE.PAUSE);
+			}
 				break;
 			case GAMESTATE.PAUSE:
 				GUI.Label(new Rect((Screen.width/100)*70,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Lives: "+stats.get_lives()),GUI.skin.GetStyle("button"));

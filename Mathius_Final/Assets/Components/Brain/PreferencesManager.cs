@@ -9,6 +9,7 @@ public class PreferencesManager{
 	private int _eqFormat;
 	private int _numWin;
 	private float _alienSpeed;
+	private int _mathiusTexturesInt;
 	
 	const string TERRAINS = "using_terrains";
 	const string OPERATIONS = "using_operations";
@@ -16,6 +17,7 @@ public class PreferencesManager{
 	const string EQ_FORMAT = "using_eqFormat";
 	const string NUM_WIN = "win_number";
 	const string ALIENSPEED = "_gameSpeed";
+	const string TEXTUREINT = "_mathiusTextures";
 	
 	public PreferencesManager(){
 		_terrains = (byte)PlayerPrefs.GetInt(TERRAINS,1);
@@ -24,6 +26,7 @@ public class PreferencesManager{
 		_eqFormat = PlayerPrefs.GetInt(EQ_FORMAT,0);
 		_numWin = PlayerPrefs.GetInt(NUM_WIN,25);
 		_alienSpeed = PlayerPrefs.GetFloat(ALIENSPEED ,0.5f);
+		_mathiusTexturesInt = PlayerPrefs.GetInt(TEXTUREINT,0);
 	}
 	
 	public void set_terrains(byte terrains){
@@ -62,5 +65,13 @@ public class PreferencesManager{
 		PlayerPrefs.Save();
 	}
 	public float get_alienSpeed(){return _alienSpeed;}
+	
+	public int get_mathiusTexture(){return _mathiusTexturesInt;}
+	
+	public void set_mathiusTexture(int text){
+		_mathiusTexturesInt = text;
+		PlayerPrefs.SetInt(TEXTUREINT,text);
+		PlayerPrefs.Save();
+	}
 	
 }

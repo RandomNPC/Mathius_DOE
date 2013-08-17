@@ -12,9 +12,11 @@ public class OptionsUI : MonoBehaviour {
 	private bool toggleTxt2;
 	public float musicSliderValue = 0.0f;
 	public float effectSliderValue = 0.0f;
+	private Selector<Texture> texture1;
 	// Use this for initialization
 	void Start () {
-	
+		colorInt = MasterController.BRAIN.pm().get_mathiusTexture();
+		texture1 = GameObject.Find("MathiusModel").GetComponent<Mathius_ColorChange>().getTexture();
 	}
 	
 	void OnGUI(){
@@ -45,6 +47,8 @@ public class OptionsUI : MonoBehaviour {
 		if(GUI.Button(new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
 			if(colorInt>0){
 				colorInt --;
+				texture1.prev();
+				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
 			}
 		}
 		//Equation int
@@ -53,6 +57,8 @@ public class OptionsUI : MonoBehaviour {
 		if(GUI.Button(new Rect(widthDivider*65, intDivider*25,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
 			if( colorInt<7){
 				colorInt ++;
+				texture1.next();
+				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
 			}
 		}
 		
