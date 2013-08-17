@@ -1,0 +1,60 @@
+1. add sounds to sounds folder
+2. click brain and add 1 to sounds in sound manager
+	add sound element, and copy name of the sound
+
+3.go to sound mngr script assign a const string with Variable in ALL CAPS be short and descriptive
+	assign the var we just created with the "name of the sound" 
+
+4.Find the location where you want to play the sound in code.
+call soundmgr.sounds.playsound(soundmangr.nameofVAR in step 3, camcollider.MATHEARTHCAM)     
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^________  use intelisense always!!!!!!!!!!!!!!
+
+ DONE:
+
+mathius crash explosion 
+
+
+
+
+NEED TO DO:
+
+killing alien                                       mastercontroller.cs line73 (math kill alien), and line 107-108 in between two IF's (mathius crash into alien all cases)
+
+UI scrolling (on mouseover)sounds :
+	
+	gameoverui.cs line 43,48+1,51+2,54+3,57+4,67+5,70+6
+	
+	high score ui.cs line 24, 27+1
+
+	
+                                          
+UI music  main page start game                               
+UI Music   master controller.cs line45 (end game) line 58 (game starts) 
+
+
+
+shooting right alien         scoremanager.cs line 53                           
+
+shooting wrong alien         scoremanager.cs line85                      
+
+Beggining of level (get the nasa sound FX) master controller.cs line 59 (game starts)
+
+Pause screen event noise     gamepause.cs line 33(pause) 55 (resume game) 
+
+
+
+STUFF TO DO WITH MAX:
+
+UI scrolling (on mouseover)sounds :
+
+	leveleditor.cs (MAX needs to do it with me)
+
+	mathiusui.cs pause options (ask MAX)
+
+	menuUI.cs (MAXTime re did menu ui)
+
+credits page (max) music
+MOST BUTTONS NEED MAX TIME
+when the level ends (max)

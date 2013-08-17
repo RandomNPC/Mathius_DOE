@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour {
 	
 	public static Vector3 PLAY_ON_GAMEOBJECT;
 	public static SoundManager SOUNDS;
+	public const string MATHIUS_EXPLOSION ="NearExplosionB";
 	
 	void Start(){
 		PLAY_ON_GAMEOBJECT = gameObject.transform.position;
