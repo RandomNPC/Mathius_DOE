@@ -24,9 +24,10 @@ public class Mathius_UI : MonoBehaviour {
 		GUI.skin = thisMetalGUISkin;
 		switch(gs){
 			case GAMESTATE.RESUME:
-				GUI.Label(new Rect((Screen.width/100)*70,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Lives: "+stats.get_lives()),GUI.skin.GetStyle("button"));
-				GUI.Label(new Rect((Screen.width/100)*40,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Score: "+stats.get_score()),GUI.skin.GetStyle("button"));
-				GUI.Label(new Rect((Screen.width/100)*10,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Streak: "+stats.get_streak()),GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect((Screen.width/100)*48,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Lives: "+stats.get_lives()),GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect((Screen.width/100)*25,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Score: "+stats.get_score()),GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect((Screen.width/100)*2,(3*intDivider),((Screen.width/5)),(18*intDivider)), ("Streak: "+stats.get_streak()),GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect((Screen.width/100)*71,(3*intDivider),((Screen.width/4)),(18*intDivider)), ("Answers Left: "+ stats.get_problems_remaining()),GUI.skin.GetStyle("button"));
 				GUI.Label (new Rect((Screen.width/3) ,(75*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Mathius Number: "+ stats.get_answer()) ,GUI.skin.GetStyle("button"));
 				GUI.Label (new Rect((Screen.width/3) ,(80*intDivider) ,(4*(Screen.width/10)) ,(14*intDivider) ) ,("Next: "+ stats.get_equation()) ,GUI.skin.GetStyle("window"));
 				break;
