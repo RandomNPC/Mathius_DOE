@@ -40,6 +40,7 @@ public class GameOverUI : MonoBehaviour {
 				GUI.Label(new Rect((Screen.width/5),(27*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect((Screen.width/5),(45*intDivider),(3*(Screen.width/5)),(10*intDivider)), (_hsi.initials()),GUI.skin.GetStyle("box"));
 				if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("ENTER") ,GUI.skin.GetStyle("box") ) ){
+					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 					_highScore.hS().set_name(_hsi.initials());
 					_highScore.saveScores();
 					_state = State.DISPLAY;
@@ -64,9 +65,11 @@ public class GameOverUI : MonoBehaviour {
 				//GUI.Label(new Rect((Screen.width/5),(25*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("GAMEOVER"),GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect((Screen.width/5),(47*intDivider),(3*(Screen.width/5)),(18*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
+						SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 						Debug.Log("Mathius Clicked");
 						Application.LoadLevel("MainMenu");}
 				if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Replay") ,GUI.skin.GetStyle("box") ) ){
+						SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 						Debug.Log("Replay Clicked");
 						Application.LoadLevel("Earth Scene");}
 				break;

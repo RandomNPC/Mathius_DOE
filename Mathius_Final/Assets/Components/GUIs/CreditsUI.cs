@@ -25,6 +25,7 @@ public class CreditsUI : MonoBehaviour {
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
 		GUI.skin = thisMetalGUISkin;
 		if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
+					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 					gs++;
 					derp += "noob";}
 		switch(gs){

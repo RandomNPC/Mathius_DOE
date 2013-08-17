@@ -21,9 +21,11 @@ public class HighScoreUI : MonoBehaviour {
 		GUI.Label(new Rect((Screen.width/10)*5,(65*intDivider),(50*(Screen.width/100)),(9*intDivider)), ("9:\t\t\t" + PlayerPrefs.GetInt("Player H8",8) +" "+ PlayerPrefs.GetString("Player 8","I")),GUI.skin.GetStyle("box"));
 		GUI.Label(new Rect((Screen.width/10)*5,(75*intDivider),(50*(Screen.width/100)),(9*intDivider)), ("10:\t\t\t" + PlayerPrefs.GetInt("Player H9",9)+" "+ PlayerPrefs.GetString("Player 9","J")),GUI.skin.GetStyle("box"));
 		if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
+				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("Mathius Clicked");
 				Application.LoadLevel("MainMenu");}
 		if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("New Game") ,GUI.skin.GetStyle("box") ) ){
+				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("Replay Clicked");
 				Application.LoadLevel("Earth Scene");}
 	}
