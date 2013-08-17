@@ -17,6 +17,7 @@ public class NumBullet : MonoBehaviour {
 	public Texture TZero;
 
 	void Start() {
+		SoundManager.SOUNDS.playSound(SoundManager.SFX_SHOOT_NUM,CameraCollider.MATHIUS_EARTH_CAM);
 		float x, y;
 		x = 200 * Mathf.Cos(transform.rotation.z);
 		y = 200 * Mathf.Sin(transform.rotation.z);

@@ -14,6 +14,7 @@ public class Mathius_UI : MonoBehaviour {
 	public static Mathius_UI MUI;
 	
 	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 		stats = MasterController.BRAIN.sm();
 		gs = GAMESTATE.RESUME;
 		MUI = gameObject.GetComponent<Mathius_UI>();

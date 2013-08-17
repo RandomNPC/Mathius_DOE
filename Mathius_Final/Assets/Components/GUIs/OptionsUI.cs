@@ -14,6 +14,7 @@ public class OptionsUI : MonoBehaviour {
 	public float effectSliderValue = 0.0f;
 	// Use this for initialization
 	void Start () {
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 	
 	}
 	
@@ -89,7 +90,6 @@ public class OptionsUI : MonoBehaviour {
 		effectSliderValue = GUI.HorizontalSlider(slider, effectSliderValue, 0.0F, 100.0F);
 		
 		if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
-			SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 			Application.LoadLevel("MainMenu");
 		}
 

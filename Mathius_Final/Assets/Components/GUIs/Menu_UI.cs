@@ -7,7 +7,9 @@ public class Menu_UI : MonoBehaviour {
 	#pragma warning disable 0168 // variable declared but not used.
 	#pragma warning disable 0219 // variable assigned but not used.
 	#pragma warning disable 0414 
-	
+	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_MAIN_MENU);
+	}
 	void OnGUI () {
 
 		float intDivider = Screen.height/100;
@@ -16,30 +18,25 @@ public class Menu_UI : MonoBehaviour {
 		GUI.skin = thisMetalGUISkin;
 		GUI.Label(titleRect, ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));
 		if(GUI.Button (new Rect(Screen.width/3 ,(23*intDivider) ,(2*(Screen.width/5)) ,(10*intDivider) ) ,("START GAME") ,GUI.skin.GetStyle("box") ) ){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("Mathius Clicked");
 				Application.LoadLevel("Earth Scene");}
 		if(GUI.Button (new Rect((Screen.width/3),(35*intDivider),(2*(Screen.width/5)),(10*intDivider)), ("Level Editor"),GUI.skin.GetStyle("box"))){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("level Editor Clicked");
 				Application.LoadLevel("Settings");
 		}
 		if(GUI.Button (new Rect((Screen.width/3),(46*intDivider),(2*(Screen.width/5)),(10*intDivider)), ("Options"),GUI.skin.GetStyle("box"))){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("Options Clicked");
 				Application.LoadLevel("Options");
 		}
 		
 		if(GUI.Button (new Rect(Screen.width/3,(57*intDivider), (2*(Screen.width/5)), (10*intDivider)), ("High Score"),GUI.skin.GetStyle("box"))){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("HighScore Clicked");
 				Application.LoadLevel("HighScores");}
 		if(GUI.Button(new Rect(Screen.width/3,(68*intDivider),(2*(Screen.width/5)),(10*intDivider)),("Credits"),GUI.skin.GetStyle("box"))){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
+				
 				Debug.Log("Credits Clicked");
 				Application.LoadLevel("Credits");}
 		if(GUI.Button(new Rect(Screen.width/3,(79*intDivider), (2*(Screen.width/5)), (10*intDivider)), ("Exit"),GUI.skin.GetStyle("box"))){
-				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 				Debug.Log("Exit Clicked");
 				Application.Quit();}
 		//if(GUI.Button (new Rect(Screen.width/3,(35*intDivider),(2*(Screen.width/5)),(10*intDivider)), ("Tutorial"),GUI.skin.GetStyle("box"))){

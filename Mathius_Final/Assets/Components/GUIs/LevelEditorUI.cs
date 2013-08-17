@@ -28,6 +28,7 @@ public class LevelEditorUI : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 		sm = MasterController.BRAIN.sm();
 		winNum = MasterController.BRAIN.pm().get_numWin();
 		hSliderValue = MasterController.BRAIN.pm().get_alienSpeed();
@@ -71,7 +72,6 @@ public class LevelEditorUI : MonoBehaviour {
 		}
 		//Reset
 		if(GUI.Button (new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider) ) ,("Reset") ,GUI.skin.GetStyle("box") ) ){
-			SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 			MasterController.BRAIN.pm().set_operations(using_operations());
 			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
 			MasterController.BRAIN.pm().set_terrains(using_terrains());
@@ -84,7 +84,6 @@ public class LevelEditorUI : MonoBehaviour {
 		}
 		//Save
 		if(GUI.Button (new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider) ) ,("Save") ,GUI.skin.GetStyle("box") ) ){
-			SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 			MasterController.BRAIN.pm().set_operations(using_operations());
 			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
 			MasterController.BRAIN.pm().set_terrains(using_terrains());
