@@ -35,6 +35,8 @@ public class MapPropertiesHelper : MonoBehaviour {
 		sources[1].loop = false;
 		sources[0].mute = false;
 		sources[1].mute = false;
+		sources[0].Stop();
+		sources[1].Stop();
 		
 		foreach(GameObject source in sounds){
 			SoundMode sMode = source.GetComponent<SoundProfile>().mode;
@@ -54,6 +56,7 @@ public class MapPropertiesHelper : MonoBehaviour {
 						default:
 							break;
 					}
+					sources[0].Play();
 					break;
 				case SoundType.SFX:
 					sources[1].clip = clip;
@@ -67,6 +70,7 @@ public class MapPropertiesHelper : MonoBehaviour {
 						default:
 							break;
 					}
+					sources[1].Play();
 					break;
 			}
 			
