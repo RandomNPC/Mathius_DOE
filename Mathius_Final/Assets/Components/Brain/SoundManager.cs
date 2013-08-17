@@ -39,6 +39,9 @@ public class SoundManager : MonoBehaviour {
 	public const string LEVEL_FOREST ="level forest";
 	public const string LEVEL_EARTH ="level earth";
 	public const string LEVEL_DESERT ="level desert";
+	public const string UI_MUSIC_MAIN ="UI music main";
+	public const string UI_LR_buttons ="UI left right buttons";
+	public const string SFX_SHOOT_NUM ="shoot num";
 	
 	void Start(){
 		PLAY_ON_GAMEOBJECT = gameObject.transform.position;
