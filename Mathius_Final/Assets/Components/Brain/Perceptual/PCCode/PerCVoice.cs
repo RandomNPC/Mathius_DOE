@@ -40,7 +40,6 @@ public class PerCVoice : MonoBehaviour {
 	private PXCUPipeline						myPipe = null;		//handle for the pipeline
 	private PXCUPipeline.Mode					myMode = PXCUPipeline.Mode.VOICE_RECOGNITION;
 	private PXCMVoiceRecognition.Recognition	voice;				//struct for holding recognition data
-	private bool								voiceHeard=false;	//true if a voice command was heard.
 	
 	//volume values range from zero to one as a float. Zero is muted. 1 is the loudest.
 	//if you have the volume close to zero, only quiet voices are recognized in a query.
@@ -49,15 +48,15 @@ public class PerCVoice : MonoBehaviour {
 	//0.1 is not practical, you are whispering.
 	//0.5 appears to be normal speech
 	//1.0 is for someone who needs to be loud
-	private float[]								volume = new float[1]{0.5f};
+	private float[]								volume = new float[1]{0.25f};
 	private System.Threading.Thread				myThread=null;		//handle for thread
 												//This array is used to set voice commands into the pipeline
-	private string[]							commands = new string[18]{
+	private string[]							commands = new string[]{
 												"zero","one","two","three","four","five","six","seven",
 												"ate","nine","left","right","up","down","select","cancel","pause","do a barrel roll"	
 												};
-	private bool[] 								numbers = new bool[10]{false,false,false,false,false,false,false,false,false,false};
-	private bool[]								options = new bool[8]{false,false,false,false,false,false,false,false};
+	private bool[] 								numbers;//bool list i'll check to flag a number being called.
+	private bool[]								options;//bool list i'll check to flag a command being called.
 	private string								dictated;//if there is dictation strings,I'll hold them here
 	private PXCMCapture.Device.Property			audio_mix_prop = PXCMCapture.Device.Property.PROPERTY_AUDIO_MIX_LEVEL;
 	private bool								commandsSet = false;//bool for determining if the voice commands were set
@@ -76,6 +75,13 @@ public class PerCVoice : MonoBehaviour {
 			return;
 		}
 		else myPipe.SetDeviceProperty(audio_mix_prop,volume);//must choose a volume that handles the environment, sensitive mic
+		
+		//default the bool arrays to false.
+		numbers = new bool[10];
+		options = new bool[commands.Length-10];
+		for(int i = 0; i<numbers.Length;i++)numbers[i] = false;
+		for(int j = 0; j<options.Length;j++)options[j] = false;
+		
 		
 		keepLooping = true;//tell the thread not to stop
 		dictated	= null;
@@ -101,11 +107,6 @@ public class PerCVoice : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	//the thread function allows us to SPAM querying the pipeline for voice recognition
 	//the outer loop continually loops until until told to stop. or you fail to acquire 
 	//a frame (meaning the pipeline is not initialized or it is null)
@@ -113,7 +114,6 @@ public class PerCVoice : MonoBehaviour {
 		while(myPipe.AcquireFrame(true) && keepLooping){
 			if(myPipe.QueryVoiceRecognized(out voice)){//the out keyword causes the the function to change the original voice var
 				lock(lockObj){						   //lockObj esists only for this purpose, making this critical section
-					voiceHeard = true;
 					dictated = "Voice Heard! Label: "+voice.label+", text: "+voice.dictation+", confidence: "+voice.confidence+"\n";
 					Debug.Log(dictated);//the label is the index in the commands array of the heard command.
 										//the dictation holds the string value at that position in the array.
@@ -129,7 +129,8 @@ public class PerCVoice : MonoBehaviour {
 	}
 	
 	//use the setVolume function to set how loud the player should speak to play, can be used anytime
-	//the volume is private, can only be changed here
+	//the volume is private, can only be changed here. every time you change the volume I record the new
+	//volume. use get volume to know what the current colume is.
 	public void setVolume(float desiredVolume){
 		if(desiredVolume>1.0 || desiredVolume<=0){
 			Debug.LogWarning("Volume choice must be [0.0f,1.0f]");
@@ -139,6 +140,7 @@ public class PerCVoice : MonoBehaviour {
 			if(myPipe!=null){
 				float[] newVolume = new float[1]{desiredVolume};
 				myPipe.SetDeviceProperty(audio_mix_prop,newVolume);
+				volume[0] = newVolume[0];
 			}
 		}
 	}
@@ -146,8 +148,8 @@ public class PerCVoice : MonoBehaviour {
 	//use this function to get an integer representing the number the player said.
 	//if the valie is -1, the player said no number yet.
 	public int getNumberVoiced(){
-		for(int i = 0; i<10; i++){
-			if(numbers[i] == true){numbers[i]=false; voiceHeard=false; return i;}
+		for(int i = 0; i<numbers.Length; i++){
+			if(numbers[i] == true){numbers[i]=false; return i;}
 		}
 		return -1;
 	}
@@ -155,14 +157,20 @@ public class PerCVoice : MonoBehaviour {
 	//if you need to know which option was voiced, and need the actual string, here ya go.
 	//returns an empty string if nothing was voiced. note: C# can switch on strings
 	public string getOptionVoicedAsString(){
-		for(int i = 0; i<7; i++){
+		for(int i = 0; i<options.Length; i++){
 			if(options[i]==true){	
-				options[i]=false; voiceHeard = false; return commands[10+i];
+				options[i]=false; return commands[10+i];
 			}
 		}
 		return "";
 	}
 	
+	//since I know what the starting value of the volume, I'll just keep track of the changes.
+	//use this function to ask what the current volume setting is. This is the second best thing
+	//to getting te volume from the device.....
+	public float getVolume(){
+		return volume[0];
+	}
 	
 	
 }

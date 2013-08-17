@@ -41,6 +41,7 @@ public class PerCGesture : MonoBehaviour {
 	private bool swipeUp;
 	private bool swipeDown;
 	private bool swipeRight;
+	private bool circle;//in case you want a gesture for doing a barrel roll
 	
 
 	void Start () {
@@ -75,7 +76,8 @@ public class PerCGesture : MonoBehaviour {
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_LEFT) swipeLeft = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_RIGHT) swipeRight = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_UP) swipeUp = true;
-			else Debug.Log("NO GESTURE FOUND!\n");
+			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_HAND_CIRCLE) circle = true;
+			else Debug.LogWarning("NO GESTURE FOUND!\n");
 		}
 		
 		myPipe.ReleaseFrame();
@@ -107,12 +109,22 @@ public class PerCGesture : MonoBehaviour {
 		if(swipeLeft){swipeLeft = false; return true;}
 		else return false;
 	}
+	//in case we want to make barrel rolling, the circle gesture is added
+	public bool circled(){
+		if(circle){circle=false; return true;}
+		else return false;
+	}
 	
 	//if you need to know the resolution for any mathematical reason, use getResolution.
 	//if the value you received is -1,-1 then you have to use a less accurate method of hand tracking
 	public int[] getResolution(){
 		if(!resFound) return new int[2]{-1,-1};//-1,-1 is my error resolution
 		else return resolution;		
+	}
+	// get resolution overload that allows you to pass in a bool for error checking if you so desire
+	public int[] getResolution(out bool success){
+		if(!resFound){success = false; return new int[2]{-1,-1};}//-1,-1 is my error resolution
+		else {success = true; return resolution;}	
 	}
 	
 	//this function returns the current primary hand location, meaning, the first hand found by the camera.
