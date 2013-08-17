@@ -69,6 +69,7 @@ public class LevelEditorUI : MonoBehaviour {
 				terrainNum ++;
 			}
 		}
+<<<<<<< HEAD
 		//Equation Incrementer
 		if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
 		Debug.Log("Mathius Clicked");
@@ -79,8 +80,45 @@ public class LevelEditorUI : MonoBehaviour {
 			pref.set_eqFormat(format[formatArray[formatInt]]);
 			pref.set_numWin(winNum);
 			pref.set_alienSpeed(hSliderValue);
+=======
+		//Reset
+		if(GUI.Button (new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider) ) ,("Reset") ,GUI.skin.GetStyle("box") ) ){
+			MasterController.BRAIN.pm().set_operations(using_operations());
+			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
+			MasterController.BRAIN.pm().set_terrains(using_terrains());
+			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
+			MasterController.BRAIN.pm().set_numWin(winNum);
+			PlayerPrefs.SetInt("win_number",winNum);
+			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
+			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
 			Application.LoadLevel("MainMenu");
 		}
+		//Save
+		if(GUI.Button (new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider) ) ,("Save") ,GUI.skin.GetStyle("box") ) ){
+			MasterController.BRAIN.pm().set_operations(using_operations());
+			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
+			MasterController.BRAIN.pm().set_terrains(using_terrains());
+			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
+			MasterController.BRAIN.pm().set_numWin(winNum);
+			PlayerPrefs.SetInt("win_number",winNum);
+			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
+			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+>>>>>>> origin/MaxBranch8_15
+			Application.LoadLevel("MainMenu");
+		}
+		//Custom Game
+		if(GUI.Button (new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Custom") ,GUI.skin.GetStyle("box") ) ){
+			MasterController.BRAIN.pm().set_operations(using_operations());
+			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
+			MasterController.BRAIN.pm().set_terrains(using_terrains());
+			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
+			MasterController.BRAIN.pm().set_numWin(winNum);
+			PlayerPrefs.SetInt("win_number",winNum);
+			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
+			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+			Application.LoadLevel("Earth Scene");
+		}
+		
 		
 		//Terrain Toggle
 		GUI.Label(new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5), ("Terrain Selection"),GUI.skin.GetStyle("button"));

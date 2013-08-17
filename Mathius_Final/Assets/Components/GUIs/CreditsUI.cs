@@ -3,23 +3,20 @@ using System.Collections;
 
 public class CreditsUI : MonoBehaviour {
 	
-	public enum GAMESTATE{
-		START,
-		ONE,
-		TWO,
-		THREE,
-		LAST
-	}
 	
-	private GAMESTATE gs;
+	
+	
+	private int gs;
 	private ScoreManager stats;
 	public GUISkin thisMetalGUISkin;
 	public static Mathius_UI MUI;
+	private string derp;
 	
 	void Start(){
 		stats = MasterController.BRAIN.sm();
-		gs = GAMESTATE.START;
+		gs = 0;
 		MUI = gameObject.GetComponent<Mathius_UI>();
+		derp = "";
 	}
 	
 	void OnGUI(){
@@ -27,8 +24,12 @@ public class CreditsUI : MonoBehaviour {
 		float widthDivider = Screen.width/100;
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
 		GUI.skin = thisMetalGUISkin;
+		if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
+					gs++;
+					derp += "noob";}
 		switch(gs){
-			case GAMESTATE.START://Main Team
+			case 0://Main Team
+				print(gs + derp);
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));	
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *20),"Senior Programmer/ Lead Tools Programmer",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 25, widthDivider * 70, intDivider *10),"Paul Matias",GUI.skin.GetStyle("box"));
@@ -45,10 +46,9 @@ public class CreditsUI : MonoBehaviour {
 				GUI.Label(new Rect(widthDivider*15, intDivider* 78, widthDivider * 70, intDivider *20),"Art Lead/ Sound/ Design",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 81, widthDivider * 70, intDivider *10),"Hasani Groce",GUI.skin.GetStyle("box"));
 				
-				if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
-					gs = GAMESTATE.ONE;}
 				break;
-			case GAMESTATE.ONE://Hackathon Teams
+			case 1://Hackathon Teams
+				print(gs + derp);
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));	
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *10),"Hackathon Team 1",GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 32, widthDivider * 70, intDivider *10),"Anthony Jones	Programmer",GUI.skin.GetStyle("button"));
@@ -68,34 +68,32 @@ public class CreditsUI : MonoBehaviour {
 				GUI.Label(new Rect(widthDivider*20, intDivider* 84, widthDivider * 70, intDivider *10),"Olabiyi Oyewumi 	Programmer",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 87, widthDivider * 70, intDivider *10),"Maximilian Bolling	UI Programmer/Design",GUI.skin.GetStyle("button"));	
 				
-				if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
-					gs = GAMESTATE.TWO;}
+				
 				break;
 				
-			case GAMESTATE.TWO://Resources
+			case 2://Resources
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));
-				if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
-					gs = GAMESTATE.THREE;}
+				
 				break;
-			case GAMESTATE.THREE://
+			case 3://
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));
-				if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
-					gs = GAMESTATE.LAST;}
+				
 				break;
-			case GAMESTATE.LAST: //Tom Murphy
+			case 4: //Tom Murphy
 				GUI.Label(titleRect, ("Mathius: Defender of Earth!"),GUI.skin.GetStyle("label"));	
 				
 				GUI.Label(new Rect(widthDivider*15, intDivider* 50, widthDivider * 70, intDivider *20),"Special Thanks to our mentor and friend:",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 53, widthDivider * 70, intDivider *10),"Tom 'Wolf' Murphy",GUI.skin.GetStyle("box"));
 				
-				if(GUI.Button (new Rect(5*(Screen.width/10) ,(95*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
-					Debug.Log("Mathius Clicked");
-					Application.LoadLevel("MainMenu");}
+				break;
+			case 5:
+				Application.LoadLevel("MainMenu");
+				
 				break;
 		}
 	}
 	
-	public void changeMenuState(GAMESTATE state){
+	public void changeMenuState(int state){
 		gs = state;
 	}
 }
