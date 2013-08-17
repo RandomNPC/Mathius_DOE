@@ -103,7 +103,7 @@ public class PerCVoice : MonoBehaviour {
 		//shut down the pipeline
 		if(myPipe != null){
 			myPipe.Dispose();
-			myPipe = null;
+			myPipe = null; 
 		}
 	}
 	

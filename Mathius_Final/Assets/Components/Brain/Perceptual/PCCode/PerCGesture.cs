@@ -77,7 +77,6 @@ public class PerCGesture : MonoBehaviour {
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_RIGHT) swipeRight = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_UP) swipeUp = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_HAND_CIRCLE) circle = true;
-			else Debug.LogWarning("NO GESTURE FOUND!\n");
 		}
 		
 		myPipe.ReleaseFrame();
