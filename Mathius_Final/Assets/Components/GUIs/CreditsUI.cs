@@ -14,6 +14,7 @@ public class CreditsUI : MonoBehaviour {
 	private float creditTimer;
 	
 	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 		stats = MasterController.BRAIN.sm();
 		gs = 0;
 		MUI = gameObject.GetComponent<Mathius_UI>();
@@ -37,6 +38,7 @@ public class CreditsUI : MonoBehaviour {
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
 		GUI.skin = thisMetalGUISkin;
 		if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
+					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 					gs++;
 					derp += "noob";
 					creditTimer = 5.0f;}

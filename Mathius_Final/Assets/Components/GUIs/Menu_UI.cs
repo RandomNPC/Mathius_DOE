@@ -7,7 +7,9 @@ public class Menu_UI : MonoBehaviour {
 	#pragma warning disable 0168 // variable declared but not used.
 	#pragma warning disable 0219 // variable assigned but not used.
 	#pragma warning disable 0414 
-	
+	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_MAIN_MENU);
+	}
 	void OnGUI () {
 
 		float intDivider = Screen.height/100;
@@ -31,6 +33,7 @@ public class Menu_UI : MonoBehaviour {
 				Debug.Log("HighScore Clicked");
 				Application.LoadLevel("HighScores");}
 		if(GUI.Button(new Rect(Screen.width/3,(68*intDivider),(2*(Screen.width/5)),(10*intDivider)),("Credits"),GUI.skin.GetStyle("box"))){
+				
 				Debug.Log("Credits Clicked");
 				Application.LoadLevel("Credits");}
 		if(GUI.Button(new Rect(Screen.width/3,(79*intDivider), (2*(Screen.width/5)), (10*intDivider)), ("Exit"),GUI.skin.GetStyle("box"))){

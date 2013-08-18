@@ -50,7 +50,7 @@ public class ScoreManager{
 	}
 	
 	public void onCorrectAnswer(EquationGenerator.EquationOperation operation){
-		
+	SoundManager.SOUNDS.playSound(SoundManager.SFX_RIGHT_NUM_HIT,CameraCollider.MATHIUS_EARTH_CAM);		
 		switch(operation){
 			case EquationGenerator.EquationOperation.ADDITION:
 				_bonus_points += ADDITION_BONUS;
@@ -82,6 +82,7 @@ public class ScoreManager{
 	}
 	
 	public void onWrongAnswer(){
+		SoundManager.SOUNDS.playSound(SoundManager.SFX_WRONG_NUM_HIT,CameraCollider.MATHIUS_EARTH_CAM);
 		_wrong++;
 		_streak_build = 0;
 		_isOnStreak = false;

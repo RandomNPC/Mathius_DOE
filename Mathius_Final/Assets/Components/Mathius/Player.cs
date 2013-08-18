@@ -73,7 +73,7 @@ public class Player : MonoBehaviour {
 		Instantiate(explosion,new Vector3(explode.x,explode.y,explode.z),Quaternion.identity);
 		Destroy(gameObject);
 		//GameObject.Find("Brain").GetComponent<SoundManager>().playSound("NearExplosionB",GameObject.Find("MathiusEarthCam").GetComponent<Transform>().position);
-		SoundManager.SOUNDS.playSound(SoundManager.MATHIUS_EXPLOSION, CameraCollider.MATHIUS_EARTH_CAM);
+		SoundManager.SOUNDS.playSound(SoundManager.MATH_CRASH, CameraCollider.MATHIUS_EARTH_CAM);
 	}
 	
 	void OnTriggerEnter(Collider col){

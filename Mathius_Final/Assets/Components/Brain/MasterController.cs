@@ -22,6 +22,8 @@ public class MasterController : MonoBehaviour {
 	private SkyBoxManager sbHelper;
 	
 	public static MasterController BRAIN;
+	public static Vector3 UI_MAIN_MENU;
+	public static Vector3 UI_CAMERA_ALT;
 	
 	void Awake() {//This is the start of the Game. Period.
 		DontDestroyOnLoad(gameObject);
@@ -36,6 +38,8 @@ public class MasterController : MonoBehaviour {
 		hHelper = new HighScoreManager();
 		aHelper = new Alien(_alien);
 		iHelper = new HighScoreInitials(3);
+		UI_MAIN_MENU = new Vector3(0.0f,1.0f,-13.75854f);
+		UI_CAMERA_ALT = new Vector3(0.0f,1.0f,-10.0f);
 		//stHelper = new Selector<Texture>((Texture[])_mathiusTextures);
 	}
 	
@@ -60,6 +64,7 @@ public class MasterController : MonoBehaviour {
 	
 	public void onGameStart(){
 		
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(1);

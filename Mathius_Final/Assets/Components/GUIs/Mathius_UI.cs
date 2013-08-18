@@ -14,6 +14,7 @@ public class Mathius_UI : MonoBehaviour {
 	public static Mathius_UI MUI;
 	
 	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 		stats = MasterController.BRAIN.sm();
 		gs = GAMESTATE.RESUME;
 		MUI = gameObject.GetComponent<Mathius_UI>();
@@ -42,6 +43,7 @@ public class Mathius_UI : MonoBehaviour {
 				GUI.Label (new Rect((Screen.width/3) ,(75*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Mathius Number: "+ stats.get_answer()) ,GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(Screen.width/4,Screen.height/2,500,100),"Pause");
 				if(GUI.Button (new Rect(6*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
+					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 					Debug.Log("Mathius Clicked");
 					Application.LoadLevel("MainMenu");}
 				break;

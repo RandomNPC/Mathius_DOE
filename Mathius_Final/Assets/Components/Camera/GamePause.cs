@@ -30,6 +30,8 @@ public class GamePause : MonoBehaviour {
 	
 	
 	public void PauseGame(){
+		SoundManager.SOUNDS.setVolume(0.1f);
+		SoundManager.SOUNDS.playSound(SoundManager.PAUSE,CameraCollider.MATHIUS_EARTH_CAM);
 		GameObject[] obj = GameObject.FindGameObjectsWithTag("Pause");
 		foreach(GameObject g in obj){
 			GameObject active = g.transform.parent.gameObject;
@@ -53,6 +55,8 @@ public class GamePause : MonoBehaviour {
 	
 	public void ResumeGame(){
 		//logic here before I unfreeze everything
+		SoundManager.SOUNDS.setVolume(1.0f);
+		SoundManager.SOUNDS.playSound(SoundManager.PAUSE,CameraCollider.MATHIUS_EARTH_CAM);
 		
 		GameObject[] obj = GameObject.FindGameObjectsWithTag("Pause");
 		foreach(GameObject g in obj){

@@ -28,6 +28,7 @@ public class LevelEditorUI : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 		sm = MasterController.BRAIN.sm();
 		winNum = MasterController.BRAIN.pm().get_numWin();
 		hSliderValue = MasterController.BRAIN.pm().get_alienSpeed();
@@ -95,6 +96,7 @@ public class LevelEditorUI : MonoBehaviour {
 		}
 		//Custom Game
 		if(GUI.Button (new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Custom") ,GUI.skin.GetStyle("box") ) ){
+			SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 			MasterController.BRAIN.pm().set_operations(using_operations());
 			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
 			MasterController.BRAIN.pm().set_terrains(using_terrains());

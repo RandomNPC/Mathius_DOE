@@ -4,7 +4,9 @@ using System.Collections;
 public class HighScoreUI : MonoBehaviour {
 	
 	public GUISkin thisMetalGUISkin;
-	
+	void Start(){
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
+	}
 	void OnGUI(){
 		float intDivider = Screen.height/100;
 		GUI.skin = thisMetalGUISkin;
