@@ -30,7 +30,7 @@ public class MapPropertiesHelper : MonoBehaviour {
 	
 	public bool spawn_buildings(){return spawnBuildings;}
 	
-	public void onTransitionTrigger(){
+	private void play_sounds(){
 		sources[0].loop = false;
 		sources[1].loop = false;
 		sources[0].mute = false;
@@ -75,5 +75,22 @@ public class MapPropertiesHelper : MonoBehaviour {
 			}
 			
 		}
+	}
+	
+	private void render_skybox(){
+		switch(gameObject.GetComponent<MapProperties>().mode){
+			case SkyboxMode.DAYNIGHT:
+				MasterController.BRAIN.sbm().mapSkyBox(MasterController.BRAIN.tm().get_next_terrain());
+				break;
+			case SkyboxMode.CONSTANT:
+				GameObject.Find("MathiusEarthCam").GetComponent<Skybox>().material = gameObject.GetComponent<MapProperties>().constant_skybox;
+				break;
+		}
+	}
+	
+	public void onTransitionTrigger(){
+		TileManager tm = MasterController.BRAIN.tm();
+		if(!tm.get_next_terrain().Equals(tm.get_prev_terrain())) play_sounds();
+		render_skybox();
 	}
 }

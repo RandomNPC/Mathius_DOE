@@ -18,7 +18,6 @@ public class MasterController : MonoBehaviour {
 	private HighScoreInitials iHelper;
 	private Alien aHelper;
 	private PCInterface pcHelper;
-	//private Selector<Texture> stHelper;
 	private SkyBoxManager sbHelper;
 	
 	public static MasterController BRAIN;
@@ -29,7 +28,7 @@ public class MasterController : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("SplashScreen");
 		BRAIN = gameObject.GetComponent<MasterController>();
-		sbHelper = new SkyBoxManager(_skyBoxes[0],_skyBoxes[1]);
+		sbHelper = new SkyBoxManager(_skyBoxes);
 		pcHelper = new PCInterface(gameObject);
 		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
@@ -40,12 +39,10 @@ public class MasterController : MonoBehaviour {
 		iHelper = new HighScoreInitials(3);
 		UI_MAIN_MENU = new Vector3(0.0f,1.0f,-13.75854f);
 		UI_CAMERA_ALT = new Vector3(0.0f,1.0f,-10.0f);
-		//stHelper = new Selector<Texture>((Texture[])_mathiusTextures);
 	}
 	
 	void Update(){
 		if(pcHelper.get_using_PCI())pcHelper.PollPCUpdates();
-		//GameObject.Find("Mathius Model").GetComponent<MeshRenderer>().material.mainTexture = _mathiusTextures[pHelper.get_mathiusTexture()];
 	}
 	
 	//Events

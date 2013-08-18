@@ -9,16 +9,14 @@ public enum SkyBoxes{
 
 public class SkyBoxManager{
 	
-	private Material _skyBoxDay;
-	private Material _skyBoxNight;
 	private Material _current;
+	private Material[] _skyboxes;
 	private Dictionary<string,SkyBoxes> _skyboxMap;
 	
-	public SkyBoxManager(Material day, Material night){
+	public SkyBoxManager(Material[] materials){
 		_skyboxMap = new Dictionary<string, SkyBoxes> ();
 		_skyboxMap.Clear();
-		_skyBoxDay = day;
-		_skyBoxNight = night;
+		_skyboxes = materials;
 		_current = null;
 	}
 	
@@ -28,18 +26,18 @@ public class SkyBoxManager{
 			switch(_skyboxMap[map_name]){
 				case SkyBoxes.DAY:
 					_skyboxMap[map_name] = SkyBoxes.NIGHT;
-					_current = _skyBoxNight;
+					_current = _skyboxes[1];
 					break;	
 				case SkyBoxes.NIGHT:
 					_skyboxMap[map_name] = SkyBoxes.DAY;
-					_current = _skyBoxDay;
+					_current = _skyboxes[0];
 					break;
 				default:
 					break;
 			}
 		}else{
 			_skyboxMap.Add(map_name,SkyBoxes.DAY);
-			_current = _skyBoxDay;
+			_current = _skyboxes[1];
 		}
 		GameObject.Find("MathiusEarthCam").GetComponent<Skybox>().material = _current;
 		

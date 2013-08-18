@@ -10,6 +10,8 @@ public class TileManager : Object {
 	private GameObject[] _maps;
 	private GameObject _map;
 	private PreferencesManager _pfm;
+	private string _prev_terrain;
+	private string _next_terrain;
 	
 	
 	public TileManager(PreferencesManager pfm){
@@ -20,6 +22,8 @@ public class TileManager : Object {
 		_pfm = pfm;
 		_map = null;
 		_maps = null;
+		_prev_terrain = "";
+		_next_terrain = "";
 	}
 	
 	public void setTerrains(GameObject[] maplist){
@@ -30,8 +34,9 @@ public class TileManager : Object {
 		_map = (_map==null) ? _maps[(int)Random.Range(0,_maps.Length-1)] : _map;
 	
 		GameObject _land = (GameObject) Instantiate(_map,new Vector3(_pos,0.0f,0.0f),Quaternion.identity);
-		MasterController.BRAIN.sbm().mapSkyBox(_land.name);
 		//insert name here
+		_prev_terrain = _next_terrain;
+		_next_terrain = _land.name;
 		_land.name = "Surface " + _tile++;
 		_land.GetComponent<TerrainCollider>().isTrigger = true;
 		if(_tile.Equals(_pfm.get_tileNum())){//We reached the last set of land tiles, now setup a trigger
@@ -56,4 +61,7 @@ public class TileManager : Object {
 	
 	public void set_pos(float pos){_pos = pos;}
 	public float get_pos(){return _pos;}
+	
+	public string get_prev_terrain(){return _prev_terrain;}
+	public string get_next_terrain(){return _next_terrain;}
 }

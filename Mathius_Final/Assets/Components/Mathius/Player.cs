@@ -43,13 +43,16 @@ public class Player : MonoBehaviour {
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
 		
 		if(pc.get_using_PCI()){//move mathius
-			
-		} else{
 			float[] xy = Gest.getHandLocation();
-			if(Input.GetKey("w") || (xy[1]<centerY-deadZone)){moveMathius(MATHIUS_UP);}
-			if(Input.GetKey("a") || (xy[0]>centerX+deadZone)){moveMathius(MATHIUS_LEFT);}
-			if(Input.GetKey("s") || (xy[1]>centerY+deadZone)){moveMathius(MATHIUS_DOWN);}
-			if(Input.GetKey("d") || (xy[0]<centerX-deadZone)){moveMathius(MATHIUS_RIGHT);}
+			if(xy[1]<centerY-deadZone) moveMathius(MATHIUS_UP);
+			if(xy[0]>centerX+deadZone) moveMathius(MATHIUS_LEFT);
+			if(xy[1]>centerY+deadZone) moveMathius(MATHIUS_DOWN);
+			if(xy[0]<centerX-deadZone) moveMathius(MATHIUS_RIGHT);
+		} else{
+			if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
+			if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
+			if(Input.GetKey("s")){moveMathius(MATHIUS_DOWN);}
+			if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
 		}
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
@@ -72,7 +75,6 @@ public class Player : MonoBehaviour {
 		Vector3 explode = gameObject.transform.position;
 		Instantiate(explosion,new Vector3(explode.x,explode.y,explode.z),Quaternion.identity);
 		Destroy(gameObject);
-		//GameObject.Find("Brain").GetComponent<SoundManager>().playSound("NearExplosionB",GameObject.Find("MathiusEarthCam").GetComponent<Transform>().position);
 		SoundManager.SOUNDS.playSound(SoundManager.MATH_CRASH, CameraCollider.MATHIUS_EARTH_CAM);
 	}
 	
