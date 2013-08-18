@@ -42,6 +42,7 @@ public class SoundManager : MonoBehaviour {
 	public const string UI_MUSIC_MAIN ="UI music main";
 	public const string UI_LR_buttons ="UI left right buttons";
 	public const string SFX_SHOOT_NUM ="shoot num";
+	public const string LEVEL_ZACK ="level zack";
 	
 	void Start(){
 		PLAY_ON_GAMEOBJECT = gameObject.transform.position;
