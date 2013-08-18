@@ -27,7 +27,7 @@ public class PerCGesture : MonoBehaviour {
 	 * BY USING THE PUBLIC FUNCTIONS!
 	 */
 	private PXCUPipeline 					myPipe=null;		//handle for the pipeline
-	
+	private bool 							yup;
 	private	PXCMGesture.GeoNode.Label 		trackedLimb; 	//this label tells the pipeline what to track
 	private	PXCMGesture.GeoNode				nodeInfo;		//will hold geonode data, if the hand is present, this has info on left hand
 	private PXCMGesture.Gesture				movement;		//will hold the gesture data the pipeline found.
@@ -35,7 +35,8 @@ public class PerCGesture : MonoBehaviour {
 	private int[]							resolution = new int[2];
 	private bool							resFound;		//true if the resolution was gained successfully
 	private PXCUPipeline.Mode 				myMode;
-	
+	private bool hand = false;
+	private float[] xy;
 	//these bools will be set to true in the event the corresponding gesture is found.
 	//use the swipedLeft, swipedRight, swipedUp, and swipedDown functions for event tests
 	private bool swipeLeft;
@@ -48,6 +49,7 @@ public class PerCGesture : MonoBehaviour {
 	
 
 	void Start () {
+		xy = new float[2]{157.0f,121.0f};
 		PG = gameObject.GetComponent<PerCGesture>();
 		//in start i am just going to initialize the pipeline and get the resolution of the camera
 		//to get the resolution, use the getRez function.
@@ -73,9 +75,10 @@ public class PerCGesture : MonoBehaviour {
 												//first acquiring the frame
 		
 		if(myPipe.QueryGeoNode(trackedLimb,out nodeInfo)){//out causes the function to change the data within nodeInfo
-			Debug.Log ("hand found! X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
+			Debug.Log ("hand found!"+" X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
 		}
 		if(myPipe.QueryGesture(trackedLimb,out movement)){//out causes the function to change the data within movement
+			Debug.Log(movement);
 			if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_DOWN) swipeDown = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_LEFT) swipeLeft = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_RIGHT) swipeRight = true;
@@ -146,6 +149,9 @@ public class PerCGesture : MonoBehaviour {
 	//this function returns the current primary hand location, meaning, the first hand found by the camera.
 	//remember to hide your hands, then show the one you want first to have it tracked
 	public float[] getHandLocation(){
+		
 		return new float[2] {nodeInfo.positionImage.x,nodeInfo.positionImage.y};
 	}
+	
+	
 }

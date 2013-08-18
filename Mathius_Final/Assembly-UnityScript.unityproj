@@ -47,24 +47,17 @@
      <Compile Include="Assets\Components\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
      <None Include="Assets\Sounds\SoundManagerTutorial.txt" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
-<<<<<<< HEAD
-     <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
-=======
      <None Include="Assets\Flow Free\Shaders\Flow Free\Flow_Diffuse_Free.shader" />
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
  <Reference Include="Flow">
  <HintPath>Assets\Flow Free\Script\Flow.dll</HintPath>
  </Reference>
->>>>>>> origin/Perceptual_Test
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{765A0E0D-B464-3AE9-CB3E-A0EE14A84A0F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
-<<<<<<< HEAD
-=======
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
       <Project>{BA90009E-3DAB-E6A7-3A68-5794F4E7C9FA}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
->>>>>>> origin/Perceptual_Test
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
