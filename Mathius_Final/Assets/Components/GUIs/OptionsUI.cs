@@ -15,13 +15,9 @@ public class OptionsUI : MonoBehaviour {
 	private Selector<Texture> texture1;
 	// Use this for initialization
 	void Start () {
-<<<<<<< HEAD
 		colorInt = MasterController.BRAIN.pm().get_mathiusTexture();
 		texture1 = GameObject.Find("MathiusModel").GetComponent<Mathius_ColorChange>().getTexture();
-=======
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
-	
->>>>>>> origin/HaTomiSound
 	}
 	
 	void OnGUI(){
