@@ -38,21 +38,26 @@ public class GameOverUI : MonoBehaviour {
 				GUI.Label(new Rect((Screen.width/5),(15*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("HIGHSCORE"),GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect((Screen.width/5),(27*intDivider),(3*(Screen.width/5)),(10*intDivider)), ("SCORE: " + _score),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect((Screen.width/5),(45*intDivider),(3*(Screen.width/5)),(10*intDivider)), (_hsi.initials()),GUI.skin.GetStyle("box"));
-				if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("ENTER") ,GUI.skin.GetStyle("box") ) ){
+				if(GUI.Button (new Rect((Screen.width/20) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("ENTER") ,GUI.skin.GetStyle("box") ) 
+				||( PerCGesture.PG.thumbedUp()) || (PerCVoice.PV.getOptionVoicedAsString()=="select")){
 					_highScore.hS().set_name(_hsi.initials());
 					_highScore.saveScores();
 					_state = State.DISPLAY;
 				}
-				if(GUI.Button(new Rect(widthDivider*30, intDivider*50,widthDivider*15, intDivider*5),("LEFT"),GUI.skin.GetStyle("button"))){
+				if(GUI.Button(new Rect(widthDivider*30, intDivider*50,widthDivider*15, intDivider*5),("LEFT"),GUI.skin.GetStyle("button")) 
+				||( PerCGesture.PG.swipedLeft()) || (PerCVoice.PV.getOptionVoicedAsString()=="left")){
 					_hsi.onSwipeRightToLeft();
 				}
-				if(GUI.Button(new Rect(widthDivider*60, intDivider*50,widthDivider*15, intDivider*5),("RIGHT"),GUI.skin.GetStyle("button"))){
+				if(GUI.Button(new Rect(widthDivider*60, intDivider*50,widthDivider*15, intDivider*5),("RIGHT"),GUI.skin.GetStyle("button"))
+				||( PerCGesture.PG.swipedRight()) || (PerCVoice.PV.getOptionVoicedAsString()=="right")){
 					_hsi.onSwipeLeftToRight();
 				}
-				if(GUI.Button(new Rect(widthDivider*45, intDivider*45,widthDivider*15, intDivider*5),("UP"),GUI.skin.GetStyle("button"))){
+				if(GUI.Button(new Rect(widthDivider*45, intDivider*45,widthDivider*15, intDivider*5),("UP"),GUI.skin.GetStyle("button"))
+				||( PerCGesture.PG.swipedUp()) || (PerCVoice.PV.getOptionVoicedAsString()=="up")){
 					_hsi.onSwipeUp();
 				}
-				if(GUI.Button(new Rect(widthDivider*45, intDivider*55,widthDivider*15, intDivider*5),("DOWN"),GUI.skin.GetStyle("button"))){
+				if(GUI.Button(new Rect(widthDivider*45, intDivider*55,widthDivider*15, intDivider*5),("DOWN"),GUI.skin.GetStyle("button"))
+				||( PerCGesture.PG.swipedDown()) || (PerCVoice.PV.getOptionVoicedAsString()=="down")){
 					_hsi.onSwipeDown();
 				}
 			

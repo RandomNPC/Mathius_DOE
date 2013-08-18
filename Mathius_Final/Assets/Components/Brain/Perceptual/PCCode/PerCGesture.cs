@@ -19,6 +19,7 @@ using UnityEngine;
 using System.Collections;
 
 public class PerCGesture : MonoBehaviour {
+	public static PerCGesture PG;
 	
 	/*
 	 * These variables hold the relevant data needed for the pipeline
@@ -42,9 +43,12 @@ public class PerCGesture : MonoBehaviour {
 	private bool swipeDown;
 	private bool swipeRight;
 	private bool circle;//in case you want a gesture for doing a barrel roll
+	private bool thumbUp;
+	private bool thumbDown;
 	
 
 	void Start () {
+		PG = gameObject.GetComponent<PerCGesture>();
 		//in start i am just going to initialize the pipeline and get the resolution of the camera
 		//to get the resolution, use the getRez function.
 		
@@ -77,6 +81,8 @@ public class PerCGesture : MonoBehaviour {
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_RIGHT) swipeRight = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_UP) swipeUp = true;
 			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_HAND_CIRCLE) circle = true;
+			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_POSE_THUMB_UP)thumbUp = true;
+			else if(movement.label == PXCMGesture.Gesture.Label.LABEL_POSE_THUMB_DOWN)thumbDown = true;
 		}
 		
 		myPipe.ReleaseFrame();
@@ -111,6 +117,17 @@ public class PerCGesture : MonoBehaviour {
 	//in case we want to make barrel rolling, the circle gesture is added
 	public bool circled(){
 		if(circle){circle=false; return true;}
+		else return false;
+	}
+	
+	//check for a thumb up
+	public bool thumbedUp(){
+		if(thumbUp){thumbUp=false; return true;}
+		else return false;
+	}
+	
+	public bool thumbedDown(){
+		if(thumbDown){thumbDown=false; return true;}
 		else return false;
 	}
 	

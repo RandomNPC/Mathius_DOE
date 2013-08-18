@@ -9,13 +9,19 @@ public class Player : MonoBehaviour {
 	public const byte MATHIUS_UP = 0x04;
 	public const byte MATHIUS_DOWN = 0x08;
 	
+	private float centerX = 157.0f;
+	private float centerY = 121.0f;
+	private float deadZone = 40.0f;
+	
 	
 	public GameObject explosion;
 	private Vector3 delta;
 	private PCInterface pc;
+	private PerCGesture Gest;
 	
 	// Use this for initialization
 	void Start () {
+		Gest = GameObject.Find("Brain").GetComponent<PerCGesture>();
 		delta = new Vector3(0.0f,0.0f,0.0f);
 		pc = MasterController.BRAIN.pci();
 	}
@@ -39,10 +45,11 @@ public class Player : MonoBehaviour {
 		if(pc.get_using_PCI()){//move mathius
 			
 		} else{
-			if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
-			if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
-			if(Input.GetKey("s")){moveMathius(MATHIUS_DOWN);}
-			if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
+			float[] xy = Gest.getHandLocation();
+			if(Input.GetKey("w") || (xy[1]<centerY-deadZone)){moveMathius(MATHIUS_UP);}
+			if(Input.GetKey("a") || (xy[0]>centerX+deadZone)){moveMathius(MATHIUS_LEFT);}
+			if(Input.GetKey("s") || (xy[1]>centerY+deadZone)){moveMathius(MATHIUS_DOWN);}
+			if(Input.GetKey("d") || (xy[0]<centerX-deadZone)){moveMathius(MATHIUS_RIGHT);}
 		}
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
