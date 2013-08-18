@@ -47,7 +47,18 @@
      <Compile Include="Assets\Components\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
      <None Include="Assets\Sounds\SoundManagerTutorial.txt" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+<<<<<<< HEAD
      <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
+=======
+     <None Include="Assets\Flow Free\Shaders\Flow Free\Flow_Diffuse_Free.shader" />
+     <None Include="Assets\Maps\Mathius-Earth\Destroyed_city_FREE\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+ <Reference Include="Flow">
+ <HintPath>Assets\Flow Free\Script\Flow.dll</HintPath>
+ </Reference>
+>>>>>>> origin/Perceptual_Test
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">

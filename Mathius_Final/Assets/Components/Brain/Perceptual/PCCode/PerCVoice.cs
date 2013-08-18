@@ -29,6 +29,8 @@ using System.Threading;
 //
 
 public class PerCVoice : MonoBehaviour {
+	
+	public static PerCVoice PV;
 
 	/*
 	 * These variables hold the relevant data needed for the pipeline
@@ -66,6 +68,8 @@ public class PerCVoice : MonoBehaviour {
 	private System.Object						lockObj = new System.Object();
 	
 	void Start () {
+		PV = gameObject.GetComponent<PerCVoice>();
+		
 		myPipe = new PXCUPipeline();
 		
 		commandsSet = myPipe.SetVoiceCommands(commands);
@@ -103,7 +107,7 @@ public class PerCVoice : MonoBehaviour {
 		//shut down the pipeline
 		if(myPipe != null){
 			myPipe.Dispose();
-			myPipe = null;
+			myPipe = null; 
 		}
 	}
 	
