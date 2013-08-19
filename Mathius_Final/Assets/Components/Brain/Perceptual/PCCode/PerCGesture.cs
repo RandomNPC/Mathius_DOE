@@ -46,6 +46,7 @@ public class PerCGesture : MonoBehaviour {
 	private bool circle;//in case you want a gesture for doing a barrel roll
 	private bool thumbUp;
 	private bool thumbDown;
+	private bool initiated;
 	
 
 	void Start () {
@@ -59,9 +60,11 @@ public class PerCGesture : MonoBehaviour {
 		myMode = PXCUPipeline.Mode.GESTURE|PXCUPipeline.Mode.COLOR_VGA  ; //the mode i want to use
 		
 		if(!myPipe.Init(myMode)){
-			Debug.Log("The pipeline failed to initialize bros :'(\n");
+			Debug.Log("The pipeline failed to initialize bras :'(\n");
+			initiated=false;
 			return;
 		}
+		else initiated = true;
 		
 		resFound = myPipe.QueryRGBSize(resolution);
 	}
@@ -70,6 +73,7 @@ public class PerCGesture : MonoBehaviour {
 	void Update () {
 		//don't do anything if the pipeline is null
 		if(myPipe == null)return;
+		if(!initiated)return;
 		
 		if(!myPipe.AcquireFrame(false))return;	//cannot query the device or check for data without
 												//first acquiring the frame
@@ -137,19 +141,21 @@ public class PerCGesture : MonoBehaviour {
 	//if you need to know the resolution for any mathematical reason, use getResolution.
 	//if the value you received is -1,-1 then you have to use a less accurate method of hand tracking
 	public int[] getResolution(){
-		if(!resFound) return new int[2]{-1,-1};//-1,-1 is my error resolution
+		if(!resFound || resFound==null) return new int[2]{-1,-1};//-1,-1 is my error resolution
 		else return resolution;		
 	}
 	// get resolution overload that allows you to pass in a bool for error checking if you so desire
 	public int[] getResolution(out bool success){
-		if(!resFound){success = false; return new int[2]{-1,-1};}//-1,-1 is my error resolution
+		if(!resFound || resFound==null){success = false; return new int[2]{-1,-1};}//-1,-1 is my error resolution
 		else {success = true; return resolution;}	
 	}
 	
 	//this function returns the current primary hand location, meaning, the first hand found by the camera.
 	//remember to hide your hands, then show the one you want first to have it tracked
 	public float[] getHandLocation(){
-		
+		if(myPipe==null || !initiated){
+		return new float[2]{157.0f,121.0f};	
+		}
 		return new float[2] {nodeInfo.positionImage.x,nodeInfo.positionImage.y};
 	}
 	

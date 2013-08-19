@@ -63,6 +63,7 @@ public class PerCVoice : MonoBehaviour {
 	private PXCMCapture.Device.Property			audio_mix_prop = PXCMCapture.Device.Property.PROPERTY_AUDIO_MIX_LEVEL;
 	private bool								commandsSet = false;//bool for determining if the voice commands were set
 	private bool								keepLooping = false;//bool to let the thread know to keep looping for query
+	private bool								initiated = false;
 	
 	//this system object only exists so I can use it for the lock command later.
 	private System.Object						lockObj = new System.Object();
@@ -75,10 +76,11 @@ public class PerCVoice : MonoBehaviour {
 		commandsSet = myPipe.SetVoiceCommands(commands);
 		if(!commandsSet)Debug.Log("Failed to set Commands! :'(");
 		if(!myPipe.Init(myMode) || !commandsSet){
-			Debug.LogError("Failed To initialize PipeLine OH NOES!");	
+			Debug.LogError("Failed To initialize PipeLine OH NOES!");
+			initiated = false;
 			return;
 		}
-		else myPipe.SetDeviceProperty(audio_mix_prop,volume);//must choose a volume that handles the environment, sensitive mic
+		else {initiated = true; myPipe.SetDeviceProperty(audio_mix_prop,volume);}//must choose a volume that handles the environment, sensitive mic
 		
 		//default the bool arrays to false.
 		numbers = new bool[10];
@@ -115,6 +117,8 @@ public class PerCVoice : MonoBehaviour {
 	//the outer loop continually loops until until told to stop. or you fail to acquire 
 	//a frame (meaning the pipeline is not initialized or it is null)
 	private void ThreadFunc(){
+		if(myPipe==null){return;}
+		else if(!initiated){return;}
 		while(myPipe.AcquireFrame(true) && keepLooping){
 			if(myPipe.QueryVoiceRecognized(out voice)){//the out keyword causes the the function to change the original voice var
 				lock(lockObj){						   //lockObj esists only for this purpose, making this critical section
@@ -152,6 +156,7 @@ public class PerCVoice : MonoBehaviour {
 	//use this function to get an integer representing the number the player said.
 	//if the valie is -1, the player said no number yet.
 	public int getNumberVoiced(){
+		if(numbers==null){return -1;}
 		for(int i = 0; i<numbers.Length; i++){
 			if(numbers[i] == true){numbers[i]=false; return i;}
 		}
@@ -161,6 +166,7 @@ public class PerCVoice : MonoBehaviour {
 	//if you need to know which option was voiced, and need the actual string, here ya go.
 	//returns an empty string if nothing was voiced. note: C# can switch on strings
 	public string getOptionVoicedAsString(){
+		if(options==null){return "";}
 		for(int i = 0; i<options.Length; i++){
 			if(options[i]==true){	
 				options[i]=false; return commands[10+i];
