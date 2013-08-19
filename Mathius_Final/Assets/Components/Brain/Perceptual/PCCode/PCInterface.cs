@@ -15,7 +15,7 @@ public class PCInterface{
 	private float[] _handpos;
 	
 	public PCInterface(GameObject instance){
-		_using_PCI = false;
+		_using_PCI = MasterController.BRAIN.pm().get_usePerceptual();
 		_gesture = instance.GetComponent<PerCGesture>();
 		_voice = instance.GetComponent<PerCVoice>();
 		_handpos = new float[2]{0,0};

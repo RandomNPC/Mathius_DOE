@@ -13,23 +13,27 @@ public class OptionsUI : MonoBehaviour {
 
 	private bool toggleTxt1;
 	private bool toggleTxt2;
-	public float musicSliderValue = 0.0f;
-	public float effectSliderValue = 0.0f;
+	public float musicSliderValue;
+	public float effectSliderValue;
 	private Selector<Texture> textures;
 	private Dictionary<Texture,string> textMapper;
+	private PreferencesManager pref;
 	
 
 	void Start () {
+		pref = MasterController.BRAIN.pm();
 		textureArray = MasterController.BRAIN._mathiusTextures;
 		textures = MasterController.BRAIN.st();
 		textMapper = new Dictionary<Texture, string>();
 		for(int i=0,  j=0; i<textureArray.Length && j<colorArray.Length; i++,j++){
 			textMapper.Add(textureArray[i],colorArray[j]);		
 		}
-		
+		toggleTxt1 = pref.get_usePerceptual();
 		colorInt = MasterController.BRAIN.pm().get_mathiusTexture();
 		MasterController.BRAIN.m().set_texture(textureArray[colorInt]);
 		textures.set_position(colorInt);
+		musicSliderValue = pref.get_musicVolume();
+		effectSliderValue = pref.get_SFXVolume();
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 	}
 	
@@ -89,13 +93,16 @@ public class OptionsUI : MonoBehaviour {
 		
 		GUI.Label(new Rect(widthDivider*20, intDivider*46,widthDivider*50, intDivider*5), ("Music: " + (Mathf.Round(musicSliderValue *100f)/100f)),GUI.skin.GetStyle("button"));
 		Rect slider1 = new Rect (widthDivider*50, intDivider*47, widthDivider*20, intDivider*2);
-		musicSliderValue = GUI.HorizontalSlider(slider1, musicSliderValue, 0.0F, 100.0F);
+		musicSliderValue = GUI.HorizontalSlider(slider1, musicSliderValue, 0.0F, 100.0f);
 		
 		GUI.Label(new Rect(widthDivider*20, intDivider*50,widthDivider*50, intDivider*5), ("Effects: " + (Mathf.Round(effectSliderValue*100f)/100f)),GUI.skin.GetStyle("button"));
 		Rect slider = new Rect (widthDivider*50, intDivider*51, widthDivider*20, intDivider*2);
-		effectSliderValue = GUI.HorizontalSlider(slider, effectSliderValue, 0.0F, 100.0F);
+		effectSliderValue = GUI.HorizontalSlider(slider, effectSliderValue, 0.0F, 100.0f);
 		
 		if(GUI.Button (new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
+			pref.set_usePerceptual(toggleTxt1);
+			pref.set_SFXVolume(effectSliderValue);
+			pref.set_musicVolume(musicSliderValue);
 			Application.LoadLevel("MainMenu");
 		}
 

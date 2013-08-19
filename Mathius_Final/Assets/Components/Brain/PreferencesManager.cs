@@ -10,6 +10,9 @@ public class PreferencesManager{
 	private int _numWin;
 	private float _alienSpeed;
 	private int _mathiusTexturesInt;
+	private bool _usePerceptual;
+	private float _musicVolume;
+	private float _SFXVolume;
 	
 	const string TERRAINS = "using_terrains";
 	const string OPERATIONS = "using_operations";
@@ -18,6 +21,9 @@ public class PreferencesManager{
 	const string NUM_WIN = "win_number";
 	const string ALIENSPEED = "_gameSpeed";
 	const string TEXTUREINT = "_mathiusTextures";
+	const string USEPERCEPTUAL = "useperceptual";
+	const string MUSICVOLUME = "musicvolume";
+	const string SFXVOLUME = "sfxvolume";
 	
 	public PreferencesManager(){
 		_terrains = (byte)PlayerPrefs.GetInt(TERRAINS,1);
@@ -27,6 +33,10 @@ public class PreferencesManager{
 		_numWin = PlayerPrefs.GetInt(NUM_WIN,25);
 		_alienSpeed = PlayerPrefs.GetFloat(ALIENSPEED ,0.5f);
 		_mathiusTexturesInt = PlayerPrefs.GetInt(TEXTUREINT,0);
+		_usePerceptual = (PlayerPrefs.GetInt(USEPERCEPTUAL,0).Equals(0)) ? false : true;
+		_musicVolume = PlayerPrefs.GetFloat(MUSICVOLUME,0.5f);
+		_SFXVolume = PlayerPrefs.GetFloat(SFXVOLUME,0.5f);
+		MonoBehaviour.print(_usePerceptual);
 	}
 	
 	public void set_terrains(byte terrains){
@@ -74,4 +84,29 @@ public class PreferencesManager{
 		PlayerPrefs.Save();
 	}
 	
+	public void set_usePerceptual(bool use){
+		_usePerceptual = use;
+		MasterController.BRAIN.pci().set_using_PCI(use);
+		int mode = (use) ? 1 : 0;
+		PlayerPrefs.SetInt(USEPERCEPTUAL,mode);
+		PlayerPrefs.Save();
+	}
+	
+	public bool get_usePerceptual(){return _usePerceptual;}
+	
+	public void set_musicVolume(float volume){
+		_musicVolume = volume;
+		PlayerPrefs.GetFloat(MUSICVOLUME,volume);
+		PlayerPrefs.Save();
+	}
+	
+	public float get_musicVolume(){return _musicVolume;}
+	
+	public void set_SFXVolume(float volume){
+		_SFXVolume = volume;
+		PlayerPrefs.GetFloat(SFXVOLUME,volume);
+		PlayerPrefs.Save();
+	}
+	
+	public float get_SFXVolume(){return _SFXVolume;} 
 }

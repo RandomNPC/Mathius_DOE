@@ -30,9 +30,9 @@ public class MasterController : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("SplashScreen");
 		BRAIN = gameObject.GetComponent<MasterController>();
+		pHelper = new PreferencesManager();
 		sbHelper = new SkyBoxManager(_skyBoxes);
 		pcHelper = new PCInterface(gameObject);
-		pHelper = new PreferencesManager();
 		mHelper = new Mathius(_mathius);
 		tHelper = new TileManager(pHelper);
 		sHelper = new ScoreManager(mHelper,pHelper);
@@ -42,6 +42,7 @@ public class MasterController : MonoBehaviour {
 		UI_MAIN_MENU = new Vector3(0.0f,1.0f,-13.75854f);
 		UI_CAMERA_ALT = new Vector3(0.0f,1.0f,-10.0f);
 		stHelper = new Selector<Texture>(_mathiusTextures);
+		pcHelper.set_using_PCI(pHelper.get_usePerceptual());
 	}
 	
 	void Update(){

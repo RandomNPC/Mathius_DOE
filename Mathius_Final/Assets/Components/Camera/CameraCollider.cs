@@ -5,11 +5,15 @@ public class CameraCollider : MonoBehaviour {
 	
 	private bool allocator_triggered;
 	public static Vector3 MATHIUS_EARTH_CAM;
-
+	private PreferencesManager _pref;
+	private AudioSource[] _audio;
+	
 	void Start () {
 		allocator_triggered = true;
 		MasterController.BRAIN.onGameStart();
 		MATHIUS_EARTH_CAM= gameObject.GetComponent<Transform>().position;
+		_pref = MasterController.BRAIN.pm();
+		_audio = gameObject.GetComponents<AudioSource>();
 	}
 	
 	void Update () {
@@ -18,6 +22,8 @@ public class CameraCollider : MonoBehaviour {
 			MasterController.BRAIN.onTriggerNewTerrain();
 			allocator_triggered = false;
 		}
+		_audio[0].volume = _pref.get_musicVolume()/100.0f;
+		_audio[1].volume = _pref.get_SFXVolume()/100.0f;
 	}
 	
 	void OnTriggerEnter(Collider obj){
