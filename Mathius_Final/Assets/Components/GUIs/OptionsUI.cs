@@ -6,9 +6,9 @@ using System.Linq;
 public class OptionsUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	private static string[] colorArray = {"Grey", "Green", "Blue", "Pink", "Red", "Yellow", "Camo", "Pwny"};
+	private static string[] soundArray = {"Low","Med","High"};
 	private Texture[] textureArray;
 	private int colorInt;
-	private string[] soundArray;
 	private int soundInt;
 
 	private bool toggleTxt1;
@@ -22,6 +22,7 @@ public class OptionsUI : MonoBehaviour {
 
 	void Start () {
 		pref = MasterController.BRAIN.pm();
+		
 		textureArray = MasterController.BRAIN._mathiusTextures;
 		textures = MasterController.BRAIN.st();
 		textMapper = new Dictionary<Texture, string>();
@@ -34,16 +35,16 @@ public class OptionsUI : MonoBehaviour {
 		textures.set_position(colorInt);
 		musicSliderValue = pref.get_musicVolume();
 		effectSliderValue = pref.get_SFXVolume();
+		
+		soundInt = pref.get_perceptualVolumeMode();
+		
+		toggleTxt2 = pref.get_mute();
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 	}
 	
 	void OnGUI(){
 		float intDivider = Screen.height/100;
 		float widthDivider = Screen.width/100;
-		soundArray = new string [3];
-		soundArray[0] = "Low";
-		soundArray[1] = "Med";
-		soundArray[2] = "High";
 
 		//hSliderValue = 0.0F;
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
@@ -103,6 +104,8 @@ public class OptionsUI : MonoBehaviour {
 			pref.set_usePerceptual(toggleTxt1);
 			pref.set_SFXVolume(effectSliderValue);
 			pref.set_musicVolume(musicSliderValue);
+			pref.set_perceptualVolume(soundInt);
+			pref.set_mute(toggleTxt2);
 			Application.LoadLevel("MainMenu");
 		}
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PreferencesManager{
 	
@@ -13,6 +14,10 @@ public class PreferencesManager{
 	private bool _usePerceptual;
 	private float _musicVolume;
 	private float _SFXVolume;
+	private float _perceptualVolume;
+	private Dictionary<int,float> _pVolume;
+	private int _pVolumeMode;
+	private bool _mute;
 	
 	const string TERRAINS = "using_terrains";
 	const string OPERATIONS = "using_operations";
@@ -24,6 +29,8 @@ public class PreferencesManager{
 	const string USEPERCEPTUAL = "useperceptual";
 	const string MUSICVOLUME = "musicvolume";
 	const string SFXVOLUME = "sfxvolume";
+	const string PERCEPTUALVOLUME = "perceptualVolume";
+	const string MUTE = "mute";
 	
 	public PreferencesManager(){
 		_terrains = (byte)PlayerPrefs.GetInt(TERRAINS,1);
@@ -36,7 +43,18 @@ public class PreferencesManager{
 		_usePerceptual = (PlayerPrefs.GetInt(USEPERCEPTUAL,0).Equals(0)) ? false : true;
 		_musicVolume = PlayerPrefs.GetFloat(MUSICVOLUME,0.5f);
 		_SFXVolume = PlayerPrefs.GetFloat(SFXVOLUME,0.5f);
-		MonoBehaviour.print(_usePerceptual);
+		_mute = (PlayerPrefs.GetInt(MUTE,0).Equals(0)) ? true : false;
+		
+		_pVolume = new Dictionary<int, float>();
+		_pVolume.Clear();		
+		_pVolume.Add (1,0.0f);
+		_pVolume.Add (2,0.5f);
+		_pVolume.Add (3,1.0f);
+		
+		int state = PlayerPrefs.GetInt(PERCEPTUALVOLUME,0);
+		
+		_perceptualVolume = _pVolume[state];
+		_pVolumeMode = state;
 	}
 	
 	public void set_terrains(byte terrains){
@@ -96,7 +114,7 @@ public class PreferencesManager{
 	
 	public void set_musicVolume(float volume){
 		_musicVolume = volume;
-		PlayerPrefs.GetFloat(MUSICVOLUME,volume);
+		PlayerPrefs.SetFloat(MUSICVOLUME,volume);
 		PlayerPrefs.Save();
 	}
 	
@@ -104,9 +122,26 @@ public class PreferencesManager{
 	
 	public void set_SFXVolume(float volume){
 		_SFXVolume = volume;
-		PlayerPrefs.GetFloat(SFXVOLUME,volume);
+		PlayerPrefs.SetFloat(SFXVOLUME,volume);
 		PlayerPrefs.Save();
 	}
 	
-	public float get_SFXVolume(){return _SFXVolume;} 
+	public float get_SFXVolume(){return _SFXVolume;}
+	
+	public void set_perceptualVolume(int mode){
+			_pVolumeMode = mode;
+			PlayerPrefs.SetInt(PERCEPTUALVOLUME,mode);
+			PlayerPrefs.Save();
+	}
+	
+	public float get_perceptualVolume(){return _perceptualVolume;}
+	public int get_perceptualVolumeMode(){return _pVolumeMode;}
+	public void set_mute(bool state){
+		_mute = state;
+		PlayerPrefs.SetInt(MUTE,(state) ? 1 : 0);
+		PlayerPrefs.Save();
+	}
+	
+	public bool get_mute(){return _mute;}
+	
 }

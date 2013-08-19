@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour {
 	private float audioVolume;
 	private float musicVolume;
 	private float SFXVolume;
-	private PreferencesManager prefs;
+
 	
 	public static Vector3 PLAY_ON_GAMEOBJECT;
 	public static SoundManager SOUNDS;
@@ -48,8 +48,7 @@ public class SoundManager : MonoBehaviour {
 	public const string LEVEL_ZACK ="level zack";
 	
 	void Start(){
-		
-		prefs = MasterController.BRAIN.pm();
+	
 		PLAY_ON_GAMEOBJECT = gameObject.transform.position;
 		SOUNDS = gameObject.GetComponent<SoundManager>();
 		audioVolume = 1.0f;
@@ -76,13 +75,5 @@ public class SoundManager : MonoBehaviour {
 			return;
 		}
 		AudioSource.PlayClipAtPoint(playclip,position,audioVolume);
-	}
-	
-	public void set_musicVolume(float volume){
-		
-	}
-	
-	public void set_SFXVolume(float volume){
-		
 	}
 }
