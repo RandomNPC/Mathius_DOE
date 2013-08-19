@@ -28,4 +28,7 @@ public class Selector<T>{
 	public T selected(){
 		return (T)(object)_list[_pos];
 	}
+	
+	public int get_position(){return _pos;}
+	public void set_position(int pos){_pos = pos;}
 }

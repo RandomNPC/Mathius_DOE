@@ -19,10 +19,12 @@ public class MasterController : MonoBehaviour {
 	private Alien aHelper;
 	private PCInterface pcHelper;
 	private SkyBoxManager sbHelper;
+	private Selector<Texture> stHelper;
 	
 	public static MasterController BRAIN;
 	public static Vector3 UI_MAIN_MENU;
 	public static Vector3 UI_CAMERA_ALT;
+	
 	
 	void Awake() {//This is the start of the Game. Period.
 		DontDestroyOnLoad(gameObject);
@@ -39,6 +41,7 @@ public class MasterController : MonoBehaviour {
 		iHelper = new HighScoreInitials(3);
 		UI_MAIN_MENU = new Vector3(0.0f,1.0f,-13.75854f);
 		UI_CAMERA_ALT = new Vector3(0.0f,1.0f,-10.0f);
+		stHelper = new Selector<Texture>(_mathiusTextures);
 	}
 	
 	void Update(){
@@ -141,7 +144,7 @@ public class MasterController : MonoBehaviour {
 	public HighScoreManager hsm(){return hHelper;}
 	public Alien al(){return aHelper;}
 	public HighScoreInitials hsi(){return iHelper;}
-	//public Selector<Texture> sT(){return stHelper;}
+	public Selector<Texture> st(){return stHelper;}
 	public SkyBoxManager sbm(){return sbHelper;}
 	public PCInterface pci(){return pcHelper;}
 }

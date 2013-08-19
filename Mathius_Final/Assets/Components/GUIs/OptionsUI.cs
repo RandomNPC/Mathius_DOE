@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class OptionsUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
-	private string[] colorArray;
+	private static string[] colorArray = {"Grey", "Green", "Blue", "Pink", "Red", "Yellow", "Camo", "Pwny"};
+	private Texture[] textureArray;
 	private int colorInt;
 	private string[] soundArray;
 	private int soundInt;
@@ -12,26 +15,27 @@ public class OptionsUI : MonoBehaviour {
 	private bool toggleTxt2;
 	public float musicSliderValue = 0.0f;
 	public float effectSliderValue = 0.0f;
-	private Selector<Texture> texture1;
-	// Use this for initialization
+	private Selector<Texture> textures;
+	private Dictionary<Texture,string> textMapper;
+	
+
 	void Start () {
+		textureArray = MasterController.BRAIN._mathiusTextures;
+		textures = MasterController.BRAIN.st();
+		textMapper = new Dictionary<Texture, string>();
+		for(int i=0,  j=0; i<textureArray.Length && j<colorArray.Length; i++,j++){
+			textMapper.Add(textureArray[i],colorArray[j]);		
+		}
+		
 		colorInt = MasterController.BRAIN.pm().get_mathiusTexture();
-		texture1 = GameObject.Find("MathiusModel").GetComponent<Mathius_ColorChange>().getTexture();
+		MasterController.BRAIN.m().set_texture(textureArray[colorInt]);
+		textures.set_position(colorInt);
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 	}
 	
 	void OnGUI(){
 		float intDivider = Screen.height/100;
 		float widthDivider = Screen.width/100;
-		colorArray =new string [8];
-		colorArray[0] ="Grey";
-		colorArray[1] ="Green";
-		colorArray[2] ="Blue";
-		colorArray[3] ="Pink";
-		colorArray[4] ="Red";
-		colorArray[5] ="Yellow";
-		colorArray[6] ="Camo";
-		colorArray[7] ="Pwny";
 		soundArray = new string [3];
 		soundArray[0] = "Low";
 		soundArray[1] = "Med";
@@ -46,21 +50,17 @@ public class OptionsUI : MonoBehaviour {
 		GUI.Label(new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5), ("Mathius Color: "),GUI.skin.GetStyle("button"));
 		//Equation Decrementer
 		if(GUI.Button(new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
-			if(colorInt>0){
-				colorInt --;
-				texture1.prev();
-				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
-			}
+			textures.prev();
+			MasterController.BRAIN.pm().set_mathiusTexture(textures.get_position());
+			MasterController.BRAIN.m ().set_texture(textures.selected());
 		}
 		//Equation int
-		GUI.Label(new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5), ("" +colorArray[colorInt]),GUI.skin.GetStyle("toggle"));
+		GUI.Label(new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5), ("" +textMapper[textures.selected()]),GUI.skin.GetStyle("toggle"));
 		//Equation Incrementer
 		if(GUI.Button(new Rect(widthDivider*65, intDivider*25,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
-			if( colorInt<7){
-				colorInt ++;
-				texture1.next();
-				MasterController.BRAIN.pm().set_mathiusTexture(colorInt);
-			}
+			textures.next();
+			MasterController.BRAIN.pm().set_mathiusTexture(textures.get_position());
+			MasterController.BRAIN.m ().set_texture(textures.selected());
 		}
 		
 		GUI.Label(new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5), ("Perceptual: "),GUI.skin.GetStyle("button"));
