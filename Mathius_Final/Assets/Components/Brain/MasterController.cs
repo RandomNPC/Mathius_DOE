@@ -123,8 +123,15 @@ public class MasterController : MonoBehaviour {
 				mHelper.set_lives(mHelper.get_lives()+1);
 			}
 			else{
-				data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-				GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
+				GameObject shield = GameObject.Find("Mathius-Shield");
+				
+				if(shield.Equals(null)){
+					data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+					GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
+				}else{
+					Destroy(shield);
+					Destroy(data.gameObject);
+				}
 			}
 		}
 		else{
