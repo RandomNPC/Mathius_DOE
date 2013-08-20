@@ -72,39 +72,35 @@ public class LevelEditorUI : MonoBehaviour {
 		}
 		//Reset
 		if(GUI.Button (new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider) ) ,("Reset") ,GUI.skin.GetStyle("box") ) ){
-			MasterController.BRAIN.pm().set_operations(using_operations());
-			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
-			MasterController.BRAIN.pm().set_terrains(using_terrains());
-			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
-			MasterController.BRAIN.pm().set_numWin(winNum);
-			PlayerPrefs.SetInt("win_number",winNum);
-			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
-			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+	      	PreferencesManager pref = MasterController.BRAIN.pm();
+    	  	pref.set_operations((byte)15);
+          	pref.set_tileNum(1);
+      		pref.set_terrains((byte)1);
+      		pref.set_eqFormat(format[formatArray[0]]);
+      		pref.set_numWin(25);
+      		pref.set_alienSpeed(0.0f);
 			Application.LoadLevel("MainMenu");
 		}
 		//Save
 		if(GUI.Button (new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider) ) ,("Save") ,GUI.skin.GetStyle("box") ) ){
-			MasterController.BRAIN.pm().set_operations(using_operations());
-			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
-			MasterController.BRAIN.pm().set_terrains(using_terrains());
-			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
-			MasterController.BRAIN.pm().set_numWin(winNum);
-			PlayerPrefs.SetInt("win_number",winNum);
-			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
-			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+			PreferencesManager pref = MasterController.BRAIN.pm();
+    	  	pref.set_operations(using_operations());
+          	pref.set_tileNum(terrainNum);
+      		pref.set_terrains(using_terrains());
+      		pref.set_eqFormat(formatInt);
+      		pref.set_numWin(winNum);
+      		pref.set_alienSpeed(hSliderValue);
 			Application.LoadLevel("MainMenu");
 		}
 		//Custom Game
 		if(GUI.Button (new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Custom") ,GUI.skin.GetStyle("box") ) ){
-			SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
-			MasterController.BRAIN.pm().set_operations(using_operations());
-			MasterController.BRAIN.pm().set_tileNum(num_of_terrains());
-			MasterController.BRAIN.pm().set_terrains(using_terrains());
-			MasterController.BRAIN.pm().set_eqFormat(using_eqFormat());
-			MasterController.BRAIN.pm().set_numWin(winNum);
-			PlayerPrefs.SetInt("win_number",winNum);
-			MasterController.BRAIN.pm().set_alienSpeed(hSliderValue);
-			PlayerPrefs.SetFloat("_gameSpeed",hSliderValue);
+	      	PreferencesManager pref = MasterController.BRAIN.pm();
+    	  	pref.set_operations(using_operations());
+          	pref.set_tileNum(terrainNum);
+      		pref.set_terrains(using_terrains());
+      		pref.set_eqFormat(formatInt);
+      		pref.set_numWin(winNum);
+      		pref.set_alienSpeed(hSliderValue);
 			Application.LoadLevel("Earth Scene");
 		}
 		
@@ -185,13 +181,7 @@ public class LevelEditorUI : MonoBehaviour {
 		
 	}
 	
-	public int num_of_terrains(){
-		PlayerPrefs.SetInt("num_of_terrains",terrainNum);
-		PlayerPrefs.Save();
-		return terrainNum;
-	}
-	
-	public byte using_terrains(){
+	private byte using_terrains(){
 		byte temp = 0x0;
 		if(toggleTxt1){temp = (byte)(temp | TerrainManager.TERRAIN_1);}
 		if(toggleTxt2){temp = (byte)(temp | TerrainManager.TERRAIN_2);}
@@ -201,26 +191,15 @@ public class LevelEditorUI : MonoBehaviour {
 		if(toggleTxt6){temp = (byte)(temp | TerrainManager.TERRAIN_6);}
 		if(toggleTxt7){temp = (byte)(temp | TerrainManager.TERRAIN_7);}
 		if(toggleTxt8){temp = (byte)(temp | TerrainManager.TERRAIN_8);}
-		PlayerPrefs.SetInt("using_terrains",(int)temp);
-		PlayerPrefs.Save();
 		return temp;
 	}
 	
-	public byte using_operations(){
+	private byte using_operations(){
 		byte temp = 0x00;
 		if(opToggleTxt1){temp = (byte)(temp | EquationGenerator.ADDITION);}
 		if(opToggleTxt2){temp = (byte)(temp | EquationGenerator.SUBTRACTION);}
 		if(opToggleTxt3){temp = (byte)(temp | EquationGenerator.MULTIPLICATION);}
 		if(opToggleTxt4){temp = (byte)(temp | EquationGenerator.DIVISION);}
-		PlayerPrefs.SetInt("using_operations",(int)temp);
-		PlayerPrefs.Save();
 		return temp;
 	}
-	
-	public int using_eqFormat(){
-		PlayerPrefs.SetInt("using_eqFormat",formatInt);
-		PlayerPrefs.Save();
-		return format[formatArray[formatInt]];
-	}
-	
 }
