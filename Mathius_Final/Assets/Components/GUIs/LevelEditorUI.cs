@@ -5,40 +5,35 @@ using System.Collections.Generic;
 public class LevelEditorUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	private int terrainNum;
-	private bool toggleTxt1;
-	private bool toggleTxt2;
-	private bool toggleTxt3;
-	private bool toggleTxt4;
-	private bool toggleTxt5;
-	private bool toggleTxt6;
-	private bool toggleTxt7;
-	private bool toggleTxt8;
+	
+	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
+
 	private bool opToggleTxt1;
 	private bool opToggleTxt2;
 	private bool opToggleTxt3;
 	private bool opToggleTxt4;
+	
 	private int winNum;
-	public float hSliderValue;
+	private float hSliderValue;
 	private int formatInt;
 	private string[] formatArray;
 	private string[] terrainNames;
 	private Dictionary<string,int> format;
-	private MasterController mc;
-	private ScoreManager sm;
+	private PreferencesManager pref;
+	
 	
 	// Use this for initialization
 	void Start () {
+		pref = MasterController.BRAIN.pm();
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
-		sm = MasterController.BRAIN.sm();
-		winNum = MasterController.BRAIN.pm().get_numWin();
-		hSliderValue = MasterController.BRAIN.pm().get_alienSpeed();
+		
+		winNum = pref.get_numWin();
+		hSliderValue = pref.get_alienSpeed();
+		
 		loadSettingsFromPreferences();
 		
 		terrainNames = new string[]{"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
-		formatArray =new string [3];
-		formatArray[0] ="Arithmetic";
-		formatArray[1] ="Algebra";
-		formatArray[2] ="Mixed";
+		formatArray =new string[]{"Arithmetic","Algebra","Mixed"};
 		format = new Dictionary<string,int>();
 		format.Clear();
 		format.Add(formatArray[0],EquationGenerator.ALGEBRA);
@@ -107,14 +102,14 @@ public class LevelEditorUI : MonoBehaviour {
 		
 		//Terrain Toggle
 		GUI.Label(new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5), ("Terrain Selection"),GUI.skin.GetStyle("button"));
-		toggleTxt1 = GUI.Toggle(new Rect(widthDivider*20, intDivider*35, 100, 30), toggleTxt1, terrainNames[0]);
-		toggleTxt2 = GUI.Toggle(new Rect(widthDivider*60, intDivider*35, 100, 30), toggleTxt2, terrainNames[1]);
-		toggleTxt3 = GUI.Toggle(new Rect(widthDivider*20, intDivider*40, 100, 30), toggleTxt3, terrainNames[2]);
-		toggleTxt4 = GUI.Toggle(new Rect(widthDivider*60, intDivider*40, 100, 30), toggleTxt4, terrainNames[3]);
-		toggleTxt5 = GUI.Toggle(new Rect(widthDivider*20, intDivider*45, 100, 30), toggleTxt5, terrainNames[4]);
-		toggleTxt6 = GUI.Toggle(new Rect(widthDivider*60, intDivider*45, 100, 30), toggleTxt6, terrainNames[5]);
-		toggleTxt7 = GUI.Toggle(new Rect(widthDivider*20, intDivider*50, 100, 30), toggleTxt7, terrainNames[6]);
-		toggleTxt8 = GUI.Toggle(new Rect(widthDivider*60, intDivider*50, 100, 30), toggleTxt8, terrainNames[7]);
+		toggleTerrain[0] = GUI.Toggle(new Rect(widthDivider*20, intDivider*35, 100, 30), toggleTerrain[0], terrainNames[0]);
+		toggleTerrain[1] = GUI.Toggle(new Rect(widthDivider*60, intDivider*35, 100, 30), toggleTerrain[1], terrainNames[1]);
+		toggleTerrain[2] = GUI.Toggle(new Rect(widthDivider*20, intDivider*40, 100, 30), toggleTerrain[2], terrainNames[2]);
+		toggleTerrain[3] = GUI.Toggle(new Rect(widthDivider*60, intDivider*40, 100, 30), toggleTerrain[3], terrainNames[3]);
+		toggleTerrain[4] = GUI.Toggle(new Rect(widthDivider*20, intDivider*45, 100, 30), toggleTerrain[4], terrainNames[4]);
+		toggleTerrain[5] = GUI.Toggle(new Rect(widthDivider*60, intDivider*45, 100, 30), toggleTerrain[5], terrainNames[5]);
+		toggleTerrain[6] = GUI.Toggle(new Rect(widthDivider*20, intDivider*50, 100, 30), toggleTerrain[6], terrainNames[6]);
+		toggleTerrain[7] = GUI.Toggle(new Rect(widthDivider*60, intDivider*50, 100, 30), toggleTerrain[7], terrainNames[7]);
 		//Opperations Toggle
 		GUI.Label(new Rect(widthDivider*20, intDivider*55,widthDivider*50, intDivider*5), ("Math Operations"),GUI.skin.GetStyle("button"));
 		opToggleTxt1 = GUI.Toggle(new Rect(widthDivider*20, intDivider*60, 100, 30), opToggleTxt1, "+");
@@ -164,14 +159,14 @@ public class LevelEditorUI : MonoBehaviour {
 		terrainNum = MasterController.BRAIN.pm().get_tileNum();
 		formatInt = MasterController.BRAIN.pm().get_eqFormat();
 		byte terrainTemp = MasterController.BRAIN.pm().get_terrains();
-		if((terrainTemp & TerrainManager.TERRAIN_1) == TerrainManager.TERRAIN_1){toggleTxt1 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_2) == TerrainManager.TERRAIN_2){toggleTxt2 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_3) == TerrainManager.TERRAIN_3){toggleTxt3 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_4) == TerrainManager.TERRAIN_4){toggleTxt4 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_5) == TerrainManager.TERRAIN_5){toggleTxt5 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_6) == TerrainManager.TERRAIN_6){toggleTxt6 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_7) == TerrainManager.TERRAIN_7){toggleTxt7 = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_8) == TerrainManager.TERRAIN_8){toggleTxt8 = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_1) == TerrainManager.TERRAIN_1){toggleTerrain[0] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_2) == TerrainManager.TERRAIN_2){toggleTerrain[1] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_3) == TerrainManager.TERRAIN_3){toggleTerrain[2] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_4) == TerrainManager.TERRAIN_4){toggleTerrain[3] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_5) == TerrainManager.TERRAIN_5){toggleTerrain[4] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_6) == TerrainManager.TERRAIN_6){toggleTerrain[5] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_7) == TerrainManager.TERRAIN_7){toggleTerrain[6] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_8) == TerrainManager.TERRAIN_8){toggleTerrain[7] = true;}
 		
 		byte opTemp = MasterController.BRAIN.pm().get_operations();
 		if((opTemp & EquationGenerator.ADDITION) == EquationGenerator.ADDITION){opToggleTxt1 = true;}
@@ -183,14 +178,14 @@ public class LevelEditorUI : MonoBehaviour {
 	
 	private byte using_terrains(){
 		byte temp = 0x0;
-		if(toggleTxt1){temp = (byte)(temp | TerrainManager.TERRAIN_1);}
-		if(toggleTxt2){temp = (byte)(temp | TerrainManager.TERRAIN_2);}
-		if(toggleTxt3){temp = (byte)(temp | TerrainManager.TERRAIN_3);}
-		if(toggleTxt4){temp = (byte)(temp | TerrainManager.TERRAIN_4);}
-		if(toggleTxt5){temp = (byte)(temp | TerrainManager.TERRAIN_5);}
-		if(toggleTxt6){temp = (byte)(temp | TerrainManager.TERRAIN_6);}
-		if(toggleTxt7){temp = (byte)(temp | TerrainManager.TERRAIN_7);}
-		if(toggleTxt8){temp = (byte)(temp | TerrainManager.TERRAIN_8);}
+		if(toggleTerrain[0]){temp = (byte)(temp | TerrainManager.TERRAIN_1);}
+		if(toggleTerrain[1]){temp = (byte)(temp | TerrainManager.TERRAIN_2);}
+		if(toggleTerrain[2]){temp = (byte)(temp | TerrainManager.TERRAIN_3);}
+		if(toggleTerrain[3]){temp = (byte)(temp | TerrainManager.TERRAIN_4);}
+		if(toggleTerrain[4]){temp = (byte)(temp | TerrainManager.TERRAIN_5);}
+		if(toggleTerrain[5]){temp = (byte)(temp | TerrainManager.TERRAIN_6);}
+		if(toggleTerrain[6]){temp = (byte)(temp | TerrainManager.TERRAIN_7);}
+		if(toggleTerrain[7]){temp = (byte)(temp | TerrainManager.TERRAIN_8);}
 		return temp;
 	}
 	
