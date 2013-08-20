@@ -7,12 +7,14 @@ using System.Collections.Generic;
 
 public enum GUIType{
 	Button,
-	Label
+	Label,
+	Toggle
 }
 
 public class GUIManager{
 	
 	public event EventHandler<ButtonName> OnClick;
+	public event EventHandler<ButtonName> OnToggle;
 	private GUISkin skin;
 	private Dictionary<string,GUIProperties> GUIObjects;
 	
@@ -22,8 +24,8 @@ public class GUIManager{
 		GUIObjects.Clear();
 	}
 	
-	public void CreateGUIObject(string name, Rect position, GUIType type, string style){
-		GUIObjects.Add(name,new GUIProperties(position,type,style));
+	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false){
+		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check));
 	}
 			
 	public void RenderGUIObjects(GUIManager gui){
@@ -32,12 +34,18 @@ public class GUIManager{
 			
 			switch(entry.Value.type){
 				case GUIType.Button:
-					if(GUI.Button(new Rect(entry.Value.rect),entry.Key,skin.GetStyle(entry.Value.style))){ 
-						OnClick(this,new ButtonName(entry.Key));
+					if(GUI.Button(new Rect(entry.Value.rect),entry.Value.name,skin.GetStyle(entry.Value.style))){ 
+						OnClick(this,new ButtonName(entry.Key,entry.Value.check));
 					}
 					break;
 				case GUIType.Label:
-					GUI.Label(new Rect(entry.Value.rect),entry.Key,skin.GetStyle(entry.Value.style));
+					GUI.Label(new Rect(entry.Value.rect),entry.Value.name,skin.GetStyle(entry.Value.style));
+					break;
+				case GUIType.Toggle:
+				 	if(!GUI.Toggle(new Rect(entry.Value.rect),entry.Value.check,entry.Value.name,skin.GetStyle(entry.Value.style)).Equals(entry.Value.check)){
+						entry.Value.check = !entry.Value.check;
+						OnToggle(this,new ButtonName(entry.Key,entry.Value.check));
+					}
 					break;
 				default:
 					break;
