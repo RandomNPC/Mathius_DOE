@@ -27,7 +27,8 @@ public class GUIManager{
 	
 	private Dictionary<string,DirectionScroller> scrollmap;
 	public string pointer{get; set;}
-	
+
+	private Texture2D texture;
 	
 	public GUIManager(GUISkin skin){
 		pointer = "";
@@ -36,6 +37,10 @@ public class GUIManager{
 		GUIObjects.Clear();
 		scrollmap = new Dictionary<string, DirectionScroller>();
 		scrollmap.Clear ();
+		
+		texture = new Texture2D(1,1);
+		texture.SetPixel(0,0,Color.red);
+		texture.Apply();
 	}
 	
 	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false){
@@ -44,6 +49,10 @@ public class GUIManager{
 			
 	public void RenderGUIObjects(GUIManager gui){
 		if(gui.Equals(null))return;
+		
+		GUI.skin.box.normal.background = texture;
+		showSelection(pointer,6.0f);
+		
 		foreach(KeyValuePair<string,GUIProperties> entry in GUIObjects){
 			
 			switch(entry.Value.type){
@@ -105,5 +114,13 @@ public class GUIManager{
 			default:
 				break;
 		}
+	}
+	
+	private void showSelection(string tag, float delta){
+		Rect pos = GUIObjects[tag].rect;
+		GUI.Box(new Rect(pos.xMin-delta,pos.yMin-delta,pos.width+2*delta,delta),GUIContent.none); //1
+		GUI.Box(new Rect(pos.xMin-delta,pos.yMax,pos.width+2*delta,delta),GUIContent.none);//2
+		GUI.Box(new Rect(pos.xMin-delta,pos.yMin-delta,delta,pos.height+2*delta),GUIContent.none); //3	
+		GUI.Box(new Rect(pos.xMax,pos.yMin-delta,delta,pos.height+2*delta),GUIContent.none);//4
 	}
 }
