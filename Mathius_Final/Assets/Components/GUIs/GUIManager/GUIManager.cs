@@ -11,6 +11,13 @@ public enum GUIType{
 	Toggle
 }
 
+public enum Direction{
+	Left,
+	Right,
+	Up,
+	Down
+}
+
 public class GUIManager{
 	
 	public event EventHandler<ButtonName> OnClick;
@@ -18,10 +25,17 @@ public class GUIManager{
 	private GUISkin skin;
 	private Dictionary<string,GUIProperties> GUIObjects;
 	
+	private Dictionary<string,DirectionScroller> scrollmap;
+	public string pointer{get; set;}
+	
+	
 	public GUIManager(GUISkin skin){
+		pointer = "";
 		this.skin = skin;
 		GUIObjects = new Dictionary<string, GUIProperties>();
 		GUIObjects.Clear();
+		scrollmap = new Dictionary<string, DirectionScroller>();
+		scrollmap.Clear ();
 	}
 	
 	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false){
@@ -50,6 +64,46 @@ public class GUIManager{
 				default:
 					break;
 			}	
+		}
+	}
+	
+	public void selectOption(string tag){
+		switch(GUIObjects[tag].type){
+			case GUIType.Button:
+				OnClick(this,new ButtonName(tag,false));
+				break;
+			case GUIType.Toggle:
+				GUIObjects[tag].check = !GUIObjects[tag].check;
+				OnToggle(this,new ButtonName(tag,GUIObjects[tag].check));
+				break;
+			case GUIType.Label:
+				//its a label... it doesnt do anything	
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void connect(string parent, string left, string right, string up, string down){
+		scrollmap.Add(parent,new DirectionScroller(left,right,up,down));
+	}
+	
+	public void swipe(Direction position){
+		switch(position){
+			case Direction.Left:
+				if(!scrollmap[pointer].left.Equals("")) pointer = scrollmap[pointer].left; 
+				break;
+			case Direction.Right:
+				if(!scrollmap[pointer].right.Equals("")) pointer = scrollmap[pointer].right;
+				break;
+			case Direction.Up:
+				if(!scrollmap[pointer].up.Equals("")) pointer = scrollmap[pointer].up;
+				break;
+			case Direction.Down:
+				if(!scrollmap[pointer].down.Equals("")) pointer = scrollmap[pointer].down;
+				break;
+			default:
+				break;
 		}
 	}
 }
