@@ -37,8 +37,8 @@ public class NumBullet : MonoBehaviour {
 	void OnTriggerEnter(Collider collision) {
 		if(collision.gameObject.name.Contains("Alian")){
 			MasterController.BRAIN.onAlienShot(variable,collision.gameObject);
+			Destroy(gameObject);
 		}
-		Destroy(gameObject);
 	}
 
 	void OnBecameInvisible() {
