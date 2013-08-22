@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Rect postion, string Text, GUIStyle Style
-//Slider is not implemented... yet. This describes the available GUI's renderable to this class.
+
 public enum GUIType{
 	Button,
 	Label,
-	Toggle
+	Toggle,
+	Slider
 }
 
-//Direction in which the perceptual/keyboard points to. Used for selecting guis. See line 110 for more info (swipe function)
 public enum Direction{
 	Left,
 	Right,
@@ -20,18 +20,18 @@ public enum Direction{
 }
 
 public class GUIManager{
-	//Event handlers to handle the event functions. Important to implement!
+	
 	public event EventHandler<ButtonName> OnClick;
 	public event EventHandler<ButtonName> OnToggle;
+	public event EventHandler<ButtonName> OnScroll;
 	private GUISkin skin;
 	private Dictionary<string,GUIProperties> GUIObjects;
 	
 	private Dictionary<string,DirectionScroller> scrollmap;
-	public string pointer{get; set;} //This pointer will initialize the first object selected (string) and gets a GUI box colored red.
+	public string pointer{get; set;}
 
 	private Texture2D texture;
 	
-	//Skin is provided in the inspector of the script with this instance
 	public GUIManager(GUISkin skin){
 		pointer = "";
 		this.skin = skin;
@@ -40,31 +40,27 @@ public class GUIManager{
 		scrollmap = new Dictionary<string, DirectionScroller>();
 		scrollmap.Clear ();
 		
-		//Texture for red color, to replace color with a new color use Color.XXXXX where XXXXX is the color.
 		texture = new Texture2D(1,1);
 		texture.SetPixel(0,0,Color.red);
 		texture.Apply();
 	}
 	
-	//Add the GUIObject to the list to render
-	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false){
-		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check));
+	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false, float min=0.0f, float max=0.0f, float defaultVal=0.0f){
+		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check,min,max,defaultVal));
 	}
-	
-	
-	//!WARNING! This function can only be called in the OnGUI function of the MonoBehavior script		
+			
 	public void RenderGUIObjects(GUIManager gui){
-		if(gui.Equals(null))return;// Check to see if the instance exists before proceeding to iterate.
+		if(gui.Equals(null))return;
 		
-		GUI.skin.box.normal.background = texture; //Setting texture of selecting to red
-		showSelection(pointer,6.0f); //will render the red selection based on the tag passed in and the thickness of the line. Tested to be best at a minimum of 6.0f.
+		GUI.skin.box.normal.background = texture;
+		showSelection(pointer,6.0f);
 		
 		foreach(KeyValuePair<string,GUIProperties> entry in GUIObjects){
-			//Renders the GUI based on the enum GUIType
+			
 			switch(entry.Value.type){
 				case GUIType.Button:
 					if(GUI.Button(new Rect(entry.Value.rect),entry.Value.name,skin.GetStyle(entry.Value.style))){ 
-						OnClick(this,new ButtonName(entry.Key,entry.Value.check));
+						OnClick(this,new ButtonName(entry.Key));
 					}
 					break;
 				case GUIType.Label:
@@ -76,14 +72,17 @@ public class GUIManager{
 						OnToggle(this,new ButtonName(entry.Key,entry.Value.check));
 					}
 					break;
+				case GUIType.Slider:
+					entry.Value.defaultVal = GUI.HorizontalSlider(new Rect(entry.Value.rect),entry.Value.defaultVal,entry.Value.min,entry.Value.max);
+					if(GUI.changed) OnScroll(this,new ButtonName(entry.Key,entry.Value.defaultVal));
+					
+					break;
 				default:
 					break;
 			}	
 		}
 	}
 	
-	
-	//Selects the option that will call the event as if it was triggered by mouse. See MyGUI for implementation. 
 	public void selectOption(string tag){
 		switch(GUIObjects[tag].type){
 			case GUIType.Button:
@@ -96,24 +95,43 @@ public class GUIManager{
 			case GUIType.Label:
 				//its a label... it doesnt do anything	
 				break;
+			case GUIType.Slider:
+				break;
 			default:
 				break;
 		}
 	}
 	
-	//Connect each gui object by tag to scroll around
 	public void connect(string parent, string left, string right, string up, string down){
 		scrollmap.Add(parent,new DirectionScroller(left,right,up,down));
 	}
 	
-	//Swiping via keyboard or perceptual, See the demo MyGUI for implementation.
 	public void swipe(Direction position){
 		switch(position){
 			case Direction.Left:
-				if(!scrollmap[pointer].left.Equals("")) pointer = scrollmap[pointer].left; 
+				if(!scrollmap[pointer].left.Equals("")) pointer = scrollmap[pointer].left;
+				else if(GUIObjects[pointer].type.Equals(GUIType.Slider)){
+					GUIProperties prop = GUIObjects[pointer];	
+					if(prop.defaultVal> prop.max || prop.defaultVal < prop.min){ 
+						if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
+						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
+						break;
+					}
+					prop.defaultVal -= 1.0f;
+				}
+		
 				break;
 			case Direction.Right:
 				if(!scrollmap[pointer].right.Equals("")) pointer = scrollmap[pointer].right;
+				else if(GUIObjects[pointer].type.Equals(GUIType.Slider)){ 
+					GUIProperties prop = GUIObjects[pointer];	
+					if(prop.defaultVal> prop.max || prop.defaultVal < prop.min){ 
+						if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
+						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
+						break;
+					}
+					prop.defaultVal += 1.0f;
+				}
 				break;
 			case Direction.Up:
 				if(!scrollmap[pointer].up.Equals("")) pointer = scrollmap[pointer].up;
@@ -126,8 +144,6 @@ public class GUIManager{
 		}
 	}
 	
-	
-	//Renders the GUI selection. This method is not to be exposed to outside classes.
 	private void showSelection(string tag, float delta){
 		Rect pos = GUIObjects[tag].rect;
 		GUI.Box(new Rect(pos.xMin-delta,pos.yMin-delta,pos.width+2*delta,delta),GUIContent.none); //1
