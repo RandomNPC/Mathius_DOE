@@ -1,4 +1,4 @@
-Mathius_DOE
+Mathius: Defender of Earth
 ===========
 
 2013 Virtual Hackathon Project. Mathius in 3D using Unity4.
