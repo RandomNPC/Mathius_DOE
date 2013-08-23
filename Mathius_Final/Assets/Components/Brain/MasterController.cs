@@ -69,12 +69,13 @@ public class MasterController : MonoBehaviour {
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_lives(1);
+		sHelper.set_streakCriteria(3);
+		GamePause.PAUSE.set_gameEnd(false);
+		
 		mHelper.set_answer();
 		sHelper.reset_score();
-		sHelper.set_streakCriteria(3);
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
-		GamePause.PAUSE.set_gameEnd(false);
 	}
 	
 	public void onAlienShot(char val, GameObject alien){
