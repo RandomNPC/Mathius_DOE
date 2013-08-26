@@ -3,9 +3,9 @@ using System.Collections;
 
 public class NumBullet : MonoBehaviour {
 
-	public char variable = '0';
+	public int variable;
 
-	public Texture TOne;
+	/*public Texture TOne;
 	public Texture TTwo;
 	public Texture TThree;
 	public Texture TFour;
@@ -14,7 +14,7 @@ public class NumBullet : MonoBehaviour {
 	public Texture TSeven;
 	public Texture TEight;
 	public Texture TNine;
-	public Texture TZero;
+	public Texture TZero;*/
 
 	void Start() {
 		SoundManager.SOUNDS.playSound(SoundManager.SFX_SHOOT_NUM,CameraCollider.MATHIUS_EARTH_CAM);
@@ -44,7 +44,7 @@ public class NumBullet : MonoBehaviour {
 	void OnBecameInvisible() {
 		Destroy(gameObject);
 	}
-
+	/*
 	public void updateTexture() {
 		switch(variable) {
 			case '0': gameObject.renderer.material.mainTexture = TZero; break;
@@ -58,5 +58,5 @@ public class NumBullet : MonoBehaviour {
 			case '8': gameObject.renderer.material.mainTexture = TEight; break;
 			case '9': gameObject.renderer.material.mainTexture = TNine; break;
 		}
-	}
+	}*/
 }
