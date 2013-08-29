@@ -120,7 +120,6 @@ public class GUIManager{
 	//------------up-------
 	//----left<-parent->right
 	//-----------down------
-	//If it is a gui slider DO NOT have labels for left and right, keep those at ""
 	//If there is no mapping to any direction, the focus will stay at the parent
 	public void connect(string parent, string left, string right, string up, string down){
 		scrollmap.Add(parent,new DirectionScroller(left,right,up,down));
@@ -130,28 +129,9 @@ public class GUIManager{
 		switch(position){
 			case Direction.Left:
 				if(!scrollmap[pointer].left.Equals("")) pointer = scrollmap[pointer].left;
-				else if(GUIObjects[pointer].type.Equals(GUIType.Slider)){
-					GUIProperties prop = GUIObjects[pointer];	
-					if(prop.defaultVal> prop.max || prop.defaultVal < prop.min){ 
-						if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
-						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
-						break;
-					}
-					prop.defaultVal -= 0.1f;//Increment value can be changed
-				}
-		
 				break;
 			case Direction.Right:
 				if(!scrollmap[pointer].right.Equals("")) pointer = scrollmap[pointer].right;
-				else if(GUIObjects[pointer].type.Equals(GUIType.Slider)){ 
-					GUIProperties prop = GUIObjects[pointer];	
-					if(prop.defaultVal> prop.max || prop.defaultVal < prop.min){ 
-						if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
-						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
-						break;
-					}
-					prop.defaultVal += 0.1f;//Increment value can be changed
-				}
 				break;
 			case Direction.Up:
 				if(!scrollmap[pointer].up.Equals("")) pointer = scrollmap[pointer].up;
@@ -180,7 +160,6 @@ public class GUIManager{
 			if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
 			else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
 		}
-		
 		OnScroll(this,new ButtonName(tag,prop.defaultVal));
 	}
 	

@@ -89,7 +89,7 @@ public class LevelEditorUI : MonoBehaviour {
 							_terrain_num.ToString(),
 							new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5),
 							GUIType.Label,
-							"toggle");
+							"nobox");
 		gui.CreateGUIObject(PLUS1,
 							"+",
 							new Rect(widthDivider*60, intDivider*25,widthDivider*5, intDivider*5),
@@ -212,7 +212,7 @@ public class LevelEditorUI : MonoBehaviour {
 							formatArray[_format_num],
 							new Rect(widthDivider*45, intDivider*71,widthDivider*50, intDivider*5),
 							GUIType.Label,
-							"toggle");
+							"nobox");
 		gui.CreateGUIObject(PLUS2,
 							"+",
 							new Rect(widthDivider*60, intDivider*70,widthDivider*5, intDivider*5),
@@ -238,7 +238,7 @@ public class LevelEditorUI : MonoBehaviour {
 							_num_to_win.ToString(),
 							new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5),
 							GUIType.Label,
-							"toggle");
+							"nobox");
 		//Alien Speed
 		gui.CreateGUIObject(ALIEN_SPEED,
 							"Alien Speed: " + (Mathf.Round(_alien_speed *100f)/100f),

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class OptionsUI : MonoBehaviour {
 	
@@ -13,6 +14,9 @@ public class OptionsUI : MonoBehaviour {
 	private float _sfx;
 	private bool _mute;
 	private bool _perceptual;
+	
+	private Texture[] _mathiusTextures;
+	private Dictionary<string,Texture> _texturemap;
 	
 	private string[] colorArray = {"Grey", "Green", "Blue", "Pink", "Red", "Yellow", "Camo", "Pwny"};
 	private string[] soundArray = {"Low","Med","High"};
@@ -37,8 +41,8 @@ public class OptionsUI : MonoBehaviour {
 	private const string MAIN_MENU = "Main Menu";
 	
 	void Start () {
+		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 		prefs = MasterController.BRAIN.pm();
-		
 		gui = new GUIManager(thisMetalGUISkin);
 		
 		gui.OnClick += HandleGuiOnClick;
@@ -54,7 +58,14 @@ public class OptionsUI : MonoBehaviour {
 		_texture = prefs.get_mathiusTexture();
 		_perceptual = prefs.get_usePerceptual();
 		_mute = prefs.get_mute();
+		_mathiusTextures = MasterController.BRAIN._mathiusTextures;
 		
+		_texturemap = new Dictionary<string, Texture>();
+		for(int i=0,  j=0; i<_mathiusTextures.Length && j<colorArray.Length; i++,j++){
+			_texturemap.Add(colorArray[j],_mathiusTextures[i]);		
+		}
+		
+		MasterController.BRAIN.m().set_texture(_texturemap[colorArray[prefs.get_mathiusTexture()]]);
 		//Options
 		gui.CreateGUIObject(OPTIONS,
 							"Options",
@@ -76,7 +87,7 @@ public class OptionsUI : MonoBehaviour {
 							colorArray[_texture],
 							new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5),
 							GUIType.Label,
-							"toggle");
+							"nobox");
 		gui.CreateGUIObject(PLUS1,
 							"+",
 							new Rect(widthDivider*65, intDivider*25,widthDivider*5, intDivider*5),
@@ -109,7 +120,7 @@ public class OptionsUI : MonoBehaviour {
 							soundArray[_sound],
 							new Rect(widthDivider*55, intDivider*35,widthDivider*50, intDivider*5),
 							GUIType.Label,
-							"toggle");
+							"nobox");
 		gui.CreateGUIObject(PLUS2,
 							"+",
 							new Rect(widthDivider*65, intDivider*34,widthDivider*5, intDivider*5),
@@ -281,17 +292,19 @@ public class OptionsUI : MonoBehaviour {
 			case MINUS1: //texture
 				if(_texture>0) _texture--;
 				gui.SetGUINameProperty(MATHIUS_COLOR_DISPLAY,colorArray[_texture]);
+				MasterController.BRAIN.m().set_texture(_texturemap[colorArray[_texture]]);
 				break;
 			case MINUS2: //perceptual sound
 				if(_sound>0) _sound--;
 				gui.SetGUINameProperty(VOICE_VOLUME_DISPLAY,soundArray[_sound]);
 				break;
 			case PLUS1: //texture
-				if(_texture<7) _texture++;
+				if(_texture<(_mathiusTextures.Length-1)) _texture++;
 				gui.SetGUINameProperty(MATHIUS_COLOR_DISPLAY,colorArray[_texture]);
+				MasterController.BRAIN.m().set_texture(_texturemap[colorArray[_texture]]);
 				break;
 			case PLUS2: // perceptual sound
-				if(_sound<2) _sound++;
+				if(_sound<(soundArray.Length-1)) _sound++;
 				gui.SetGUINameProperty(VOICE_VOLUME_DISPLAY,soundArray[_sound]);
 				break;
 			case MAIN_MENU:

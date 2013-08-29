@@ -47,9 +47,9 @@ public class PreferencesManager{
 		
 		_pVolume = new Dictionary<int, float>();
 		_pVolume.Clear();		
-		_pVolume.Add (1,0.0f);
-		_pVolume.Add (2,0.5f);
-		_pVolume.Add (3,1.0f);
+		_pVolume.Add (0,0.0f);
+		_pVolume.Add (1,0.5f);
+		_pVolume.Add (2,1.0f);
 		
 		int state = PlayerPrefs.GetInt(PERCEPTUALVOLUME,0);
 		
