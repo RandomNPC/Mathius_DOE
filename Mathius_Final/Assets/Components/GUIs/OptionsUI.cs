@@ -7,6 +7,7 @@ public class OptionsUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	private GUIManager gui;
 	private PreferencesManager prefs;
+	private PCInterface pc;
 	
 	private int _sound;
 	private int _texture;
@@ -43,14 +44,13 @@ public class OptionsUI : MonoBehaviour {
 	void Start () {
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 		prefs = MasterController.BRAIN.pm();
+		pc = MasterController.BRAIN.pci();
 		gui = new GUIManager(thisMetalGUISkin);
 		
 		gui.OnClick += HandleGuiOnClick;
 		gui.OnScroll += HandleGuiOnScroll;
 		gui.OnToggle += HandleGuiOnToggle;
-		
-		float intDivider = Screen.height/100;
-		float widthDivider = Screen.width/100;
+		pc.onGesturePerformed += HandlePconGesturePerformed;
 		
 		_sfx = prefs.get_SFXVolume();
 		_music = prefs.get_musicVolume();
@@ -69,89 +69,89 @@ public class OptionsUI : MonoBehaviour {
 		//Options
 		gui.CreateGUIObject(OPTIONS,
 							"Options",
-							new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)),
+							new Rect((Screen.width/5)/2,(3*(Screen.height/100)),(4*(Screen.width/5)),(18*(Screen.height/100))),
 							GUIType.Label,
 							"label");
 		//Mathius Color
 		gui.CreateGUIObject(MATHIUS_COLOR,
 							"Mathius Color: ",
-							new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*25,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MINUS1,
 							"-",
-							new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*50, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(MATHIUS_COLOR_DISPLAY,
 							colorArray[_texture],
-							new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*26,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"nobox");
 		gui.CreateGUIObject(PLUS1,
 							"+",
-							new Rect(widthDivider*65, intDivider*25,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*65, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		//Perceptual
 		gui.CreateGUIObject(PERCEPTUAL,
 							"Perceptual: ",
-							new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*30,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(PERCEPTUAL_DISPLAY,
 							"",
-							new Rect(widthDivider*55, intDivider*31, 100, 30),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*31, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							_perceptual);
 		//Volume
 		gui.CreateGUIObject(VOICE_VOLUME,
 							"Voice Volume: ",
-							new Rect(widthDivider*20, intDivider*34,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*34,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MINUS2,
 							"-",
-							new Rect(widthDivider*50, intDivider*34,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*50, (Screen.height/100)*34,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(VOICE_VOLUME_DISPLAY,
 							soundArray[_sound],
-							new Rect(widthDivider*55, intDivider*35,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*35,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"nobox");
 		gui.CreateGUIObject(PLUS2,
 							"+",
-							new Rect(widthDivider*65, intDivider*34,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*65, (Screen.height/100)*34,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		//Sound
 		gui.CreateGUIObject(SOUND,
 							"Sound: ",
-							new Rect(widthDivider*20, intDivider*38,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*38,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MUTE,
 							"Mute: ",
-							new Rect(widthDivider*20, intDivider*42,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*42,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MUTE_DISPLAY,
 							"",
-							new Rect(widthDivider*55, intDivider*43, 100, 30),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*43, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							_mute);
 		//Music
 		gui.CreateGUIObject(MUSIC,
 							("Music: " + (Mathf.Round(_music *100f)/100f)),
-							new Rect(widthDivider*20, intDivider*46,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*46,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MUSIC_DISPLAY,
 							"",
-							new Rect (widthDivider*50, intDivider*47, widthDivider*20, intDivider*2),
+							new Rect ((Screen.width/100)*50, (Screen.height/100)*47, (Screen.width/100)*20, (Screen.height/100)*2),
 							GUIType.Slider,
 							"",
 							false,
@@ -161,12 +161,12 @@ public class OptionsUI : MonoBehaviour {
 		//SFX
 		gui.CreateGUIObject(EFFECTS,
 							"Effects: " + (Mathf.Round(_sfx*100f)/100f),
-							new Rect(widthDivider*20, intDivider*50,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*50,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(EFFECTS_DISPLAY,
 							"",
-							new Rect (widthDivider*50, intDivider*51, widthDivider*20, intDivider*2),
+							new Rect ((Screen.width/100)*50, (Screen.height/100)*51, (Screen.width/100)*20, (Screen.height/100)*2),
 							GUIType.Slider,
 							"",
 							false,
@@ -176,7 +176,7 @@ public class OptionsUI : MonoBehaviour {
 		//Main Menu
 		gui.CreateGUIObject(MAIN_MENU,
 							"Main Menu",
-							new Rect(5*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ),
+							new Rect(5*(Screen.width/10) ,(90*(Screen.height/100)) ,(4*(Screen.width/10)) ,(15*(Screen.height/100)) ),
 							GUIType.Button,
 							"box");
 		gui.connect(MATHIUS_COLOR,MINUS1,PLUS1,MAIN_MENU,PERCEPTUAL);
@@ -194,6 +194,67 @@ public class OptionsUI : MonoBehaviour {
 					
 		gui.pointer = MATHIUS_COLOR;
 		
+	}
+
+	void HandlePconGesturePerformed (object sender, PCGesture e) //Perceptual Part
+	{
+		switch(e.gesture){
+			case Gesture.LEFT:
+				gui.swipe(Direction.Left);
+				switch(gui.pointer){
+					case MINUS1:
+					case MINUS2:
+						gui.selectOption(gui.pointer);
+						gui.swipe(Direction.Right);
+						break;
+					case MUSIC:
+						gui.SetGUISliderProperty(MUSIC_DISPLAY,-10.0f);
+						break;
+					case EFFECTS:
+						gui.SetGUISliderProperty(EFFECTS_DISPLAY,-10.0f);
+						break;				
+					default:
+						break;
+				}
+				break;
+			case Gesture.RIGHT:
+				gui.swipe(Direction.Right);
+				switch(gui.pointer){
+					case PLUS1:
+					case PLUS2:
+						gui.selectOption(gui.pointer);
+						gui.swipe(Direction.Left);
+						break;
+					case MUSIC:
+						gui.SetGUISliderProperty(MUSIC_DISPLAY,10.0f);
+						break;
+					case EFFECTS:
+						gui.SetGUISliderProperty(EFFECTS_DISPLAY,10.0f);
+						break;
+					default:
+						break;
+				}
+				break;
+			case Gesture.UP:
+				gui.swipe(Direction.Up);
+				break;
+			case Gesture.DOWN:
+				gui.swipe(Direction.Down);
+				break;
+			case Gesture.SELECT:
+				gui.selectOption(gui.pointer);
+				switch(gui.pointer){
+					case PERCEPTUAL:
+						gui.selectOption(PERCEPTUAL_DISPLAY);
+						break;
+					case MUTE:
+						gui.selectOption(MUTE_DISPLAY);
+						break;
+					default:
+						break;
+				}
+				break;
+		}
 	}
 	
 	void Update(){
@@ -258,7 +319,7 @@ public class OptionsUI : MonoBehaviour {
 		gui.RenderGUIObjects(gui);
 	}
 	
-	void HandleGuiOnToggle (object sender, ButtonName e)
+	void HandleGuiOnToggle (object sender, ButtonName e) //onToggle - GUIManager
 	{
 		switch(e.name){
 			case PERCEPTUAL_DISPLAY:
@@ -270,7 +331,7 @@ public class OptionsUI : MonoBehaviour {
 		}
 	}
 
-	void HandleGuiOnScroll (object sender, ButtonName e)
+	void HandleGuiOnScroll (object sender, ButtonName e) //onScroll - GUIManager
 	{
 		switch(e.name){
 			case MUSIC_DISPLAY:
@@ -286,7 +347,7 @@ public class OptionsUI : MonoBehaviour {
 		}
 	}
 
-	void HandleGuiOnClick (object sender, ButtonName e)
+	void HandleGuiOnClick (object sender, ButtonName e) //onClick - GUIManager
 	{
 		switch(e.name){
 			case MINUS1: //texture

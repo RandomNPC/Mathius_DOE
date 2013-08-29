@@ -29,7 +29,7 @@ public class PCInterface{
 		
 		float[] polled_handpos = _gesture.getHandLocation();
 		if(!polled_handpos[0].Equals(_handpos[0]) || !polled_handpos[1].Equals(_handpos[1])){
-			//onHandPositionChanged(this,new PCHand(polled_handpos[0],polled_handpos[1]));
+			onHandPositionChanged(this,new PCHand(polled_handpos[0],polled_handpos[1]));
 			_handpos = polled_handpos;
 		}
 		

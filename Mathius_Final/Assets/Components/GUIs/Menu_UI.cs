@@ -5,6 +5,7 @@ public class Menu_UI : MonoBehaviour {
 	
 	public GUISkin thisMetalGUISkin;
 	private GUIManager gui;
+	private PCInterface pc;
 	
 	private const string TITLE = "Mathius: Defender of Earth!";
 	private const string START_GAME = "START GAME";
@@ -15,47 +16,45 @@ public class Menu_UI : MonoBehaviour {
 	private const string EXIT = "EXIT";
 	
 	void Start(){
-		float intDivider = Screen.height/100;
-		float widthDivider = Screen.width/100;
 		
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_MAIN_MENU);
-		
+		pc = MasterController.BRAIN.pci();
 		gui = new GUIManager(thisMetalGUISkin);
 		gui.OnClick += HandleGuiOnClick;
-		
+		pc.onGesturePerformed += HandlePconGesturePerformed;
 		gui.CreateGUIObject(TITLE,
 							"Mathius: Defender of Earth!",
-							new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)),
+							new Rect((Screen.width/5)/2,(3*(Screen.height/100)),(4*(Screen.width/5)),(18*(Screen.height/100))),
 							GUIType.Label,
 							"label");
 		gui.CreateGUIObject(START_GAME,
 							"START GAME",
-							new Rect(Screen.width/3 ,(23*intDivider) ,(2*(Screen.width/5)) ,(10*intDivider)),
+							new Rect(Screen.width/3 ,(23*(Screen.height/100)) ,(2*(Screen.width/5)) ,(10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(LEVEL_EDITOR,
 							"LEVEL EDITOR",
-							new Rect((Screen.width/3),(35*intDivider),(2*(Screen.width/5)),(10*intDivider)),
+							new Rect((Screen.width/3),(35*(Screen.height/100)),(2*(Screen.width/5)),(10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(OPTIONS,
 							"OPTIONS",
-							new Rect((Screen.width/3),(46*intDivider),(2*(Screen.width/5)),(10*intDivider)),
+							new Rect((Screen.width/3),(46*(Screen.height/100)),(2*(Screen.width/5)),(10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(HIGH_SCORE,
 							"HIGH SCORE",
-							new Rect(Screen.width/3,(57*intDivider), (2*(Screen.width/5)), (10*intDivider)),
+							new Rect(Screen.width/3,(57*(Screen.height/100)), (2*(Screen.width/5)), (10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(CREDITS,
 							"CREDITS",
-							new Rect(Screen.width/3,(68*intDivider),(2*(Screen.width/5)),(10*intDivider)),
+							new Rect(Screen.width/3,(68*(Screen.height/100)),(2*(Screen.width/5)),(10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(EXIT,
 							"EXIT",
-							new Rect(Screen.width/3,(79*intDivider), (2*(Screen.width/5)), (10*intDivider)),
+							new Rect(Screen.width/3,(79*(Screen.height/100)), (2*(Screen.width/5)), (10*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		
@@ -68,21 +67,44 @@ public class Menu_UI : MonoBehaviour {
 			
 		gui.pointer = START_GAME;
 	}
+
+	void HandlePconGesturePerformed (object sender, PCGesture e)
+	{
+		switch(e.gesture){
+			case Gesture.LEFT:
+				gui.swipe(Direction.Left);
+				break;
+			case Gesture.RIGHT:
+				gui.swipe(Direction.Right);
+				break;
+			case Gesture.UP:
+				gui.swipe(Direction.Up);
+				break;
+			case Gesture.DOWN:
+				gui.swipe(Direction.Down);
+				break;
+			case Gesture.SELECT:
+				gui.selectOption(gui.pointer);
+				break;
+			default:
+				break;
+		}
+	}
 	
 	void Update(){
-		if(Input.GetKeyDown(KeyCode.W)){
+		if(Input.GetKeyDown(KeyCode.W)){//up
 			gui.swipe(Direction.Up);
 		}
-		if(Input.GetKeyDown(KeyCode.A)){
+		if(Input.GetKeyDown(KeyCode.A)){//left
 			gui.swipe(Direction.Left);
 		}
-		if(Input.GetKeyDown(KeyCode.S)){
+		if(Input.GetKeyDown(KeyCode.S)){//down
 			gui.swipe(Direction.Down);
 		}
-		if(Input.GetKeyDown(KeyCode.D)){
+		if(Input.GetKeyDown(KeyCode.D)){//right
 			gui.swipe(Direction.Right);			
 		}
-		if(Input.GetKeyDown(KeyCode.Return)){
+		if(Input.GetKeyDown(KeyCode.Return)){//select
 			gui.selectOption(gui.pointer);
 		}
 	}

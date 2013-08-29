@@ -6,6 +6,7 @@ public class LevelEditorUI : MonoBehaviour {
 	public GUISkin thisMetalGUISkin;
 	private GUIManager gui;
 	private PreferencesManager prefs;
+	private PCInterface pc;
 	
 	private int _terrain_num;
 	private int _format_num;
@@ -59,6 +60,9 @@ public class LevelEditorUI : MonoBehaviour {
 		gui.OnScroll += HandleGuiOnScroll;
 		
 		prefs = MasterController.BRAIN.pm();
+		pc = MasterController.BRAIN.pci();
+		
+		pc.onGesturePerformed += HandlePconGesturePerformed;
 		
 		_terrain_num = prefs.get_tileNum();
 		_format_num = prefs.get_eqFormat();
@@ -66,188 +70,185 @@ public class LevelEditorUI : MonoBehaviour {
 		_num_to_win = prefs.get_numWin();
 		loadSettingsFromPreferences();
 		
-		float intDivider = Screen.height/100;
-		float widthDivider = Screen.width/100;
-		
 		gui.CreateGUIObject(LEVEL_EDITOR,
 							"Level Editor",
-							new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)),
+							new Rect((Screen.width/5)/2,(3*(Screen.height/100)),(4*(Screen.width/5)),(18*(Screen.height/100))),
 							GUIType.Label,
 							"label");
 		//Number of Terrains
 		gui.CreateGUIObject(NUMBER_OF_TERRAINS,
 							"Number of Terrains : ",
-							new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*25,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MINUS1,
 							"-",
-							new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*50, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(TERRAIN_NUM,
 							_terrain_num.ToString(),
-							new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*26,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"nobox");
 		gui.CreateGUIObject(PLUS1,
 							"+",
-							new Rect(widthDivider*60, intDivider*25,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		//Reset
 		gui.CreateGUIObject(RESET,
 							"Reset",
-							new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider)),
+							new Rect(71*(Screen.width/100) ,(94*(Screen.height/100)) ,(3*(Screen.width/10)) ,(15*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		//Save
 		gui.CreateGUIObject(SAVE,
 							"Save",
-							new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider)),
+							new Rect(42*(Screen.width/100) ,(94*(Screen.height/100)) ,(29*(Screen.width/100)) ,(15*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		//Custom Game
 		gui.CreateGUIObject(CUSTOM_GAME,
 							"Custom Game",
-							new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider)),
+							new Rect((Screen.width/100) ,(94*(Screen.height/100)) ,(4*(Screen.width/10)) ,(15*(Screen.height/100))),
 							GUIType.Button,
 							"box");
 		//Terrain Selection
 		gui.CreateGUIObject(TERRAIN_SELECTION,
 							"Terrain Selection",
-							new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*30,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(TERRAIN0,
 							terrainNames[0],
-							new Rect(widthDivider*20, intDivider*35, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*35, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[0]);
 		gui.CreateGUIObject(TERRAIN1,
 							terrainNames[1],
-							new Rect(widthDivider*60, intDivider*35, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*35, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[1]);
 		gui.CreateGUIObject(TERRAIN2,
 							terrainNames[2],
-							new Rect(widthDivider*20, intDivider*40, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*40, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[2]);
 		gui.CreateGUIObject(TERRAIN3,
 							terrainNames[3],
-							new Rect(widthDivider*60, intDivider*40, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*40, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[3]);
 		gui.CreateGUIObject(TERRAIN4,
 							terrainNames[4],
-							new Rect(widthDivider*20, intDivider*45, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*45, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[4]);
 		gui.CreateGUIObject(TERRAIN5,
 							terrainNames[5],
-							new Rect(widthDivider*60, intDivider*45, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*45, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[5]);
 		gui.CreateGUIObject(TERRAIN6,
 							terrainNames[6],
-							new Rect(widthDivider*20, intDivider*50, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*50, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[6]);
 		gui.CreateGUIObject(TERRAIN7,
 							terrainNames[7],
-							new Rect(widthDivider*60, intDivider*50, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*50, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleTerrain[7]);
 		//Math Operations
 		gui.CreateGUIObject(MATH_OPERATIONS,
 							"Math Operations",
-							new Rect(widthDivider*20, intDivider*55,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*55,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(PLUS,
 							"+",
-							new Rect(widthDivider*20, intDivider*60, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*60, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleOperation[0]);
 		gui.CreateGUIObject(MINUS,
 							"-",
-							new Rect(widthDivider*60, intDivider*60, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*60, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleOperation[1]);
 		gui.CreateGUIObject(MULTIPLY,
 							"X",
-							new Rect(widthDivider*20, intDivider*65, 100, 30),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*65, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleOperation[2]);
 		gui.CreateGUIObject(DIVIDE,
 							"%",
-							new Rect(widthDivider*60, intDivider*65, 100, 30),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*65, 100, 30),
 							GUIType.Toggle,
 							"toggle",
 							toggleOperation[3]);
 		//Equation Format
 		gui.CreateGUIObject(FORMAT,
 							"Format: ",
-							new Rect(widthDivider*20, intDivider*70,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*70,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MINUS2,
 							"-",
-							new Rect(widthDivider*40, intDivider*70,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*40, (Screen.height/100)*70,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(EQUATION_FORMAT,
 							formatArray[_format_num],
-							new Rect(widthDivider*45, intDivider*71,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*45, (Screen.height/100)*71,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"nobox");
 		gui.CreateGUIObject(PLUS2,
 							"+",
-							new Rect(widthDivider*60, intDivider*70,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*70,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		//win set
 		gui.CreateGUIObject(NUMBER_TO_WIN,
 							"Number to win? ",
-							new Rect(widthDivider*20, intDivider*75,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*75,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(MINUS3,
 							"-",
-							new Rect(widthDivider*50, intDivider*75,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*50, (Screen.height/100)*75,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(PLUS3,
 							"+",
-							new Rect(widthDivider*60, intDivider*75,widthDivider*5, intDivider*5),
+							new Rect((Screen.width/100)*60, (Screen.height/100)*75,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
 							"button");
 		gui.CreateGUIObject(NUMBER_TO_WIN_VALUE,
 							_num_to_win.ToString(),
-							new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*55, (Screen.height/100)*76,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"nobox");
 		//Alien Speed
 		gui.CreateGUIObject(ALIEN_SPEED,
 							"Alien Speed: " + (Mathf.Round(_alien_speed *100f)/100f),
-							new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5),
+							new Rect((Screen.width/100)*20, (Screen.height/100)*80,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
 							"button");
 		gui.CreateGUIObject(ALIEN_SLIDER_SPEED,
 							"ALIEN_SLIDER_SPEED",
-							new Rect (widthDivider*50, intDivider*80, widthDivider*20, intDivider*2),
+							new Rect ((Screen.width/100)*50, (Screen.height/100)*80, (Screen.width/100)*20, (Screen.height/100)*2),
 							GUIType.Slider,
 							"",
 							false,
@@ -326,10 +327,56 @@ public class LevelEditorUI : MonoBehaviour {
 				default:
 					break;
 			}
-			
 		}
 		if(Input.GetKeyDown(KeyCode.Return)){
 			gui.selectOption(gui.pointer);
+		}
+	}
+	
+	void HandlePconGesturePerformed (object sender, PCGesture e)
+	{
+		switch(e.gesture){
+			case Gesture.UP:
+				gui.swipe(Direction.Up);
+				break;
+			case Gesture.DOWN:
+				gui.swipe(Direction.Down);
+				break;
+			case Gesture.LEFT:
+				gui.swipe(Direction.Left);
+				switch(gui.pointer){
+					case MINUS1:
+					case MINUS2:
+					case MINUS3:
+						gui.selectOption(gui.pointer);
+						gui.swipe(Direction.Right);
+						break;
+					case ALIEN_SPEED:
+						gui.SetGUISliderProperty(ALIEN_SLIDER_SPEED,-0.1f);
+						break;
+					default:
+						break;
+				}
+				break;
+			case Gesture.RIGHT:
+				gui.swipe(Direction.Right);
+				switch(gui.pointer){
+					case PLUS1:
+					case PLUS2:
+					case PLUS3:
+						gui.selectOption(gui.pointer);
+						gui.swipe(Direction.Left);
+						break;
+					case ALIEN_SPEED:
+						gui.SetGUISliderProperty(ALIEN_SLIDER_SPEED,0.1f);
+						break;
+					default:
+						break;
+				}
+				break;
+			case Gesture.SELECT:
+				gui.selectOption(gui.pointer);
+				break;
 		}
 	}
 	
