@@ -137,7 +137,7 @@ public class GUIManager{
 						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
 						break;
 					}
-					prop.defaultVal -= 1.0f;//Increment value can be changed
+					prop.defaultVal -= 0.1f;//Increment value can be changed
 				}
 		
 				break;
@@ -150,7 +150,7 @@ public class GUIManager{
 						else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
 						break;
 					}
-					prop.defaultVal += 1.0f;//Increment value can be changed
+					prop.defaultVal += 0.1f;//Increment value can be changed
 				}
 				break;
 			case Direction.Up:
@@ -171,5 +171,21 @@ public class GUIManager{
 		GUI.Box(new Rect(pos.xMin-delta,pos.yMax,pos.width+2*delta,delta),GUIContent.none);//2
 		GUI.Box(new Rect(pos.xMin-delta,pos.yMin-delta,delta,pos.height+2*delta),GUIContent.none); //3	
 		GUI.Box(new Rect(pos.xMax,pos.yMin-delta,delta,pos.height+2*delta),GUIContent.none);//4
+	}
+	
+	public void SetGUISliderProperty(string tag,float val){
+		GUIProperties prop = GUIObjects[tag];	
+		prop.defaultVal += val;
+		if(prop.defaultVal> prop.max || prop.defaultVal < prop.min){ 
+			if(prop.defaultVal > prop.max) prop.defaultVal = prop.max;
+			else if(prop.defaultVal < prop.min) prop.defaultVal = prop.min;
+		}
+		
+		OnScroll(this,new ButtonName(tag,prop.defaultVal));
+	}
+	
+	public void SetGUINameProperty(string tag, string val){
+		GUIProperties prop = GUIObjects[tag];
+		prop.name = val;
 	}
 }

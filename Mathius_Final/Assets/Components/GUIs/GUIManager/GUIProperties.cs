@@ -6,7 +6,7 @@ public class GUIProperties{
 	public Rect rect{get;private set;}
 	public GUIType type{get;private set;}
 	public string style{get;private set;}
-	public string name{get;private set;}
+	public string name{get; set;}
 	public bool check{get; set;}
 	public float min{get; private set;}
 	public float max{get; private set;}

@@ -1,179 +1,456 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class LevelEditorUI : MonoBehaviour {
+	
 	public GUISkin thisMetalGUISkin;
-	private int terrainNum;
+	private GUIManager gui;
+	private PreferencesManager prefs;
+	
+	private int _terrain_num;
+	private int _format_num;
+	private int _num_to_win;
+	private float _alien_speed;
 	
 	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
+	private string[] terrainNames = {"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
+	private bool[] toggleOperation = {false,false,false,false};
+	private string[] formatArray = {"Arithmetic","Algebra","Mixed"};
+	
+	private const string LEVEL_EDITOR = "Level Editor";
+	private const string NUMBER_OF_TERRAINS = "Number of Terrains : ";
+	private const string MINUS1 = "-1";
+	private const string TERRAIN_NUM = "Terrain Num";
+	private const string PLUS1 = "+1";
+	private const string RESET = "Reset";
+	private const string SAVE = "Save";
+	private const string CUSTOM_GAME = "Custom Game";
+	private const string TERRAIN_SELECTION = "Terrain Selection";
+	private const string TERRAIN0 = "Terrain0";
+	private const string TERRAIN1 = "Terrain1";
+	private const string TERRAIN2 = "Terrain2";
+	private const string TERRAIN3 = "Terrain3";
+	private const string TERRAIN4 = "Terrain4";
+	private const string TERRAIN5 = "Terrain5";
+	private const string TERRAIN6 = "Terrain6";
+	private const string TERRAIN7 = "Terrain7";
+	private const string PLUS = "+";
+	private const string MINUS = "-";
+	private const string DIVIDE = "/";
+	private const string MULTIPLY = "x";
+	private const string MATH_OPERATIONS = "Math Operations";
+	private const string FORMAT = "Format: ";
+	private const string MINUS2 = "-2";
+	private const string PLUS2 = "+2";
+	private const string EQUATION_FORMAT = "Equation Format";
+	private const string MINUS3 = "-3";
+	private const string PLUS3 = "+3";
+	private const string NUMBER_TO_WIN = "Number to win? ";
+	private const string NUMBER_TO_WIN_VALUE = "Number to win value";
+	private const string ALIEN_SPEED = "Alien Speed: ";
+	private const string ALIEN_SLIDER_SPEED = "Alien slider speed";
+	
 
-	private bool opToggleTxt1;
-	private bool opToggleTxt2;
-	private bool opToggleTxt3;
-	private bool opToggleTxt4;
-	
-	private int winNum;
-	private float hSliderValue;
-	private int formatInt;
-	private string[] formatArray;
-	private string[] terrainNames;
-	private Dictionary<string,int> format;
-	private PreferencesManager pref;
-	
-	
-	// Use this for initialization
-	void Start () {
-		pref = MasterController.BRAIN.pm();
+	void Start(){
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
+		gui = new GUIManager(thisMetalGUISkin);
+		gui.OnClick += HandleGuiOnClick;
+		gui.OnToggle += HandleGuiOnToggle;
+		gui.OnScroll += HandleGuiOnScroll;
 		
-		winNum = pref.get_numWin();
-		hSliderValue = pref.get_alienSpeed();
+		prefs = MasterController.BRAIN.pm();
 		
+		_terrain_num = prefs.get_tileNum();
+		_format_num = prefs.get_eqFormat();
+		_alien_speed = prefs.get_alienSpeed();
+		_num_to_win = prefs.get_numWin();
 		loadSettingsFromPreferences();
 		
-		terrainNames = new string[]{"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
-		formatArray =new string[]{"Arithmetic","Algebra","Mixed"};
-		format = new Dictionary<string,int>();
-		format.Clear();
-		format.Add(formatArray[0],EquationGenerator.ALGEBRA);
-		format.Add(formatArray[1],EquationGenerator.ARITHMETIC);
-		format.Add(formatArray[2],EquationGenerator.MIXED);
+		float intDivider = Screen.height/100;
+		float widthDivider = Screen.width/100;
+		
+		gui.CreateGUIObject(LEVEL_EDITOR,
+							"Level Editor",
+							new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider)),
+							GUIType.Label,
+							"label");
+		//Number of Terrains
+		gui.CreateGUIObject(NUMBER_OF_TERRAINS,
+							"Number of Terrains : ",
+							new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(MINUS1,
+							"-",
+							new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		gui.CreateGUIObject(TERRAIN_NUM,
+							_terrain_num.ToString(),
+							new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"toggle");
+		gui.CreateGUIObject(PLUS1,
+							"+",
+							new Rect(widthDivider*60, intDivider*25,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		//Reset
+		gui.CreateGUIObject(RESET,
+							"Reset",
+							new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider)),
+							GUIType.Button,
+							"box");
+		//Save
+		gui.CreateGUIObject(SAVE,
+							"Save",
+							new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider)),
+							GUIType.Button,
+							"box");
+		//Custom Game
+		gui.CreateGUIObject(CUSTOM_GAME,
+							"Custom Game",
+							new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider)),
+							GUIType.Button,
+							"box");
+		//Terrain Selection
+		gui.CreateGUIObject(TERRAIN_SELECTION,
+							"Terrain Selection",
+							new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(TERRAIN0,
+							terrainNames[0],
+							new Rect(widthDivider*20, intDivider*35, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[0]);
+		gui.CreateGUIObject(TERRAIN1,
+							terrainNames[1],
+							new Rect(widthDivider*60, intDivider*35, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[1]);
+		gui.CreateGUIObject(TERRAIN2,
+							terrainNames[2],
+							new Rect(widthDivider*20, intDivider*40, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[2]);
+		gui.CreateGUIObject(TERRAIN3,
+							terrainNames[3],
+							new Rect(widthDivider*60, intDivider*40, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[3]);
+		gui.CreateGUIObject(TERRAIN4,
+							terrainNames[4],
+							new Rect(widthDivider*20, intDivider*45, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[4]);
+		gui.CreateGUIObject(TERRAIN5,
+							terrainNames[5],
+							new Rect(widthDivider*60, intDivider*45, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[5]);
+		gui.CreateGUIObject(TERRAIN6,
+							terrainNames[6],
+							new Rect(widthDivider*20, intDivider*50, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[6]);
+		gui.CreateGUIObject(TERRAIN7,
+							terrainNames[7],
+							new Rect(widthDivider*60, intDivider*50, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleTerrain[7]);
+		//Math Operations
+		gui.CreateGUIObject(MATH_OPERATIONS,
+							"Math Operations",
+							new Rect(widthDivider*20, intDivider*55,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(PLUS,
+							"+",
+							new Rect(widthDivider*20, intDivider*60, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleOperation[0]);
+		gui.CreateGUIObject(MINUS,
+							"-",
+							new Rect(widthDivider*60, intDivider*60, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleOperation[1]);
+		gui.CreateGUIObject(MULTIPLY,
+							"X",
+							new Rect(widthDivider*20, intDivider*65, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleOperation[2]);
+		gui.CreateGUIObject(DIVIDE,
+							"%",
+							new Rect(widthDivider*60, intDivider*65, 100, 30),
+							GUIType.Toggle,
+							"toggle",
+							toggleOperation[3]);
+		//Equation Format
+		gui.CreateGUIObject(FORMAT,
+							"Format: ",
+							new Rect(widthDivider*20, intDivider*70,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(MINUS2,
+							"-",
+							new Rect(widthDivider*40, intDivider*70,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		gui.CreateGUIObject(EQUATION_FORMAT,
+							formatArray[_format_num],
+							new Rect(widthDivider*45, intDivider*71,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"toggle");
+		gui.CreateGUIObject(PLUS2,
+							"+",
+							new Rect(widthDivider*60, intDivider*70,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		//win set
+		gui.CreateGUIObject(NUMBER_TO_WIN,
+							"Number to win? ",
+							new Rect(widthDivider*20, intDivider*75,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(MINUS3,
+							"-",
+							new Rect(widthDivider*50, intDivider*75,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		gui.CreateGUIObject(PLUS3,
+							"+",
+							new Rect(widthDivider*60, intDivider*75,widthDivider*5, intDivider*5),
+							GUIType.Button,
+							"button");
+		gui.CreateGUIObject(NUMBER_TO_WIN_VALUE,
+							_num_to_win.ToString(),
+							new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"toggle");
+		//Alien Speed
+		gui.CreateGUIObject(ALIEN_SPEED,
+							"Alien Speed: " + (Mathf.Round(_alien_speed *100f)/100f),
+							new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5),
+							GUIType.Label,
+							"button");
+		gui.CreateGUIObject(ALIEN_SLIDER_SPEED,
+							"ALIEN_SLIDER_SPEED",
+							new Rect (widthDivider*50, intDivider*80, widthDivider*20, intDivider*2),
+							GUIType.Slider,
+							"",
+							false,
+							0.0f,
+							1.0f,
+							_alien_speed);
+		
+		gui.connect(NUMBER_OF_TERRAINS,MINUS1,PLUS1,CUSTOM_GAME,TERRAIN0);
+		gui.connect(TERRAIN0,TERRAIN1,TERRAIN1,NUMBER_OF_TERRAINS,TERRAIN2);
+		gui.connect(TERRAIN1,TERRAIN0,TERRAIN0,NUMBER_OF_TERRAINS,TERRAIN3);
+		gui.connect(TERRAIN2,TERRAIN3,TERRAIN3,TERRAIN0,TERRAIN4);
+		gui.connect(TERRAIN3,TERRAIN2,TERRAIN2,TERRAIN1,TERRAIN5);
+		gui.connect(TERRAIN4,TERRAIN5,TERRAIN5,TERRAIN2,TERRAIN6);
+		gui.connect(TERRAIN5,TERRAIN4,TERRAIN4,TERRAIN3,TERRAIN7);
+		gui.connect(TERRAIN6,TERRAIN7,TERRAIN7,TERRAIN4,PLUS);
+		gui.connect(TERRAIN7,TERRAIN6,TERRAIN6,TERRAIN5,MINUS);
+		gui.connect(PLUS,MINUS,MINUS,TERRAIN6,MULTIPLY);
+		gui.connect(MINUS,PLUS,PLUS,TERRAIN7,DIVIDE);
+		gui.connect(MULTIPLY,DIVIDE,DIVIDE,MINUS,FORMAT);
+		gui.connect(DIVIDE,MULTIPLY,MULTIPLY,MINUS,FORMAT);
+		gui.connect(FORMAT,MINUS2,PLUS2,MULTIPLY,NUMBER_TO_WIN);
+		gui.connect(NUMBER_TO_WIN,MINUS3,PLUS3,FORMAT,ALIEN_SPEED);
+		gui.connect(ALIEN_SPEED,"","",NUMBER_TO_WIN,CUSTOM_GAME);
+		gui.connect(CUSTOM_GAME,RESET,SAVE,ALIEN_SPEED,NUMBER_OF_TERRAINS);
+		gui.connect(SAVE,CUSTOM_GAME,RESET,ALIEN_SPEED,NUMBER_OF_TERRAINS);
+		gui.connect(RESET,SAVE,CUSTOM_GAME,ALIEN_SPEED,NUMBER_OF_TERRAINS);
+		
+		
+		
+		gui.connect(MINUS1,"",NUMBER_OF_TERRAINS,"","");
+		gui.connect(PLUS1,NUMBER_OF_TERRAINS,"","","");
+		gui.connect(MINUS2,"",FORMAT,"","");
+		gui.connect(PLUS2,FORMAT,"","","");
+		gui.connect(MINUS3,"",NUMBER_TO_WIN,"","");
+		gui.connect(PLUS3,NUMBER_TO_WIN,"","","");
+		
+		
+		gui.pointer = NUMBER_OF_TERRAINS;
+	}
+	
+	void Update(){
+		if(Input.GetKeyDown(KeyCode.W)){//up
+			gui.swipe(Direction.Up);
+		}
+		if(Input.GetKeyDown(KeyCode.A)){//left
+			gui.swipe(Direction.Left);
+			switch(gui.pointer){
+				case MINUS1:
+				case MINUS2:
+				case MINUS3:
+					gui.selectOption(gui.pointer);
+					gui.swipe(Direction.Right);
+					break;
+				case ALIEN_SPEED:
+					gui.SetGUISliderProperty(ALIEN_SLIDER_SPEED,-0.1f);
+					break;
+				default:
+					break;
+			}
+		}	
+		if(Input.GetKeyDown(KeyCode.S)){//down
+			gui.swipe(Direction.Down);
+		}
+		if(Input.GetKeyDown(KeyCode.D)){//right
+			gui.swipe(Direction.Right);
+			switch(gui.pointer){
+				case PLUS1:
+				case PLUS2:
+				case PLUS3:
+					gui.selectOption(gui.pointer);
+					gui.swipe(Direction.Left);
+					break;
+				case ALIEN_SPEED:
+					gui.SetGUISliderProperty(ALIEN_SLIDER_SPEED,0.1f);
+					break;
+				default:
+					break;
+			}
+			
+		}
+		if(Input.GetKeyDown(KeyCode.Return)){
+			gui.selectOption(gui.pointer);
+		}
 	}
 	
 	void OnGUI(){
-		float intDivider = Screen.height/100;
-		float widthDivider = Screen.width/100;
-		//hSliderValue = 0.0F;
-		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
-		GUI.skin = thisMetalGUISkin;
-		//Title
-		GUI.Label(titleRect, ("Level Editor"),GUI.skin.GetStyle("label"));
-		//First Label
-		GUI.Label(new Rect(widthDivider*20, intDivider*25,widthDivider*50, intDivider*5), ("Number of Terrains : "),GUI.skin.GetStyle("button"));
-		//Terrain Decrementer
-		if(GUI.Button(new Rect(widthDivider*50, intDivider*25,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
-			if(terrainNum>1){
-				terrainNum --;
-			}
-		}
-		//Terrain int
-		GUI.Label(new Rect(widthDivider*55, intDivider*26,widthDivider*50, intDivider*5), ("" +terrainNum),GUI.skin.GetStyle("toggle"));
-		//Terrain Incrementer
-		if(GUI.Button(new Rect(widthDivider*60, intDivider*25,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
-			if(terrainNum>=1){
-				terrainNum ++;
-			}
-		}
-		//Reset
-		if(GUI.Button (new Rect(71*(Screen.width/100) ,(94*intDivider) ,(3*(Screen.width/10)) ,(15*intDivider) ) ,("Reset") ,GUI.skin.GetStyle("box") ) ){
-	      	PreferencesManager pref = MasterController.BRAIN.pm();
-    	  	pref.set_operations((byte)15);
-          	pref.set_tileNum(1);
-      		pref.set_terrains((byte)1);
-      		pref.set_eqFormat(format[formatArray[0]]);
-      		pref.set_numWin(25);
-      		pref.set_alienSpeed(0.0f);
-			Application.LoadLevel("MainMenu");
-		}
-		//Save
-		if(GUI.Button (new Rect(42*(Screen.width/100) ,(94*intDivider) ,(29*(Screen.width/100)) ,(15*intDivider) ) ,("Save") ,GUI.skin.GetStyle("box") ) ){
-			PreferencesManager pref = MasterController.BRAIN.pm();
-    	  	pref.set_operations(using_operations());
-          	pref.set_tileNum(terrainNum);
-      		pref.set_terrains(using_terrains());
-      		pref.set_eqFormat(formatInt);
-      		pref.set_numWin(winNum);
-      		pref.set_alienSpeed(hSliderValue);
-			Application.LoadLevel("MainMenu");
-		}
-		//Custom Game
-		if(GUI.Button (new Rect((Screen.width/100) ,(94*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Custom") ,GUI.skin.GetStyle("box") ) ){
-	      	PreferencesManager pref = MasterController.BRAIN.pm();
-    	  	pref.set_operations(using_operations());
-          	pref.set_tileNum(terrainNum);
-      		pref.set_terrains(using_terrains());
-      		pref.set_eqFormat(formatInt);
-      		pref.set_numWin(winNum);
-      		pref.set_alienSpeed(hSliderValue);
-			Application.LoadLevel("Earth Scene");
-		}
-		
-		
-		//Terrain Toggle
-		GUI.Label(new Rect(widthDivider*20, intDivider*30,widthDivider*50, intDivider*5), ("Terrain Selection"),GUI.skin.GetStyle("button"));
-		toggleTerrain[0] = GUI.Toggle(new Rect(widthDivider*20, intDivider*35, 100, 30), toggleTerrain[0], terrainNames[0]);
-		toggleTerrain[1] = GUI.Toggle(new Rect(widthDivider*60, intDivider*35, 100, 30), toggleTerrain[1], terrainNames[1]);
-		toggleTerrain[2] = GUI.Toggle(new Rect(widthDivider*20, intDivider*40, 100, 30), toggleTerrain[2], terrainNames[2]);
-		toggleTerrain[3] = GUI.Toggle(new Rect(widthDivider*60, intDivider*40, 100, 30), toggleTerrain[3], terrainNames[3]);
-		toggleTerrain[4] = GUI.Toggle(new Rect(widthDivider*20, intDivider*45, 100, 30), toggleTerrain[4], terrainNames[4]);
-		toggleTerrain[5] = GUI.Toggle(new Rect(widthDivider*60, intDivider*45, 100, 30), toggleTerrain[5], terrainNames[5]);
-		toggleTerrain[6] = GUI.Toggle(new Rect(widthDivider*20, intDivider*50, 100, 30), toggleTerrain[6], terrainNames[6]);
-		toggleTerrain[7] = GUI.Toggle(new Rect(widthDivider*60, intDivider*50, 100, 30), toggleTerrain[7], terrainNames[7]);
-		//Opperations Toggle
-		GUI.Label(new Rect(widthDivider*20, intDivider*55,widthDivider*50, intDivider*5), ("Math Operations"),GUI.skin.GetStyle("button"));
-		opToggleTxt1 = GUI.Toggle(new Rect(widthDivider*20, intDivider*60, 100, 30), opToggleTxt1, "+");
-		opToggleTxt2 = GUI.Toggle(new Rect(widthDivider*60, intDivider*60, 100, 30), opToggleTxt2, "-");
-		opToggleTxt3 = GUI.Toggle(new Rect(widthDivider*20, intDivider*65, 100, 30), opToggleTxt3, "X");
-		opToggleTxt4 = GUI.Toggle(new Rect(widthDivider*60, intDivider*65, 100, 30), opToggleTxt4, "%");
-		//Eqaution Format
-		GUI.Label(new Rect(widthDivider*20, intDivider*70,widthDivider*50, intDivider*5), ("Format: "),GUI.skin.GetStyle("button"));
-		//Equation Decrementer
-		if(GUI.Button(new Rect(widthDivider*40, intDivider*70,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
-			if(formatInt>0){
-				formatInt --;
-			}
-		}
-		//Equation int
-		GUI.Label(new Rect(widthDivider*45, intDivider*71,widthDivider*50, intDivider*5), ("" +formatArray[formatInt]),GUI.skin.GetStyle("toggle"));
-		//Equation Incrementer
-		if(GUI.Button(new Rect(widthDivider*60, intDivider*70,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
-			if( formatInt<2){
-				formatInt ++;
-			}
-		}
-		//Win Int
-		GUI.Label(new Rect(widthDivider*20, intDivider*75,widthDivider*50, intDivider*5), ("Number to win? "),GUI.skin.GetStyle("button"));
-		//Win Decrementer
-		if(GUI.Button(new Rect(widthDivider*50, intDivider*75,widthDivider*5, intDivider*5),("-"),GUI.skin.GetStyle("button"))){
-			if(winNum>1){
-				winNum --;
-			}
-		}
-		//Win num
-		GUI.Label(new Rect(widthDivider*55, intDivider*76,widthDivider*50, intDivider*5), ("" + winNum),GUI.skin.GetStyle("toggle"));
-		//win Incrementer
-		if(GUI.Button(new Rect(widthDivider*60, intDivider*75,widthDivider*5, intDivider*5),("+"),GUI.skin.GetStyle("button"))){
-			if(winNum>=1){
-				winNum ++;
-			}
-		}
-		//Alien Speed
-		GUI.Label(new Rect(widthDivider*20, intDivider*80,widthDivider*50, intDivider*5), ("Alien Speed: "+(Mathf.Round(hSliderValue *100f)/100f)),GUI.skin.GetStyle("button"));
-		Rect slider = new Rect (widthDivider*50, intDivider*80, widthDivider*20, intDivider*2);
-		hSliderValue = GUI.HorizontalSlider(slider, hSliderValue, 0.0F, 1.0F);
-		
+		gui.RenderGUIObjects(gui);	
 	}
 	
-	private void loadSettingsFromPreferences(){
-		terrainNum = MasterController.BRAIN.pm().get_tileNum();
-		formatInt = MasterController.BRAIN.pm().get_eqFormat();
-		byte terrainTemp = MasterController.BRAIN.pm().get_terrains();
-		if((terrainTemp & TerrainManager.TERRAIN_1) == TerrainManager.TERRAIN_1){toggleTerrain[0] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_2) == TerrainManager.TERRAIN_2){toggleTerrain[1] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_3) == TerrainManager.TERRAIN_3){toggleTerrain[2] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_4) == TerrainManager.TERRAIN_4){toggleTerrain[3] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_5) == TerrainManager.TERRAIN_5){toggleTerrain[4] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_6) == TerrainManager.TERRAIN_6){toggleTerrain[5] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_7) == TerrainManager.TERRAIN_7){toggleTerrain[6] = true;}
-		if((terrainTemp & TerrainManager.TERRAIN_8) == TerrainManager.TERRAIN_8){toggleTerrain[7] = true;}
-		
-		byte opTemp = MasterController.BRAIN.pm().get_operations();
-		if((opTemp & EquationGenerator.ADDITION) == EquationGenerator.ADDITION){opToggleTxt1 = true;}
-		if((opTemp & EquationGenerator.SUBTRACTION) == EquationGenerator.SUBTRACTION){opToggleTxt2 = true;}
-		if((opTemp & EquationGenerator.MULTIPLICATION) == EquationGenerator.MULTIPLICATION){opToggleTxt3 = true;}
-		if((opTemp & EquationGenerator.DIVISION) == EquationGenerator.DIVISION){opToggleTxt4 = true;}
-		
+	void HandleGuiOnClick (object sender, ButtonName e)
+	{
+		switch(e.name){
+			case MINUS1://terrain
+				if(_terrain_num>1) _terrain_num--;
+				gui.SetGUINameProperty(TERRAIN_NUM,_terrain_num.ToString());
+				break;
+			case MINUS2://eq format
+				if(_format_num>0) _format_num--;
+				gui.SetGUINameProperty(EQUATION_FORMAT,formatArray[_format_num]);
+				break;
+			case MINUS3://num to win
+				if(_num_to_win>1) _num_to_win--;
+				gui.SetGUINameProperty(NUMBER_TO_WIN_VALUE,_num_to_win.ToString());
+				break;
+			case PLUS1://terrain
+				_terrain_num++;
+				gui.SetGUINameProperty(TERRAIN_NUM,_terrain_num.ToString());
+				break;
+			case PLUS2://eq format
+				if(_format_num<(formatArray.Length-1)) _format_num++;
+				gui.SetGUINameProperty(EQUATION_FORMAT,formatArray[_format_num]);
+				break;
+			case PLUS3:
+				_num_to_win++;
+				gui.SetGUINameProperty(NUMBER_TO_WIN_VALUE,_num_to_win.ToString());
+				break;
+			case SAVE:
+				prefs.set_operations(using_operations());
+				prefs.set_terrains(using_terrains());
+	          	prefs.set_tileNum(_terrain_num);
+	      		prefs.set_eqFormat(_format_num);
+	      		prefs.set_numWin(_num_to_win);
+	      		prefs.set_alienSpeed(_alien_speed);
+				Application.LoadLevel("MainMenu");
+				break;
+			case RESET:
+				prefs.set_operations((byte)15);
+	          	prefs.set_tileNum(1);
+	      		prefs.set_terrains((byte)1);
+	      		prefs.set_eqFormat(0);
+	      		prefs.set_numWin(25);
+	      		prefs.set_alienSpeed(0.0f);
+				Application.LoadLevel("MainMenu");
+				break;
+			case CUSTOM_GAME:
+				prefs.set_operations(using_operations());
+				prefs.set_terrains(using_terrains());
+				prefs.set_tileNum(_terrain_num);
+	      		prefs.set_eqFormat(_format_num);
+	      		prefs.set_numWin(_num_to_win);
+	      		prefs.set_alienSpeed(_alien_speed);
+				Application.LoadLevel("Earth Scene");
+				break;
+			default:
+				break;
+		}
+	}
+	
+	void HandleGuiOnToggle (object sender, ButtonName e)
+	{
+		switch(e.name){
+			case TERRAIN0:
+				toggleTerrain[0] = e.state;
+				break;
+			case TERRAIN1:
+				toggleTerrain[1] = e.state;
+				break;
+			case TERRAIN2:
+				toggleTerrain[2] = e.state;
+				break;
+			case TERRAIN3:
+				toggleTerrain[3] = e.state;
+				break;
+			case TERRAIN4:
+				toggleTerrain[4] = e.state;
+				break;
+			case TERRAIN5:
+				toggleTerrain[5] = e.state;
+				break;
+			case TERRAIN6:
+				toggleTerrain[6] = e.state;
+				break;
+			case TERRAIN7:
+				toggleTerrain[7] = e.state;
+				break;
+			case PLUS:
+				toggleOperation[0] = e.state;
+				break;
+			case MINUS:
+				toggleOperation[1] = e.state;
+				break;
+			case MULTIPLY:
+				toggleOperation[2] = e.state;
+				break;
+			case DIVIDE:
+				toggleOperation[3] = e.state;
+				break;
+			default:
+				break;
+		}
+
+	}
+	
+	void HandleGuiOnScroll (object sender, ButtonName e)
+	{
+		switch(e.name){
+			case ALIEN_SLIDER_SPEED:
+				_alien_speed = e.amount;
+				gui.SetGUINameProperty(ALIEN_SPEED,"Alien Speed: " +(Mathf.Round(_alien_speed *100f)/100f));
+				break;
+			default:
+				break;
+		}
 	}
 	
 	private byte using_terrains(){
@@ -188,13 +465,34 @@ public class LevelEditorUI : MonoBehaviour {
 		if(toggleTerrain[7]){temp = (byte)(temp | TerrainManager.TERRAIN_8);}
 		return temp;
 	}
-	
+
 	private byte using_operations(){
 		byte temp = 0x00;
-		if(opToggleTxt1){temp = (byte)(temp | EquationGenerator.ADDITION);}
-		if(opToggleTxt2){temp = (byte)(temp | EquationGenerator.SUBTRACTION);}
-		if(opToggleTxt3){temp = (byte)(temp | EquationGenerator.MULTIPLICATION);}
-		if(opToggleTxt4){temp = (byte)(temp | EquationGenerator.DIVISION);}
+		if(toggleOperation[0]){temp = (byte)(temp | EquationGenerator.ADDITION);}
+		if(toggleOperation[1]){temp = (byte)(temp | EquationGenerator.SUBTRACTION);}
+		if(toggleOperation[2]){temp = (byte)(temp | EquationGenerator.MULTIPLICATION);}
+		if(toggleOperation[3]){temp = (byte)(temp | EquationGenerator.DIVISION);}
 		return temp;
 	}
+	
+	private void loadSettingsFromPreferences(){
+
+		byte terrainTemp = prefs.get_terrains();
+		if((terrainTemp & TerrainManager.TERRAIN_1) == TerrainManager.TERRAIN_1){toggleTerrain[0] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_2) == TerrainManager.TERRAIN_2){toggleTerrain[1] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_3) == TerrainManager.TERRAIN_3){toggleTerrain[2] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_4) == TerrainManager.TERRAIN_4){toggleTerrain[3] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_5) == TerrainManager.TERRAIN_5){toggleTerrain[4] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_6) == TerrainManager.TERRAIN_6){toggleTerrain[5] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_7) == TerrainManager.TERRAIN_7){toggleTerrain[6] = true;}
+		if((terrainTemp & TerrainManager.TERRAIN_8) == TerrainManager.TERRAIN_8){toggleTerrain[7] = true;}
+
+		byte opTemp = prefs.get_operations();
+		if((opTemp & EquationGenerator.ADDITION) == EquationGenerator.ADDITION){toggleOperation[0] = true;}
+		if((opTemp & EquationGenerator.SUBTRACTION) == EquationGenerator.SUBTRACTION){toggleOperation[1] = true;}
+		if((opTemp & EquationGenerator.MULTIPLICATION) == EquationGenerator.MULTIPLICATION){toggleOperation[2] = true;}
+		if((opTemp & EquationGenerator.DIVISION) == EquationGenerator.DIVISION){toggleOperation[3] = true;}
+
+	}
+		
 }
