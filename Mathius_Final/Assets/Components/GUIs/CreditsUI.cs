@@ -3,24 +3,66 @@ using System.Collections;
 
 public class CreditsUI : MonoBehaviour {
 	
-	
-	
-	
 	private int gs;
 	private ScoreManager stats;
 	public GUISkin thisMetalGUISkin;
 	public static Mathius_UI MUI;
-	private string derp;
 	private float creditTimer;
+	
+	private GUIManager gui;
+	private PCInterface pc;
+	
+	private const string NEXT = "NEXT";
 	
 	void Start(){
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
+		gui = new GUIManager(thisMetalGUISkin);
+		
+		gui.OnClick += HandleGuiOnClick;
+		gui.CreateGUIObject(NEXT,
+							"Next",
+							new Rect(8*(Screen.width/10) ,(95*(Screen.height/100)) ,(2*(Screen.width/10)) ,(10*(Screen.height/100))),
+							GUIType.Button,
+							"box");
+		
+		pc = MasterController.BRAIN.pci();
+		
+		pc.onGesturePerformed += HandlePconGesturePerformed;
 		stats = MasterController.BRAIN.sm();
 		gs = 0;
 		MUI = gameObject.GetComponent<Mathius_UI>();
-		derp = "";
 		creditTimer = 5.0f;
+		
+		gui.connect(NEXT,NEXT,NEXT,NEXT,NEXT);
+		gui.pointer = NEXT;
 	}
+
+	void HandlePconGesturePerformed (object sender, PCGesture e)
+	{
+		switch(e.gesture){
+			case Gesture.SELECT:
+				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
+				gs++;
+				creditTimer = 5.0f;
+				break;
+			default:
+				break;
+		}
+	}
+
+	void HandleGuiOnClick (object sender, ButtonName e)
+	{
+		switch(e.name){
+			case NEXT:
+				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
+				gs++;
+				creditTimer = 5.0f;
+				break;
+			default:
+				break;
+		}	
+	}
+	
 	void Update(){
 		if(creditTimer>0){
 			creditTimer -= Time.deltaTime;
@@ -29,23 +71,21 @@ public class CreditsUI : MonoBehaviour {
 			gs++;
 			creditTimer = 5.0f;
 		}
-		
+		if(Input.GetKeyDown(KeyCode.Return)){
+			gui.selectOption(gui.pointer);
+		}
 	}
 	
 	void OnGUI(){
+		
+		gui.RenderGUIObjects(gui);
 		float intDivider = Screen.height/100;
 		float widthDivider = Screen.width/100;
 		Rect titleRect = new Rect((Screen.width/5)/2,(3*intDivider),(4*(Screen.width/5)),(18*intDivider));
 		GUI.skin = thisMetalGUISkin;
-		if(GUI.Button (new Rect(8*(Screen.width/10) ,(95*intDivider) ,(2*(Screen.width/10)) ,(10*intDivider)) ,("NEXT") ,GUI.skin.GetStyle("box") ) ){
-					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
-					gs++;
-					derp += "noob";
-					creditTimer = 5.0f;}
 		
 		switch(gs){
 			case 0://Main Team
-				print(gs + derp);
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));	
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *20),"Senior Programmer/ Lead Tools Programmer",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 25, widthDivider * 70, intDivider *10),"Paul Matias",GUI.skin.GetStyle("box"));
@@ -64,7 +104,6 @@ public class CreditsUI : MonoBehaviour {
 				
 				break;
 			case 1://Hackathon Teams
-				print(gs + derp);
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));	
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *10),"Hackathon Team 1",GUI.skin.GetStyle("box"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 32, widthDivider * 70, intDivider *10),"Anthony Jones	Programmer",GUI.skin.GetStyle("button"));

@@ -9,14 +9,28 @@ using System.Collections.Generic;
 //up = move ascii wheel prev
 //down = move ascii wheel next
 
+public enum SwipeDirection{
+	Left,
+	Right,
+	Up,
+	Down
+}
+
+public class Swipe : EventArgs{
+	
+	public SwipeDirection swipe{get; private set;}
+	public Swipe(SwipeDirection direction){
+		swipe = direction;
+	}
+}
+
 public class HighScoreInitials{
 	
 	private List<AsciiWheel> _slots;	
 	private AsciiWheel _ref;
 	private int _pos;
 	
-	public EventHandler onSucess_SwipedLeftToRight;
-	public EventHandler onSucess_SwipedRightToLeft;
+	public event EventHandler<Swipe> onSuccessSwipe;
 	
 	public HighScoreInitials(int slots){
 		if(slots <= 0) throw new IndexOutOfRangeException();
@@ -29,25 +43,32 @@ public class HighScoreInitials{
 		_ref = _slots[0];
 	}
 	
-	public void onSwipeLeftToRight(){
-		if(_pos < (_slots.Count-1)){
-			_pos++;
-			onSucess_SwipedLeftToRight(this,new EventArgs());
+	public void swipe(SwipeDirection direction){
+		switch(direction){
+			case SwipeDirection.Down:
+				_ref.next();
+				onSuccessSwipe(this,new Swipe(SwipeDirection.Down));
+				break;
+			case SwipeDirection.Right:
+				if(_pos < (_slots.Count-1)){
+					_pos++;
+					onSuccessSwipe(this,new Swipe(SwipeDirection.Right));
+				}
+				_ref = _slots[_pos];
+				break;
+			case SwipeDirection.Left:
+				if(_pos > 0){
+					_pos--;
+					onSuccessSwipe(this,new Swipe(SwipeDirection.Left));
+				}
+				_ref = _slots[_pos];
+				break;
+			case SwipeDirection.Up:
+				_ref.prev();
+				onSuccessSwipe(this,new Swipe(SwipeDirection.Up));
+				break;
 		}
-		_ref = _slots[_pos];
-	}
-	public void onSwipeRightToLeft(){
-		if(_pos > 0){
-			_pos--;
-			onSucess_SwipedRightToLeft(this,new EventArgs());
-		}
-		_ref = _slots[_pos];
-	}
-	public void onSwipeUp(){
-		_ref.prev();
-	}
-	public void onSwipeDown(){
-		_ref.next();
+		
 	}
 	
 	public void resetWheelPositions(){

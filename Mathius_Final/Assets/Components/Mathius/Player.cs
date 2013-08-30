@@ -42,18 +42,19 @@ public class Player : MonoBehaviour {
 		if(mpos.x>cpos.x+delta.x){moveMathius(MATHIUS_LEFT);}
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
 		
-		if(pc.get_using_PCI()){//move mathius
+		if(MasterController.BRAIN.pci().get_using_PCI()){
 			float[] xy = Gest.getHandLocation();
 			if(xy[1]<centerY-deadZone) moveMathius(MATHIUS_UP);
 			if(xy[0]>centerX+deadZone) moveMathius(MATHIUS_LEFT);
 			if(xy[1]>centerY+deadZone) moveMathius(MATHIUS_DOWN);
 			if(xy[0]<centerX-deadZone) moveMathius(MATHIUS_RIGHT);
-		} else{
-			if(Input.GetKey("w")){moveMathius(MATHIUS_UP);}
-			if(Input.GetKey("a")){moveMathius(MATHIUS_LEFT);}
-			if(Input.GetKey("s")){moveMathius(MATHIUS_DOWN);}
-			if(Input.GetKey("d")){moveMathius(MATHIUS_RIGHT);}
 		}
+	
+		if(Input.GetKey(KeyCode.W)){moveMathius(MATHIUS_UP);}
+		if(Input.GetKey(KeyCode.A)){moveMathius(MATHIUS_LEFT);}
+		if(Input.GetKey(KeyCode.S)){moveMathius(MATHIUS_DOWN);}
+		if(Input.GetKey(KeyCode.D)){moveMathius(MATHIUS_RIGHT);}
+
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
 		MasterController.BRAIN.m().set_bounds(delta);
