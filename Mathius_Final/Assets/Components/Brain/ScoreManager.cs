@@ -13,6 +13,7 @@ public class ScoreManager{
 	private int _problems_to_clear;
 	private int _bonus_points;
 	private Mathius _mathius;
+	private PreferencesManager _prefs;
 	
 	private const int CORRECT_ANSWER = 100;
 	private const int WRONG_ANSWER = 10;
@@ -30,7 +31,9 @@ public class ScoreManager{
 		_isOnStreak = false;
 		_equation = "";
 		_mathius = instance;
-		_problems_to_clear = prefs.get_numWin();
+		_prefs = prefs;
+		
+		_problems_to_clear = _prefs.get_numWin();
 		_bonus_points = 0;
 	}
 	
@@ -43,6 +46,7 @@ public class ScoreManager{
 		_equation = "";
 		_isOnStreak = false;
 		_bonus_points = 0;
+		_problems_to_clear = _prefs.get_numWin();
 	}
 	
 	public void set_streakCriteria(int criteria){
@@ -50,7 +54,7 @@ public class ScoreManager{
 	}
 	
 	public void onCorrectAnswer(EquationGenerator.EquationOperation operation){
-	SoundManager.SOUNDS.playSound(SoundManager.SFX_RIGHT_NUM_HIT,CameraCollider.MATHIUS_EARTH_CAM);		
+		SoundManager.SOUNDS.playSound(SoundManager.SFX_RIGHT_NUM_HIT,CameraCollider.MATHIUS_EARTH_CAM);		
 		switch(operation){
 			case EquationGenerator.EquationOperation.ADDITION:
 				_bonus_points += ADDITION_BONUS;
