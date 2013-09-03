@@ -27,4 +27,6 @@ public class NearestEnemy : MonoBehaviour {
 		nearest_enemy = closest;
 		MasterController.BRAIN.sm().set_equation(nearest_enemy.GetComponent<AlienManager>().equation);
 	}
+	
+	public GameObject get_nearest_enemy(){return nearest_enemy;}
 }

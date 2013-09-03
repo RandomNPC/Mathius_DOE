@@ -34,9 +34,10 @@ public class Gun : MonoBehaviour {
 		}
 	}
 
-	private void fireNum(int v) {
+	public void fireNum(int v) {
 		if(v < 0 && v > 9) return; 
 		GameObject proj = (GameObject)Instantiate(bullets[v], transform.position, transform.rotation);
+		proj.name = "Bullet";
 		proj.GetComponent<NumBullet>().variable = v;
 		onCD = true;
 		Timer = 0.0f;
