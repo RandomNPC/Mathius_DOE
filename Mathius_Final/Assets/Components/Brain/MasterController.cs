@@ -66,6 +66,7 @@ public class MasterController : MonoBehaviour {
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
 		tHelper.setTerrains(TerrainManager.MAPS);
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
+		mHelper.set_texture(_mathiusTextures[pHelper.get_mathiusTexture()]);
 		mHelper.set_lives(1);
 		sHelper.set_streakCriteria(3);
 		GamePause.PAUSE.set_gameEnd(false);
