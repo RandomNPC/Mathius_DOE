@@ -252,7 +252,7 @@ public class LevelEditorUI : MonoBehaviour {
 							GUIType.Slider,
 							"",
 							false,
-							0.0f,
+							0.25f,
 							1.0f,
 							_alien_speed);
 		

@@ -75,6 +75,7 @@ public class MasterController : MonoBehaviour {
 		sHelper.reset_score();
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
+		aHelper.reset_postions();
 	}
 	
 	public void onAlienShot(int val, GameObject alien){

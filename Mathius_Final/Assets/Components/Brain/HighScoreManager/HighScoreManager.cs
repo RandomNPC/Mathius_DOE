@@ -29,24 +29,20 @@ public class HighScoreManager{
 			}
 	}
 	
-	public void addScore(int score){
-		hs = new HighScore(score,"");
+	public void addScore(int myscore){
+		hs = new HighScore(myscore,"");
 		_scores.Add(hs);
-		sortScores();
 		
-		try{
-			_pos = _scores.IndexOf(hs);
-		}catch{
-			_pos = _scores.Count;
+		HighScore lowest = null;
+		foreach(HighScore score in _scores){
+			if(lowest==null) lowest = score;
+			else if(score.get_score() < lowest.get_score()) lowest = score;
 		}
-		
-		if(_pos>=(_scores.Count-1)){
-			_scores.Remove(hs);
-			_isHighScore = false;
-		}
-		else{
+		_scores.Remove(lowest);
+		if(_scores.Contains(hs)){
 			_isHighScore = true;
 		}
+		else _isHighScore = false;
 	}
 	
 	private void sortScores(){
@@ -67,8 +63,11 @@ public class HighScoreManager{
 		_scores.Reverse();
 		temp = null;
 	}
+
 	
 	public void saveScores(){
+		
+		sortScores();
 		for(int k = 0; k < MAX_ENTRIES; k++){
 			HighScore hse = _scores[k];
 			
