@@ -324,9 +324,11 @@ public class OptionsUI : MonoBehaviour {
 		switch(e.name){
 			case PERCEPTUAL_DISPLAY:
 				_perceptual = e.state;
+				prefs.set_usePerceptual(_perceptual);
 				break;
 			case MUTE_DISPLAY:
 				_mute = e.state;
+				prefs.set_mute(_mute);
 				break;
 		}
 	}
@@ -337,10 +339,12 @@ public class OptionsUI : MonoBehaviour {
 			case MUSIC_DISPLAY:
 				_music = e.amount;
 				gui.SetGUINameProperty(MUSIC,("Music: " + (Mathf.Round(_music *100f)/100f)));
+				prefs.set_musicVolume(_music);
 				break;
 			case EFFECTS_DISPLAY:
 				_sfx = e.amount;
 				gui.SetGUINameProperty(EFFECTS,"Effects: " + (Mathf.Round(_sfx*100f)/100f));
+				prefs.set_SFXVolume(_sfx);
 				break;
 			default:
 				break;
@@ -354,10 +358,12 @@ public class OptionsUI : MonoBehaviour {
 				if(_texture>0) _texture--;
 				gui.SetGUINameProperty(MATHIUS_COLOR_DISPLAY,colorArray[_texture]);
 				MasterController.BRAIN.m().set_texture(_texturemap[colorArray[_texture]]);
+				prefs.set_mathiusTexture(_texture);
 				break;
 			case MINUS2: //perceptual sound
 				if(_sound>0) _sound--;
 				gui.SetGUINameProperty(VOICE_VOLUME_DISPLAY,soundArray[_sound]);
+				prefs.set_perceptualVolume(_sound);
 				break;
 			case PLUS1: //texture
 				if(_texture<(_mathiusTextures.Length-1)) _texture++;
@@ -367,15 +373,9 @@ public class OptionsUI : MonoBehaviour {
 			case PLUS2: // perceptual sound
 				if(_sound<(soundArray.Length-1)) _sound++;
 				gui.SetGUINameProperty(VOICE_VOLUME_DISPLAY,soundArray[_sound]);
+				prefs.set_perceptualVolume(_sound);
 				break;
 			case MAIN_MENU:
-				prefs.set_mathiusTexture(_texture);
-				prefs.set_musicVolume(_music);
-				prefs.set_mute(_mute);
-				prefs.set_SFXVolume(_sfx);
-				prefs.set_perceptualVolume(_sound);
-				prefs.set_usePerceptual(_perceptual);
-				MasterController.BRAIN.pci().set_using_PCI(_perceptual);
 				Application.LoadLevel("MainMenu");
 				break;
 			default:
