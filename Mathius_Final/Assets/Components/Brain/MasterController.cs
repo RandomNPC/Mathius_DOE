@@ -26,6 +26,7 @@ public class MasterController : MonoBehaviour {
 	
 	
 	void Awake() {//This is the start of the Game. Period.
+		Application.targetFrameRate = 60;
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("SplashScreen");
 		BRAIN = gameObject.GetComponent<MasterController>();
