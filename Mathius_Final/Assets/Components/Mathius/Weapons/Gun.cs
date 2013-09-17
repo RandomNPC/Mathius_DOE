@@ -27,11 +27,10 @@ public class Gun : MonoBehaviour {
 
 	public void fireNum(int v) {
 		//check the distance of game object to the nearest bullet
-		if(nearest_bullet.Equals(null)){
-		}else{
-			if(Mathf.Abs((gameObject.transform.position - nearest_bullet.transform.position).x)<=10.0f) return;
-		}
-		if(v < 0 && v > 9) return; 
+		if(v < 0 && v > 9) return;
+		
+		if(nearest_bullet)if(Mathf.Abs((gameObject.transform.position - nearest_bullet.transform.position).x)<=10.0f) return;
+		
 		GameObject proj = (GameObject)Instantiate(bullets[v], transform.position, transform.rotation);
 		proj.name = "Bullet";
 		proj.GetComponent<NumBullet>().variable = v;
