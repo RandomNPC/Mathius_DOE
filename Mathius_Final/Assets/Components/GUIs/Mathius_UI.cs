@@ -45,6 +45,7 @@ public class Mathius_UI : MonoBehaviour {
 				if(GUI.Button (new Rect(6*(Screen.width/10) ,(90*intDivider) ,(4*(Screen.width/10)) ,(15*intDivider) ) ,("Main Menu") ,GUI.skin.GetStyle("box") ) ){
 					SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,CameraCollider.MATHIUS_EARTH_CAM);
 					Debug.Log("Mathius Clicked");
+					MasterController.BRAIN.tm ().reset_terrain();
 					Application.LoadLevel("MainMenu");}
 				break;
 		}

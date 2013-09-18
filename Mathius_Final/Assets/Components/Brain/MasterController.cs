@@ -51,6 +51,7 @@ public class MasterController : MonoBehaviour {
 	//Events
 	public void onGameEnd(){
 		hHelper.addScore(sHelper.get_score());
+		tHelper.reset_terrain();
 		Application.LoadLevel("GameOver");
 	}
 	
