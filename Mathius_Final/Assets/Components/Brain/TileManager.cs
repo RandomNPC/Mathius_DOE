@@ -68,4 +68,9 @@ public class TileManager : Object {
 	public string get_prev_terrain(){return _prev_terrain;}
 	public string get_next_terrain(){return _next_terrain;}
 	public string get_current_terrain(){return _current_terrain;}
+	public void reset_terrain(){
+		_prev_terrain = "";
+		_next_terrain = "";
+		_current_terrain = "";
+	}
 }
