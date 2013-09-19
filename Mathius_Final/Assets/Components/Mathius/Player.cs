@@ -37,9 +37,7 @@ public class Player : MonoBehaviour {
 		delta.z = mpos.z-cpos.z;
 		delta.y = delta.z*Mathf.Tan(Camera.main.fov*Mathf.PI/360)-dim.y;
 		delta.x = delta.y*Camera.main.aspect-dim.x;
-		
-		
-		
+				
 		if(mpos.y>cpos.y+delta.y){moveMathius(MATHIUS_DOWN);}
 		else if(mpos.y < cpos.y-delta.y){moveMathius(MATHIUS_UP);}//mathius nonono
 		
@@ -53,7 +51,7 @@ public class Player : MonoBehaviour {
 			gameObject.GetComponent<Player>().destroy_mathius();
 			mHelper.set_lives(mHelper.get_lives()-1);
 			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
-			mHelper.spawn_mathius(cam.x,cam.y,cam.z+100.0f);
+			mHelper.spawn_mathius(cam.x,cam.y+15.0f,cam.z+100.0f);
 		}
 		
 		
