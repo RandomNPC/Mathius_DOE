@@ -66,7 +66,7 @@ public class MasterController : MonoBehaviour {
 	public void onGameStart(){
 		
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
-		tHelper.setTerrains(TerrainManager.MAPS);
+		tHelper.setTerrains(gameObject.GetComponent<TerrainManager>().get_terrains(MasterController.BRAIN.pm().get_terrains()));
 		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
 		mHelper.set_texture(_mathiusTextures[pHelper.get_mathiusTexture()]);
 		mHelper.set_lives(1);
@@ -116,7 +116,9 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onMathiusCollision(Collider data){
+		
 		if(data.gameObject.name.Contains("Alian")){
+			if(mHelper.get_invisible()) return;
 			if(mHelper.get_answer().Equals(data.gameObject.GetComponent<AlienManager>().answer)){
 				GameObject alien_ref = data.gameObject;
 				GameObject land_ref = alien_ref.transform.parent.gameObject;
