@@ -9,6 +9,7 @@ public class Mathius : Object{
 	private int _lives;
 	private int _answer;
 	private Texture _texture;
+	private bool _invisible;
 	
 	public Mathius(GameObject mathius){
 		_texture = null;
@@ -17,6 +18,7 @@ public class Mathius : Object{
 		_bounds = new Vector3(0.0f,0.0f,0.0f);
 		_lives = 0;
 		_answer = Random.Range(0,9);
+		_invisible = false;
 	}
 	
 	public void set_mpos(Vector3 mpos){_mpos = mpos;}
@@ -40,5 +42,6 @@ public class Mathius : Object{
 	public Vector3 get_bounds(){return _bounds;}
 	public void set_texture(Texture texture){_texture = texture;}// GameObject.Find("Mathius Model").renderer.material.SetTexture("_MainTex",texture);}
 	public Texture get_texture(){return _texture;}
-
+	public void set_invisible(bool status){ _invisible = status;}
+	public bool get_invisible(){return _invisible;}
 }
