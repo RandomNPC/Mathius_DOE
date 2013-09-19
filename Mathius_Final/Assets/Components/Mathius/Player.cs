@@ -18,12 +18,14 @@ public class Player : MonoBehaviour {
 	private Vector3 delta;
 	private PCInterface pc;
 	private PerCGesture Gest;
+	private Vector3 dim;
 	
 	// Use this for initialization
 	void Start () {
 		Gest = GameObject.Find("Brain").GetComponent<PerCGesture>();
 		delta = new Vector3(0.0f,0.0f,0.0f);
 		pc = MasterController.BRAIN.pci();
+		dim = gameObject.GetComponent<BoxCollider>().size/2;
 	}
 	
 	// Update is called once per frame
@@ -33,8 +35,10 @@ public class Player : MonoBehaviour {
 		Vector3 mpos = gameObject.transform.position;
 		
 		delta.z = mpos.z-cpos.z;
-		delta.y = delta.z*Mathf.Tan(Camera.main.fov*Mathf.PI/360);
-		delta.x = delta.y*Camera.main.aspect;
+		delta.y = delta.z*Mathf.Tan(Camera.main.fov*Mathf.PI/360)-dim.y;
+		delta.x = delta.y*Camera.main.aspect-dim.x;
+		
+		
 		
 		if(mpos.y>cpos.y+delta.y){moveMathius(MATHIUS_DOWN);}
 		else if(mpos.y < cpos.y-delta.y){moveMathius(MATHIUS_UP);}//mathius nonono

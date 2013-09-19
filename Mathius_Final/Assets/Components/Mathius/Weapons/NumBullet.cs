@@ -5,17 +5,6 @@ public class NumBullet : MonoBehaviour {
 
 	public int variable;
 
-	/*public Texture TOne;
-	public Texture TTwo;
-	public Texture TThree;
-	public Texture TFour;
-	public Texture TFive;
-	public Texture TSix;
-	public Texture TSeven;
-	public Texture TEight;
-	public Texture TNine;
-	public Texture TZero;*/
-
 	void Start() {
 		SoundManager.SOUNDS.playSound(SoundManager.SFX_SHOOT_NUM,CameraCollider.MATHIUS_EARTH_CAM);
 		float x, y;
@@ -32,6 +21,9 @@ public class NumBullet : MonoBehaviour {
 		mag += (vel.z * vel.z);
 		mag = Mathf.Sqrt(mag);
 		rigidbody.velocity=	200 / mag * vel;
+		
+		GameObject camera = GameObject.Find("MathiusEarthCam");
+		if(Mathf.Abs((camera.transform.position - gameObject.transform.position).x) > MasterController.BRAIN.m().get_bounds().x) Destroy(gameObject);
 	}
 
 	void OnTriggerEnter(Collider collision) {
@@ -41,22 +33,4 @@ public class NumBullet : MonoBehaviour {
 		}
 	}
 
-	void OnBecameInvisible() {
-		Destroy(gameObject);
-	}
-	/*
-	public void updateTexture() {
-		switch(variable) {
-			case '0': gameObject.renderer.material.mainTexture = TZero; break;
-			case '1': gameObject.renderer.material.mainTexture = TOne; break;
-			case '2': gameObject.renderer.material.mainTexture = TTwo; break;
-			case '3': gameObject.renderer.material.mainTexture = TThree; break;
-			case '4': gameObject.renderer.material.mainTexture = TFour; break;
-			case '5': gameObject.renderer.material.mainTexture = TFive; break;
-			case '6': gameObject.renderer.material.mainTexture = TSix; break;
-			case '7': gameObject.renderer.material.mainTexture = TSeven; break;
-			case '8': gameObject.renderer.material.mainTexture = TEight; break;
-			case '9': gameObject.renderer.material.mainTexture = TNine; break;
-		}
-	}*/
 }

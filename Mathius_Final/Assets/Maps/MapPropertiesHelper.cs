@@ -33,8 +33,14 @@ public class MapPropertiesHelper : MonoBehaviour {
 	private void play_sounds(){
 		sources[0].loop = false;
 		sources[1].loop = false;
-		sources[0].mute = false;
-		sources[1].mute = false;
+		if(MasterController.BRAIN.pm().get_mute()){
+			sources[0].mute = true;
+			sources[1].mute = true;
+		}
+		else{
+			sources[0].mute = false;
+			sources[1].mute = false;
+		}
 		sources[0].Stop();
 		sources[1].Stop();
 		
