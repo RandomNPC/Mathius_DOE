@@ -74,6 +74,6 @@ public class SoundManager : MonoBehaviour {
 			print ("AudioClip " + name + " does not exist");
 			return;
 		}
-		AudioSource.PlayClipAtPoint(playclip,position,audioVolume);
+		if(!MasterController.BRAIN.pm().get_mute())AudioSource.PlayClipAtPoint(playclip,position,audioVolume);
 	}
 }

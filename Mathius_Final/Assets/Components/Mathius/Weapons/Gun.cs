@@ -31,6 +31,8 @@ public class Gun : MonoBehaviour {
 		
 		if(nearest_bullet)if(Mathf.Abs((gameObject.transform.position - nearest_bullet.transform.position).x)<=10.0f) return;
 		
+		if(GameObject.FindGameObjectsWithTag("Bullet").Length > 3) return;
+		
 		GameObject proj = (GameObject)Instantiate(bullets[v], transform.position, transform.rotation);
 		proj.name = "Bullet";
 		proj.GetComponent<NumBullet>().variable = v;
