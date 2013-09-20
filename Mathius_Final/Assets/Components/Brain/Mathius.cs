@@ -40,7 +40,7 @@ public class Mathius : Object{
 	}
 	public void set_bounds(Vector3 bounds){_bounds = bounds;}
 	public Vector3 get_bounds(){return _bounds;}
-	public void set_texture(Texture texture){_texture = texture;}// GameObject.Find("Mathius Model").renderer.material.SetTexture("_MainTex",texture);}
+	public void set_texture(Texture texture){_texture = texture;}
 	public Texture get_texture(){return _texture;}
 	public void set_invisible(bool status){ _invisible = status;}
 	public bool get_invisible(){return _invisible;}
