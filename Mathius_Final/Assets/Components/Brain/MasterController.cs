@@ -7,6 +7,7 @@ public class MasterController : MonoBehaviour {
 	public GameObject _alien;
 	public Texture[] _mathiusTextures;
 	public Material[] _skyBoxes;
+	public GameObject _alianExplosion;
 	
 	public GameObject end;
 	
@@ -82,7 +83,9 @@ public class MasterController : MonoBehaviour {
 			GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
 			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
-			Destroy(alien);	
+			Destroy(alien);
+			GameObject thisParticle =  Instantiate(_alianExplosion,new Vector3(alien_pos.x,alien_pos.y,alien_pos.z),Quaternion.identity) as GameObject;
+			Destroy(thisParticle,2.0f);
 			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 			sHelper.onCorrectAnswer(op);
 		}
@@ -122,6 +125,7 @@ public class MasterController : MonoBehaviour {
 				gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 				mHelper.set_answer();
 				mHelper.set_lives(mHelper.get_lives()+1);
+				
 			}
 			else{
 				GameObject shield = GameObject.Find("Mathius-Shield");

@@ -14,11 +14,11 @@ public class LevelEditorUI : MonoBehaviour {
 	private float _alien_speed;
 	
 	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
-	private string[] terrainNames = {"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
+	private string[] terrainNames = {"Island","Forest","Desert","Moon","Snow","Volcano","Forest","Zack's Map"};
 	private bool[] toggleOperation = {false,false,false,false};
 	private string[] formatArray = {"Arithmetic","Algebra","Mixed"};
 	
-	private const string LEVEL_EDITOR = "Level Editor";
+	private const string LEVEL_EDITOR = "Settings";
 	private const string NUMBER_OF_TERRAINS = "Number of Terrains : ";
 	private const string MINUS1 = "-1";
 	private const string TERRAIN_NUM = "Terrain Num";
