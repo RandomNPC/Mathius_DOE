@@ -68,7 +68,7 @@ public class MasterController : MonoBehaviour {
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
 		tHelper.setTerrains(gameObject.GetComponent<TerrainManager>().get_terrains(MasterController.BRAIN.pm().get_terrains()));
 		Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
-		mHelper.spawn_mathius(0.0f+cam.x,15.0f+cam.y,150.0f+cam.z);
+		mHelper.spawn_mathius(0.0f+cam.x,15.0f+cam.y,100.0f+cam.z);
 		mHelper.set_texture(_mathiusTextures[pHelper.get_mathiusTexture()]);
 		mHelper.set_lives(1);
 		sHelper.set_streakCriteria(3);
