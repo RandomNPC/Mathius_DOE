@@ -131,8 +131,9 @@ public class MasterController : MonoBehaviour {
 			else{
 				GameObject shield = GameObject.Find("Mathius-Shield");
 				
-				if(shield.Equals(null)){
+				if(!shield){
 					data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+					//data.gameObject.AddComponent<Rigidbody>();
 					GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
 				}else{
 					Destroy(shield);

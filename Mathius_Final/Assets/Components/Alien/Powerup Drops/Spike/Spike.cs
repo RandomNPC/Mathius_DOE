@@ -7,7 +7,7 @@ public class Spike : MonoBehaviour {
 		
 		GameObject shield = GameObject.Find("Mathius-Shield");
 		
-		if(shield.Equals(null)){
+		if(!shield){
 			Mathius mHelper = MasterController.BRAIN.m();
 			SoundManager.SOUNDS.playSound(SoundManager.PU_SPIKE,CameraCollider.MATHIUS_EARTH_CAM);
 			gameObject.GetComponent<Player>().destroy_mathius();
