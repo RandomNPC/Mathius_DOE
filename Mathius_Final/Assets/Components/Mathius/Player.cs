@@ -61,10 +61,10 @@ public class Player : MonoBehaviour {
 			if(xy[0]<centerX-deadZone) moveMathius(MATHIUS_RIGHT);
 		}
 	
-		if(Input.GetKey(KeyCode.W)){moveMathius(MATHIUS_UP);}
-		if(Input.GetKey(KeyCode.A)){moveMathius(MATHIUS_LEFT);}
-		if(Input.GetKey(KeyCode.S)){moveMathius(MATHIUS_DOWN);}
-		if(Input.GetKey(KeyCode.D)){moveMathius(MATHIUS_RIGHT);}
+		if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.UpArrow)){moveMathius(MATHIUS_UP);}
+		if(Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow)){moveMathius(MATHIUS_LEFT);}
+		if(Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.DownArrow)){moveMathius(MATHIUS_DOWN);}
+		if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)){moveMathius(MATHIUS_RIGHT);}
 
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);
