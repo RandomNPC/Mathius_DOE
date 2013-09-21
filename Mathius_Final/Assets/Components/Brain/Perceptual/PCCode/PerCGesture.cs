@@ -48,6 +48,17 @@ public class PerCGesture : MonoBehaviour {
 	private bool thumbDown;
 	private bool initiated;
 	
+	private bool moveRight;
+	private bool moveleft;
+	private bool moveUp;
+	private bool moveDown;
+	private bool centeredX;
+	private bool centeredY;
+	
+	private float centerX = 157.0f;
+	private float centerY = 121.0f;
+	private float zoneX = 40.0f;
+	private float zoneY = 40.0f;
 
 	void Start () {
 		xy = new float[2]{157.0f,121.0f};
@@ -67,6 +78,7 @@ public class PerCGesture : MonoBehaviour {
 		else initiated = true;
 		
 		resFound = myPipe.QueryRGBSize(resolution);
+		centered = true;
 	}
 	
 
@@ -81,6 +93,78 @@ public class PerCGesture : MonoBehaviour {
 		if(myPipe.QueryGeoNode(trackedLimb,out nodeInfo)){//out causes the function to change the data within nodeInfo
 			Debug.Log ("hand found!"+" X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
 		}
+		
+		//the following code will perform the event sending for movement.
+		//basically we only want to send an event if your hand position
+		//changes mathius' movement. that is, if you decided to move Mathius
+		//from the current movement to another. 
+		//example: Your hand is centered, therefore mathius isn't to move.
+		//you then move your hand to the right, once your hand leaves the
+		//centered area and is in the right, we send a move right event
+		//you can move your hand all you want in the right area and no event
+		//will fire, but move your hand to the centered area and we fire a stop.
+		if(centeredX){
+			//shouldn't short circuit from centered, made some cases not get caugh
+			if(nodeInfo.positionImage.x>(centerX+zoneX)){/*Perform event to move right*/}
+			if(nodeInfo.positionImage.x<(centerX-zoneX)){/*Perform event to move left*/}
+		}
+		if(centeredY){
+			if(nodeInfo.positionImage.y>(centerY+zoney)){/*Perform event to move up*/}
+			if(nodeInfo.positionImage.y<(centerY+zoneY)){/*Perform event to move down*/}
+		}
+		if(moveUp){
+			//have to set all moves to false when going centered.
+			if(nodeInfo.positionImage.y<(centerY-zoneY)){
+				/*Perform event to move down*/
+				//send stop for moving up
+				//moveup false, movedown true
+			}
+			else if(nodeInfo.positionImage.y<(centerY+zoneY) && nodeInfo.positionImage.y > (centerY-zoneY)){
+				//perform event stop on move up, centeredY  = true	
+				//moveup false
+			}
+		}
+		if(moveDown){
+			if(nodeInfo.positionImage.y>(centerY+zoneY)){
+				/*Perform event to move up*/
+				//send stop on move down
+				//send go on move up
+				//moveup true
+				//movdown false
+			}
+			else if(nodeInfo.positionImage.y<(centerY+zoneY) && nodeInfo.positionImage.y > (centerY-zoneY)){
+				//perform event to stop move down,centered Y true
+			}
+		}
+		if(moveRight){
+			if(nodeInfo.positionImage.x<(centerX-zoneX)){
+				/*Perform event to move left*/
+				//stop on move right
+				//yes on move left
+				//moveright false
+				//moveleft true
+			}
+			else if(nodeInfo.positionImage.x<(centerX+zoneX) && nodeInfo.positionImage.x > (centerX-zoneX)){
+				//stop on move right and move left
+				//centeredX true
+				
+			}
+		}
+		if(moveleft){
+			if(nodeInfo.positionImage.x>(centerX+zoneX)){
+				/*Perform event to move right*/
+				//stop on move left
+				//yes on move right
+				//moveright true
+				//moveleft false
+			}
+			else if(nodeInfo.positionImage.x<(centerX+zoneX) && nodeInfo.positionImage.x > (centerX-zoneX)){
+				//stop on move right and move left
+				//centeredX true
+				
+			}
+		}
+		
 		if(myPipe.QueryGesture(trackedLimb,out movement)){//out causes the function to change the data within movement
 			Debug.Log(movement);
 			if(movement.label == PXCMGesture.Gesture.Label.LABEL_NAV_SWIPE_DOWN) swipeDown = true;
