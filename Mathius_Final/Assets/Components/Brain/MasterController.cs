@@ -86,14 +86,9 @@ public class MasterController : MonoBehaviour {
 		if(val.Equals(alien.GetComponent<AlienManager>().answer)){ //function called twice, why?
 			GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
-<<<<<<< HEAD
-			Destroy(alien);	
-=======
-			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
 			Destroy(alien);
 			GameObject thisParticle =  Instantiate(_alianExplosion,new Vector3(alien_pos.x,alien_pos.y,alien_pos.z),Quaternion.identity) as GameObject;
 			Destroy(thisParticle,2.0f);
->>>>>>> origin/MaxBranch9_13
 			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 			//double items, wtf?
 			sHelper.onCorrectAnswer(alien.GetComponent<AlienManager>().operation);
