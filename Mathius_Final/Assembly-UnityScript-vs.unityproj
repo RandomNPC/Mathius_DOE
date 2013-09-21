@@ -68,7 +68,7 @@
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="Flow">
- <HintPath>Assets\Maps\Mathius-Volcano\Flow Free\Script\Flow.dll</HintPath>
+ <HintPath>Assets\Maps\Flow Free\Script\Flow.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
