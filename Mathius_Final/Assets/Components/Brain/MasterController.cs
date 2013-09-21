@@ -82,13 +82,13 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onAlienShot(int val, GameObject alien){
-		if(val.Equals(alien.GetComponent<AlienManager>().answer)){
+		if(val.Equals(alien.GetComponent<AlienManager>().answer)){ //function called twice, why?
 			GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
-			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
 			Destroy(alien);	
 			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
-			sHelper.onCorrectAnswer(op);
+			//double items, wtf?
+			sHelper.onCorrectAnswer(alien.GetComponent<AlienManager>().operation);
 		}
 		else{
 			sHelper.onWrongAnswer();
@@ -134,7 +134,6 @@ public class MasterController : MonoBehaviour {
 				
 				if(!shield){
 					data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-					//data.gameObject.AddComponent<Rigidbody>();
 					GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
 				}else{
 					Destroy(shield);

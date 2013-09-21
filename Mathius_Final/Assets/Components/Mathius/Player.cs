@@ -45,15 +45,13 @@ public class Player : MonoBehaviour {
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
 		
 		GameObject current_terrain = GameObject.Find(MasterController.BRAIN.tm().get_current_terrain());
-		/*if(current_terrain) if(current_terrain.GetComponent<Terrain>().terrainData.GetHeight((int)mpos.x,(int)mpos.z) > mpos.y){
+		if(Mathf.Abs((cpos-mpos).x)>(delta.x+dim.x)){
+			destroy_mathius();
 			Mathius mHelper = MasterController.BRAIN.m();
-			SoundManager.SOUNDS.playSound(SoundManager.PU_SPIKE,CameraCollider.MATHIUS_EARTH_CAM);
-			gameObject.GetComponent<Player>().destroy_mathius();
 			mHelper.set_lives(mHelper.get_lives()-1);
 			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
 			mHelper.spawn_mathius(cam.x,cam.y+15.0f,cam.z+100.0f);
-		}*/
-		
+		}
 		
 		if(MasterController.BRAIN.pci().get_using_PCI()){
 			float[] xy = Gest.getHandLocation();
