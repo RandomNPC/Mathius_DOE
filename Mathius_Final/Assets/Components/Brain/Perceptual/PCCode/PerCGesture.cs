@@ -159,5 +159,24 @@ public class PerCGesture : MonoBehaviour {
 		return new float[2] {nodeInfo.positionImage.x,nodeInfo.positionImage.y};
 	}
 	
+	public void restart(){
+		//shut this motha down.
+		if(myPipe != null){
+			myPipe.Dispose();
+			myPipe = null;
+		}
+		
+		myPipe = new PXCUPipeline();
+		trackedLimb = PXCMGesture.GeoNode.Label.LABEL_BODY_HAND_PRIMARY;// Primary is first tracked hand
+		myMode = PXCUPipeline.Mode.GESTURE|PXCUPipeline.Mode.COLOR_VGA  ; //the mode i want to use
+		
+		if(!myPipe.Init(myMode)){
+			Debug.Log("The pipeline failed to initialize bras :'(\n");
+			initiated=false;
+			return;
+		}
+		else initiated = true;
+	}
+	
 	
 }

@@ -50,6 +50,7 @@ public class PerCVoice : MonoBehaviour {
 	//0.1 is not practical, you are whispering.
 	//0.5 appears to be normal speech
 	//1.0 is for someone who needs to be loud
+	//I think.... >_>    <_<
 	private float[]								volume = new float[1]{0.25f};
 	private System.Threading.Thread				myThread=null;		//handle for thread
 												//This array is used to set voice commands into the pipeline
@@ -180,6 +181,63 @@ public class PerCVoice : MonoBehaviour {
 	//to getting te volume from the device.....
 	public float getVolume(){
 		return volume[0];
+	}
+	
+	//set the volume with these, low mid and high
+	public void setVolumeLow(){
+		float [] volume = new float[1]{0.33f};
+		myPipe.SetDeviceProperty(audio_mix_prop,volume);
+	}
+	public void setVolumeMid(){
+		float [] volume = new float[1]{0.66f};
+		myPipe.SetDeviceProperty(audio_mix_prop,volume);
+	}
+	public void setVolumeHigh(){
+		float [] volume = new float[1]{0.99f};
+		myPipe.SetDeviceProperty(audio_mix_prop,volume);
+	}
+	
+	public void restart(){
+		//shut down the thread
+		if(myThread!=null){
+			keepLooping = false;
+			Thread.Sleep(5);
+			myThread.Join();
+			myThread = null;
+		}
+		
+		//shut down the pipeline
+		if(myPipe != null){
+			myPipe.Dispose();
+			myPipe = null; 
+		}
+		
+		myPipe = new PXCUPipeline();
+		
+		commandsSet = myPipe.SetVoiceCommands(commands);
+		if(!commandsSet)Debug.Log("Failed to set Commands! :'(");
+		if(!myPipe.Init(myMode) || !commandsSet){
+			Debug.LogError("Failed To initialize PipeLine OH NOES!");
+			initiated = false;
+			return;
+		}
+		else {initiated = true; myPipe.SetDeviceProperty(audio_mix_prop,volume);}//must choose a volume that handles the environment, sensitive mic
+		
+		//default the bool arrays to false.
+		numbers = new bool[10];
+		options = new bool[commands.Length-10];
+		for(int i = 0; i<numbers.Length;i++)numbers[i] = false;
+		for(int j = 0; j<options.Length;j++)options[j] = false;
+		
+		
+		keepLooping = true;//tell the thread not to stop
+		dictated	= null;
+		
+		myThread = new Thread(ThreadFunc);//make thread handle
+		myThread.Start();				  //let 'er rip!
+		
+		PerCGesture.PG.restart();
+		
 	}
 	
 	
