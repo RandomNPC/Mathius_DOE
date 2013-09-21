@@ -44,11 +44,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" />
-     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\FPSInputController.js" />
-     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
-     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" />
-     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" />
+     <Compile Include="Assets\Standard Assets\Particles\Legacy Particles\TimedObjectDestructor.js" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Maps\Mathius-Zack\0000 terrain snow\atsV3 UnityTerrainSnow Package\Shaders\Trees\TreeCreatorBarkRendertexSnow.shader" />
      <None Include="Assets\Components\Sounds\SoundManagerTutorial.txt" />
      <None Include="Assets\Components\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />

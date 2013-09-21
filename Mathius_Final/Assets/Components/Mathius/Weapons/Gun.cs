@@ -4,14 +4,10 @@ using System.Collections;
 
 public class Gun : MonoBehaviour {
 	
-	private float Timer = 0.0f, CoolDown = 0.25f;
-	private bool onCD = false;
-	
 	public GameObject[] bullets;
+	private GameObject nearest_bullet = null;
 	
 	void Update() {
-		
-		if(!onCD){
 			if(MasterController.BRAIN.pci().get_using_PCI()){
 				fireNum(PerCVoice.PV.getNumberVoiced());
 			}
@@ -27,19 +23,19 @@ public class Gun : MonoBehaviour {
 				if(Input.GetKeyDown(KeyCode.Alpha9) || Input.GetKeyDown(KeyCode.Keypad9)) {fireNum(9);}
 				if(Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0)) {fireNum(0);}
 			}
-		}
-		else{
-			Timer += Time.deltaTime;
-			if(Timer >= CoolDown){Timer = 0.0f; onCD = false;}
-		}
 	}
 
 	public void fireNum(int v) {
-		if(v < 0 && v > 9) return; 
+		//check the distance of game object to the nearest bullet
+		if(v < 0 && v > 9) return;
+		
+		if(nearest_bullet)if(Mathf.Abs((gameObject.transform.position - nearest_bullet.transform.position).x)<=10.0f) return;
+		
+		if(GameObject.FindGameObjectsWithTag("Bullet").Length > 3) return;
+		
 		GameObject proj = (GameObject)Instantiate(bullets[v], transform.position, transform.rotation);
 		proj.name = "Bullet";
 		proj.GetComponent<NumBullet>().variable = v;
-		onCD = true;
-		Timer = 0.0f;
+		nearest_bullet = proj;
 	}
 }

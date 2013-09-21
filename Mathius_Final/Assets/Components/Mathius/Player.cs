@@ -18,12 +18,14 @@ public class Player : MonoBehaviour {
 	private Vector3 delta;
 	private PCInterface pc;
 	private PerCGesture Gest;
+	private Vector3 dim;
 	
 	// Use this for initialization
 	void Start () {
 		Gest = GameObject.Find("Brain").GetComponent<PerCGesture>();
 		delta = new Vector3(0.0f,0.0f,0.0f);
 		pc = MasterController.BRAIN.pci();
+		dim = gameObject.GetComponent<BoxCollider>().size/2;
 	}
 	
 	// Update is called once per frame
@@ -33,14 +35,23 @@ public class Player : MonoBehaviour {
 		Vector3 mpos = gameObject.transform.position;
 		
 		delta.z = mpos.z-cpos.z;
-		delta.y = delta.z*Mathf.Tan(Camera.main.fov*Mathf.PI/360);
-		delta.x = delta.y*Camera.main.aspect;
-		
+		delta.y = delta.z*Mathf.Tan(Camera.main.fov*Mathf.PI/360)-dim.y;
+		delta.x = delta.y*Camera.main.aspect-dim.x;
+				
 		if(mpos.y>cpos.y+delta.y){moveMathius(MATHIUS_DOWN);}
-		else if(mpos.y < cpos.y-delta.y){moveMathius(MATHIUS_UP);}
+		else if(mpos.y < cpos.y-delta.y){moveMathius(MATHIUS_UP);}//mathius nonono
 		
 		if(mpos.x>cpos.x+delta.x){moveMathius(MATHIUS_LEFT);}
 		else if(mpos.x < cpos.x-delta.x){moveMathius(MATHIUS_RIGHT);}
+		
+		GameObject current_terrain = GameObject.Find(MasterController.BRAIN.tm().get_current_terrain());
+		if(Mathf.Abs((cpos-mpos).x)>(delta.x+dim.x)){
+			destroy_mathius();
+			Mathius mHelper = MasterController.BRAIN.m();
+			mHelper.set_lives(mHelper.get_lives()-1);
+			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
+			mHelper.spawn_mathius(cam.x,cam.y+15.0f,cam.z+100.0f);
+		}
 		
 		if(MasterController.BRAIN.pci().get_using_PCI()){
 			float[] xy = Gest.getHandLocation();
@@ -50,10 +61,10 @@ public class Player : MonoBehaviour {
 			if(xy[0]<centerX-deadZone) moveMathius(MATHIUS_RIGHT);
 		}
 	
-		if(Input.GetKey(KeyCode.W)){moveMathius(MATHIUS_UP);}
-		if(Input.GetKey(KeyCode.A)){moveMathius(MATHIUS_LEFT);}
-		if(Input.GetKey(KeyCode.S)){moveMathius(MATHIUS_DOWN);}
-		if(Input.GetKey(KeyCode.D)){moveMathius(MATHIUS_RIGHT);}
+		if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.UpArrow)){moveMathius(MATHIUS_UP);}
+		if(Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow)){moveMathius(MATHIUS_LEFT);}
+		if(Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.DownArrow)){moveMathius(MATHIUS_DOWN);}
+		if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)){moveMathius(MATHIUS_RIGHT);}
 
 		
 		gameObject.transform.localRotation.Set(0.0f,0.0f,0.0f,0.0f);

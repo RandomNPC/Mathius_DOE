@@ -20,7 +20,7 @@ public class AlienMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		scale = GameSpeed.SPEED.get_gameSpeed();
+		scale = MasterController.BRAIN.pm ().get_alienSpeed();
 		switch(state){
 			case 1: //sine wave
 				transform.Translate(-scale, 0, 0);

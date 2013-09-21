@@ -7,6 +7,7 @@ public class MasterController : MonoBehaviour {
 	public GameObject _alien;
 	public Texture[] _mathiusTextures;
 	public Material[] _skyBoxes;
+	public GameObject _alianExplosion;
 	
 	public GameObject end;
 	
@@ -26,6 +27,7 @@ public class MasterController : MonoBehaviour {
 	
 	
 	void Awake() {//This is the start of the Game. Period.
+		Application.targetFrameRate = 60;
 		DontDestroyOnLoad(gameObject);
 		Application.LoadLevel("SplashScreen");
 		BRAIN = gameObject.GetComponent<MasterController>();
@@ -50,6 +52,7 @@ public class MasterController : MonoBehaviour {
 	//Events
 	public void onGameEnd(){
 		hHelper.addScore(sHelper.get_score());
+		tHelper.reset_terrain();
 		Application.LoadLevel("GameOver");
 	}
 	
@@ -64,8 +67,9 @@ public class MasterController : MonoBehaviour {
 	public void onGameStart(){
 		
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
-		tHelper.setTerrains(TerrainManager.MAPS);
-		mHelper.spawn_mathius(0.0f,15.0f,150.0f);
+		tHelper.setTerrains(gameObject.GetComponent<TerrainManager>().get_terrains(MasterController.BRAIN.pm().get_terrains()));
+		Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
+		mHelper.spawn_mathius(0.0f+cam.x,15.0f+cam.y,100.0f+cam.z);
 		mHelper.set_texture(_mathiusTextures[pHelper.get_mathiusTexture()]);
 		mHelper.set_lives(1);
 		sHelper.set_streakCriteria(3);
@@ -75,16 +79,19 @@ public class MasterController : MonoBehaviour {
 		sHelper.reset_score();
 		tHelper.set_pos(0.0f);	
 		hHelper.loadScores();
+		aHelper.reset_postions();
 	}
 	
 	public void onAlienShot(int val, GameObject alien){
-		if(val.Equals(alien.GetComponent<AlienManager>().answer)){
-			GameObject land_ref = alien.transform.parent.gameObject;
+		if(val.Equals(alien.GetComponent<AlienManager>().answer)){ //function called twice, why?
+			//GameObject land_ref = alien.transform.parent.gameObject;
 			Vector3 alien_pos = alien.transform.position;
-			EquationGenerator.EquationOperation op = alien.GetComponent<AlienManager>().operation;
-			Destroy(alien);	
-			gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
-			sHelper.onCorrectAnswer(op);
+			Destroy(alien);
+			GameObject thisParticle =  Instantiate(_alianExplosion,new Vector3(alien_pos.x,alien_pos.y,alien_pos.z),Quaternion.identity) as GameObject;
+			Destroy(thisParticle,2.0f);
+			//gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
+			//double items, wtf?
+			sHelper.onCorrectAnswer(alien.GetComponent<AlienManager>().operation);
 		}
 		else{
 			sHelper.onWrongAnswer();
@@ -113,20 +120,22 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onMathiusCollision(Collider data){
+		
 		if(data.gameObject.name.Contains("Alian")){
+			if(mHelper.get_invisible()) return;
 			if(mHelper.get_answer().Equals(data.gameObject.GetComponent<AlienManager>().answer)){
 				GameObject alien_ref = data.gameObject;
 				GameObject land_ref = alien_ref.transform.parent.gameObject;
 				Vector3 alien_pos = alien_ref.transform.position;
 				Destroy(data.gameObject);
-				gameObject.GetComponent<ItemDropManager>().drop_item(alien_pos,land_ref);
 				mHelper.set_answer();
 				mHelper.set_lives(mHelper.get_lives()+1);
+				
 			}
 			else{
 				GameObject shield = GameObject.Find("Mathius-Shield");
 				
-				if(shield.Equals(null)){
+				if(!shield){
 					data.gameObject.GetComponent<BoxCollider>().isTrigger = false;
 					GameObject.Find ("Mathius").GetComponent<Player>().crashTrajectory_mathius();
 				}else{
@@ -140,7 +149,7 @@ public class MasterController : MonoBehaviour {
 			GameObject.Find("Mathius").GetComponent<Player>().destroy_mathius();
 			mHelper.set_lives(mHelper.get_lives()-1);
 			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
-			mHelper.spawn_mathius(cam.x,cam.y,cam.z+100.0f);
+			mHelper.spawn_mathius(cam.x,cam.y+15.0f,cam.z+100.0f);
 		}
 	}
 	

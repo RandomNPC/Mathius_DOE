@@ -15,7 +15,7 @@ public class GamePause : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Escape) || (PerCVoice.PV.getOptionVoicedAsString()=="pause" )){
+		if(Input.GetKeyDown(KeyCode.Escape)){
 			if(!gameDisabled){
 				PauseGame();
 				gameDisabled = true;

@@ -60,7 +60,7 @@ public class GUIManager{
 		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check,min,max,defaultVal));
 	}
 			
-	public void RenderGUIObjects(GUIManager gui){
+	public void RenderGUIObjects(GUIManager gui){ //warning, function must be called from onGUI.
 		if(gui.Equals(null))return;//I require checking the instance to avoid null ref exception errors
 		
 		GUI.skin.box.normal.background = texture; //applying red texture here for box

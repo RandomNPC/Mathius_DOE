@@ -23,7 +23,7 @@ public class CameraCollider : MonoBehaviour {
 			allocator_triggered = false;
 		}
 		_audio[0].volume = _pref.get_musicVolume()/100.0f;
-		_audio[1].volume = _pref.get_SFXVolume()/100.0f;
+		_audio[1].volume = _pref.get_musicVolume()/100.0f;
 	}
 	
 	void OnTriggerEnter(Collider obj){

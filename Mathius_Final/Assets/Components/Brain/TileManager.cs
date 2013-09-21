@@ -12,6 +12,7 @@ public class TileManager : Object {
 	private PreferencesManager _pfm;
 	private string _prev_terrain;
 	private string _next_terrain;
+	private string _current_terrain;
 	
 	
 	public TileManager(PreferencesManager pfm){
@@ -24,6 +25,7 @@ public class TileManager : Object {
 		_maps = null;
 		_prev_terrain = "";
 		_next_terrain = "";
+		_current_terrain = "";
 	}
 	
 	public void setTerrains(GameObject[] maplist){
@@ -56,6 +58,7 @@ public class TileManager : Object {
 	}
 	
 	public void triggerTransition(){
+		_current_terrain = "Surface " + (_tile-1);
 		_next.GetComponent<MapPropertiesHelper>().onTransitionTrigger();
 	}
 	
@@ -64,4 +67,10 @@ public class TileManager : Object {
 	
 	public string get_prev_terrain(){return _prev_terrain;}
 	public string get_next_terrain(){return _next_terrain;}
+	public string get_current_terrain(){return _current_terrain;}
+	public void reset_terrain(){
+		_prev_terrain = "";
+		_next_terrain = "";
+		_current_terrain = "";
+	}
 }

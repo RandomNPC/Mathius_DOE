@@ -17,6 +17,8 @@ public class SplashTimer : MonoBehaviour {
 			Application.LoadLevel("MainMenu");
 		}
 		
-		
+		if(Input.anyKey == true){
+			Application.LoadLevel("MainMenu");
+		}
 	}
 }

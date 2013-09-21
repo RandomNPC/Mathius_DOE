@@ -15,4 +15,8 @@ public class AlienManager : MonoBehaviour {
 		answer = eq.answer();
 		operation = eq.eqOperation();
 	}
+	
+	void OnDestroy(){
+		MasterController.BRAIN.GetComponent<ItemDropManager>().drop_item(transform.position,gameObject.transform.parent.gameObject);
+	}
 }

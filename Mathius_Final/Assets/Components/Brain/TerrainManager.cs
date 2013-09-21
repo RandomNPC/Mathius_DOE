@@ -16,13 +16,8 @@ public class TerrainManager : MonoBehaviour {
 	public const byte TERRAIN_7 = 0x40;
 	public const byte TERRAIN_8 = 0x80;
 	
-	public static GameObject[] MAPS;
 	
-	void Start(){
-		MAPS = get_terrains((byte)PlayerPrefs.GetInt("using_terrains",1));	
-	}
-	
-	private GameObject[] get_terrains(byte _terrains){
+	public GameObject[] get_terrains(byte _terrains){
 		if(terrains == null) terrains = new List<GameObject>();
 		terrains.Clear();
 		for(int pos = 0; pos < 8; pos++){

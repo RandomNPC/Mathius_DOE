@@ -14,11 +14,11 @@ public class LevelEditorUI : MonoBehaviour {
 	private float _alien_speed;
 	
 	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
-	private string[] terrainNames = {"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
+	private string[] terrainNames = {"Island","Forest","Desert","Moon","Snow","Volcano","Forest","Zack's Map"};
 	private bool[] toggleOperation = {false,false,false,false};
 	private string[] formatArray = {"Arithmetic","Algebra","Mixed"};
 	
-	private const string LEVEL_EDITOR = "Level Editor";
+	private const string LEVEL_EDITOR = "Settings";
 	private const string NUMBER_OF_TERRAINS = "Number of Terrains : ";
 	private const string MINUS1 = "-1";
 	private const string TERRAIN_NUM = "Terrain Num";
@@ -252,7 +252,7 @@ public class LevelEditorUI : MonoBehaviour {
 							GUIType.Slider,
 							"",
 							false,
-							0.0f,
+							0.25f,
 							1.0f,
 							_alien_speed);
 		
@@ -390,34 +390,34 @@ public class LevelEditorUI : MonoBehaviour {
 			case MINUS1://terrain
 				if(_terrain_num>1) _terrain_num--;
 				gui.SetGUINameProperty(TERRAIN_NUM,_terrain_num.ToString());
+		        prefs.set_tileNum(_terrain_num);
 				break;
 			case MINUS2://eq format
 				if(_format_num>0) _format_num--;
-				gui.SetGUINameProperty(EQUATION_FORMAT,formatArray[_format_num]);
+				gui.SetGUINameProperty(EQUATION_FORMAT,formatArray[_format_num]);		      		
+				prefs.set_eqFormat(_format_num);
 				break;
 			case MINUS3://num to win
 				if(_num_to_win>1) _num_to_win--;
 				gui.SetGUINameProperty(NUMBER_TO_WIN_VALUE,_num_to_win.ToString());
+				prefs.set_numWin(_num_to_win);
 				break;
 			case PLUS1://terrain
 				_terrain_num++;
 				gui.SetGUINameProperty(TERRAIN_NUM,_terrain_num.ToString());
+	          	prefs.set_tileNum(_terrain_num);
 				break;
 			case PLUS2://eq format
 				if(_format_num<(formatArray.Length-1)) _format_num++;
 				gui.SetGUINameProperty(EQUATION_FORMAT,formatArray[_format_num]);
+		      	prefs.set_eqFormat(_format_num);
 				break;
-			case PLUS3:
+			case PLUS3://num to win
 				_num_to_win++;
 				gui.SetGUINameProperty(NUMBER_TO_WIN_VALUE,_num_to_win.ToString());
+				prefs.set_numWin(_num_to_win);
 				break;
 			case SAVE:
-				prefs.set_operations(using_operations());
-				prefs.set_terrains(using_terrains());
-	          	prefs.set_tileNum(_terrain_num);
-	      		prefs.set_eqFormat(_format_num);
-	      		prefs.set_numWin(_num_to_win);
-	      		prefs.set_alienSpeed(_alien_speed);
 				Application.LoadLevel("MainMenu");
 				break;
 			case RESET:
@@ -430,12 +430,6 @@ public class LevelEditorUI : MonoBehaviour {
 				Application.LoadLevel("MainMenu");
 				break;
 			case CUSTOM_GAME:
-				prefs.set_operations(using_operations());
-				prefs.set_terrains(using_terrains());
-				prefs.set_tileNum(_terrain_num);
-	      		prefs.set_eqFormat(_format_num);
-	      		prefs.set_numWin(_num_to_win);
-	      		prefs.set_alienSpeed(_alien_speed);
 				Application.LoadLevel("Earth Scene");
 				break;
 			default:
@@ -485,7 +479,8 @@ public class LevelEditorUI : MonoBehaviour {
 			default:
 				break;
 		}
-
+		prefs.set_terrains(using_terrains());
+		prefs.set_operations(using_operations());
 	}
 	
 	void HandleGuiOnScroll (object sender, ButtonName e)
@@ -494,6 +489,7 @@ public class LevelEditorUI : MonoBehaviour {
 			case ALIEN_SLIDER_SPEED:
 				_alien_speed = e.amount;
 				gui.SetGUINameProperty(ALIEN_SPEED,"Alien Speed: " +(Mathf.Round(_alien_speed *100f)/100f));
+				prefs.set_alienSpeed(_alien_speed);
 				break;
 			default:
 				break;

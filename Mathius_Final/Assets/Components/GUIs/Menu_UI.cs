@@ -9,7 +9,7 @@ public class Menu_UI : MonoBehaviour {
 	
 	private const string TITLE = "Mathius: Defender of Earth!";
 	private const string START_GAME = "START GAME";
-	private const string LEVEL_EDITOR = "LEVEL EDITOR";
+	private const string LEVEL_EDITOR = "SETTINGS";
 	private const string OPTIONS = "OPTIONS";
 	private const string HIGH_SCORE = "HIGH SCORE";
 	private const string CREDITS = "CREDITS";
@@ -33,7 +33,7 @@ public class Menu_UI : MonoBehaviour {
 							GUIType.Button,
 							"box");
 		gui.CreateGUIObject(LEVEL_EDITOR,
-							"LEVEL EDITOR",
+							"SETTINGS",
 							new Rect((Screen.width/3),(35*(Screen.height/100)),(2*(Screen.width/5)),(10*(Screen.height/100))),
 							GUIType.Button,
 							"box");

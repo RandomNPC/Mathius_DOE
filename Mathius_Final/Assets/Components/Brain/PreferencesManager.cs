@@ -43,7 +43,7 @@ public class PreferencesManager{
 		_usePerceptual = (PlayerPrefs.GetInt(USEPERCEPTUAL,0).Equals(0)) ? false : true;
 		_musicVolume = PlayerPrefs.GetFloat(MUSICVOLUME,0.5f);
 		_SFXVolume = PlayerPrefs.GetFloat(SFXVOLUME,0.5f);
-		_mute = (PlayerPrefs.GetInt(MUTE,0).Equals(0)) ? true : false;
+		_mute = (PlayerPrefs.GetInt(MUTE,0).Equals(1)) ? true : false;
 		
 		_pVolume = new Dictionary<int, float>();
 		_pVolume.Clear();		
@@ -122,6 +122,7 @@ public class PreferencesManager{
 	
 	public void set_SFXVolume(float volume){
 		_SFXVolume = volume;
+		SoundManager.SOUNDS.setVolume(_SFXVolume);
 		PlayerPrefs.SetFloat(SFXVOLUME,volume);
 		PlayerPrefs.Save();
 	}
