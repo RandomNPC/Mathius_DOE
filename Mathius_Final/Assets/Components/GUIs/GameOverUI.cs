@@ -140,6 +140,8 @@ public class GameOverUI : MonoBehaviour {
 		switch(e.name){
 			case MAINMENU:
 				Application.LoadLevel("MainMenu");
+				SoundManager.SOUNDS.playSound(SoundManager.UI_MUSIC_MAIN,MasterController.UI_CAMERA_ALT);
+				SoundManager.SOUNDS.playSound(SoundManager.UI_MAIN_LOOP,MasterController.UI_CAMERA_ALT);
 				break;
 			case REPLAY:
 				Application.LoadLevel("Earth Scene");
