@@ -36,6 +36,7 @@ public class GameOverUI : MonoBehaviour {
 	
 	
 	void Start(){
+		MasterController.BRAIN.onEnterMenu();
 		pc = MasterController.BRAIN.pci();
 		pc.onGesturePerformed += HandlePconGesturePerformed;
 		_score = MasterController.BRAIN.sm().get_score();
