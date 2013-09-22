@@ -198,12 +198,12 @@ public class GameOverUI : MonoBehaviour {
 								   GUIType.Label,
 								   "label");
 		
-		guiInput.connect(UP1,ENTER,UP2,DOWN1,DOWN1);
-		guiInput.connect(UP2,UP1,UP3,DOWN2,DOWN2);
-		guiInput.connect(UP3,UP2,ENTER,DOWN3,DOWN3);
-		guiInput.connect(DOWN1,ENTER,DOWN2,UP1,UP1);
-		guiInput.connect(DOWN2,DOWN1,DOWN3,UP2,UP2);
-		guiInput.connect(DOWN3,DOWN2,ENTER,UP3,UP3);
+		guiInput.connect(UP1,ENTER,UP2,"",DOWN1);
+		guiInput.connect(UP2,UP1,UP3,"",DOWN2);
+		guiInput.connect(UP3,UP2,ENTER,"",DOWN3);
+		guiInput.connect(DOWN1,ENTER,DOWN2,UP1,"");
+		guiInput.connect(DOWN2,DOWN1,DOWN3,UP2,"");
+		guiInput.connect(DOWN3,DOWN2,ENTER,UP3,"");
 		guiInput.connect(ENTER,UP3,UP1,UP1,UP1);
 		
 		guiInput.pointer = UP1;
@@ -331,6 +331,15 @@ public class GameOverUI : MonoBehaviour {
 			switch(_state){
 				case State.INPUT:
 					guiInput.swipe(Direction.Up);
+					switch(guiInput.pointer){
+						case UP1:
+						case UP2:
+						case UP3:
+							guiInput.selectOption(guiInput.pointer);
+							break;
+						default:
+							break;
+					}
 					break;
 				case State.DISPLAY:
 					guiDisplay.swipe(Direction.Up);
@@ -356,6 +365,15 @@ public class GameOverUI : MonoBehaviour {
 			switch(_state){
 				case State.INPUT:
 					guiInput.swipe(Direction.Down);
+					switch(guiInput.pointer){
+						case DOWN1:
+						case DOWN2:
+						case DOWN3:
+							guiInput.selectOption(guiInput.pointer);
+							break;
+						default:
+							break;
+					}
 					break;
 				case State.DISPLAY:
 					guiDisplay.swipe(Direction.Down);
@@ -439,6 +457,15 @@ public class GameOverUI : MonoBehaviour {
 				switch(_state){
 					case State.INPUT:
 						guiInput.swipe(Direction.Up);
+						switch(guiInput.pointer){
+							case UP1:
+							case UP2:
+							case UP3:
+								guiInput.selectOption(guiInput.pointer);
+								break;
+							default:
+								break;
+						}
 						break;
 					case State.DISPLAY:
 						guiDisplay.swipe(Direction.Up);
@@ -451,6 +478,15 @@ public class GameOverUI : MonoBehaviour {
 				switch(_state){
 					case State.INPUT:
 						guiInput.swipe(Direction.Down);
+						switch(guiInput.pointer){
+							case DOWN1:
+							case DOWN2:
+							case DOWN3:
+								guiInput.selectOption(guiInput.pointer);
+								break;
+							default:
+								break;
+						}
 						break;
 					case State.DISPLAY:
 						guiDisplay.swipe(Direction.Down);
