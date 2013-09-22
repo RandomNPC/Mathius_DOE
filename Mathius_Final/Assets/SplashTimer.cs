@@ -14,10 +14,12 @@ public class SplashTimer : MonoBehaviour {
 			myTimer -= Time.deltaTime;
 		}
 		if(myTimer<= 0){
+			MasterController.BRAIN.onEnterMenu();
 			Application.LoadLevel("MainMenu");
 		}
 		
 		if(Input.anyKey == true){
+			MasterController.BRAIN.onEnterMenu();
 			Application.LoadLevel("MainMenu");
 		}
 	}

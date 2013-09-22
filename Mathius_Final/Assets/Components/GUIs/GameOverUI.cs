@@ -36,6 +36,7 @@ public class GameOverUI : MonoBehaviour {
 	
 	
 	void Start(){
+		MasterController.BRAIN.onEnterMenu();
 		pc = MasterController.BRAIN.pci();
 		pc.onGesturePerformed += HandlePconGesturePerformed;
 		_score = MasterController.BRAIN.sm().get_score();
@@ -78,23 +79,23 @@ public class GameOverUI : MonoBehaviour {
 								 GUIType.Button,
 								 "box");
 		guiInput.CreateGUIObject(LEFT,
-								 "Left",
-								 new Rect((Screen.width/100)*30, (Screen.height/100)*50,(Screen.width/100)*15, (Screen.height/100)*5),
+								 "<",
+								 new Rect((Screen.width/100)*42, (Screen.height/100)*50,(Screen.width/100)*2, (Screen.height/100)*5),
 								 GUIType.Button,
 								 "button");
 		guiInput.CreateGUIObject(RIGHT,
-								 "Right",
-								 new Rect((Screen.width/100)*60, (Screen.height/100)*50,(Screen.width/100)*15, (Screen.height/100)*5),
+								 ">",
+								 new Rect((Screen.width/100)*58, (Screen.height/100)*50,(Screen.width/100)*2, (Screen.height/100)*5),
 								 GUIType.Button,
 								 "button");
-		guiInput.CreateGUIObject(UP,
+		guiInput.CreateGUIObject(UP,//right up button
 								 "Up",
-								 new Rect((Screen.width/100)*45, (Screen.height/100)*45,(Screen.width/100)*15, (Screen.height/100)*5),
+								 new Rect((Screen.width/100)*54, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),
 								 GUIType.Button,
 								 "button");
-		guiInput.CreateGUIObject(DOWN,
+		guiInput.CreateGUIObject(DOWN, //right down button
 								 "Down",
-								 new Rect((Screen.width/100)*45, (Screen.height/100)*55,(Screen.width/100)*15, (Screen.height/100)*5),
+								 new Rect((Screen.width/100)*54, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),
 								 GUIType.Button,
 								 "button");
 		//Display
@@ -199,7 +200,11 @@ public class GameOverUI : MonoBehaviour {
 				guiDisplay.RenderGUIObjects(guiDisplay);
 				break;
 			case State.INPUT:
-				guiInput.RenderGUIObjects(guiInput);
+				guiInput.RenderGUIObjects(guiInput);;
+				GUI.Button(new Rect((Screen.width/100)*45, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Left UP 
+				GUI.Button(new Rect((Screen.width/100)*45, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Left Right
+				GUI.Button(new Rect((Screen.width/100)*50, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Center UP 
+				GUI.Button(new Rect((Screen.width/100)*50, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Center Right
 				break;
 			default:
 				break;

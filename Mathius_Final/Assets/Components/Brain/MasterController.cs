@@ -65,6 +65,9 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onGameStart(){
+		AudioSource[] menuSounds = gameObject.GetComponents<AudioSource>();
+		menuSounds[0].Stop();
+		menuSounds[1].Stop();
 		
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
 		tHelper.setTerrains(gameObject.GetComponent<TerrainManager>().get_terrains(MasterController.BRAIN.pm().get_terrains()));
@@ -151,6 +154,12 @@ public class MasterController : MonoBehaviour {
 			Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
 			mHelper.spawn_mathius(cam.x,cam.y+15.0f,cam.z+100.0f);
 		}
+	}
+	
+	public void onEnterMenu(){
+		AudioSource[] menuSounds = gameObject.GetComponents<AudioSource>();
+		menuSounds[0].Play();
+		menuSounds[1].Play();
 	}
 	
 	//class instances. Use 
