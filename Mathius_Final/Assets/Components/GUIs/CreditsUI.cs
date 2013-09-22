@@ -31,7 +31,7 @@ public class CreditsUI : MonoBehaviour {
 		stats = MasterController.BRAIN.sm();
 		gs = 0;
 		MUI = gameObject.GetComponent<Mathius_UI>();
-		creditTimer = 5.0f;
+		creditTimer = 20.0f;
 		
 		gui.connect(NEXT,NEXT,NEXT,NEXT,NEXT);
 		gui.pointer = NEXT;
@@ -43,7 +43,7 @@ public class CreditsUI : MonoBehaviour {
 			case Gesture.SELECT:
 				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 				gs++;
-				creditTimer = 5.0f;
+				creditTimer = 20.0f;
 				break;
 			default:
 				break;
@@ -56,7 +56,7 @@ public class CreditsUI : MonoBehaviour {
 			case NEXT:
 				SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,MasterController.UI_CAMERA_ALT);
 				gs++;
-				creditTimer = 5.0f;
+				creditTimer = 20.0f;
 				break;
 			default:
 				break;
@@ -69,7 +69,7 @@ public class CreditsUI : MonoBehaviour {
 		}
 		if (creditTimer<= 0){
 			gs++;
-			creditTimer = 5.0f;
+			creditTimer = 20.0f;
 		}
 		if(Input.GetKeyDown(KeyCode.Return)){
 			gui.selectOption(gui.pointer);
@@ -128,10 +128,32 @@ public class CreditsUI : MonoBehaviour {
 				
 			case 2://Resources
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));
-				
+				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *10),"Art Assets",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 32, widthDivider * 92, intDivider *10),"Unity Terrain Assets, Standard Assets, Sample Particle Pack -Unity Technologies",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 35, widthDivider * 92, intDivider *10),"Nobiaz Free Textures -Dactillar Design                            Flow Free -David Naskidashvili",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 38, widthDivider * 92, intDivider *10),"Ats Snow Suit -Forst                                                  Destroyed City Free -Profi Developers",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 41, widthDivider * 92, intDivider *10),"Computer Typodermic Fonts -Ray Larabie                                 Gui Images -Shadow3097",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 44, widthDivider * 92, intDivider *10),"Ball Pack -Steve Wigley                                                                  Small Particle Pack -Fire95",GUI.skin.GetStyle("credits"));	
+				GUI.Label(new Rect(widthDivider*5, intDivider* 47, widthDivider * 92, intDivider *10),"Green, Light-Blue, Moon-OffWhite Textures -Thomas Bolling",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 50, widthDivider * 92, intDivider *10),"Waterblue, StaryNight Textures/Skyboxes -Thomas Bolling",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 53, widthDivider * 92, intDivider *10),"Shield Model/Texture -Maximilian Bolling               Extra Gui Skin -Unity Technologies ",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 56, widthDivider * 92, intDivider *10),"Numbers 0-9, Mathius, Alien Models/Textures -Hasani Groce",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 59, widthDivider * 92, intDivider *10),"Extralife, Coin, Bomb, Shield, Spike Power-UP Models/Textures -Hasani Groce",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 64, widthDivider * 70, intDivider *10),"Sound Assets",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 74, widthDivider * 92, intDivider *10),"Music Pack #3 -Space -AudioDraft        8Bit Retro Rampage:Free -Red Button Audio",GUI.skin.GetStyle("credits"));
+				GUI.Label(new Rect(widthDivider*5, intDivider* 77, widthDivider * 92, intDivider *10),"Nasa Mision Audio -Unity Technologies                 8Bit Sounds Free -Electrodynamics",GUI.skin.GetStyle("credits"));
+			
 				break;
 			case 3://
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *20),"Lead QA Tester Video Editor",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 25, widthDivider * 70, intDivider *10),"Gabe Tanenhaus",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 36, widthDivider * 70, intDivider *20),"World Builder QA Tester",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 39, widthDivider * 70, intDivider *10),"Zackery Arne",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 50, widthDivider * 70, intDivider *20),"Special Thanks to our Families Especially:",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 53, widthDivider * 70, intDivider *10),"Diana Vergil",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 64, widthDivider * 70, intDivider *10),"Marilou Matias",GUI.skin.GetStyle("box"));
+				
 				
 				break;
 			case 4: //Tom Murphy

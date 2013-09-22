@@ -14,11 +14,11 @@ public class LevelEditorUI : MonoBehaviour {
 	private float _alien_speed;
 	
 	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
-	private string[] terrainNames = {"Terrain1","Terrain2","Terrain3","Terrain4","Terrain5","Terrain6","Terrain7","Terrain8"};
+	private string[] terrainNames = {"Island","Forest","Desert","Moon","Snow","Volcano","Forest","Zack's Map"};
 	private bool[] toggleOperation = {false,false,false,false};
 	private string[] formatArray = {"Arithmetic","Algebra","Mixed"};
 	
-	private const string LEVEL_EDITOR = "Level Editor";
+	private const string LEVEL_EDITOR = "Settings";
 	private const string NUMBER_OF_TERRAINS = "Number of Terrains : ";
 	private const string MINUS1 = "-1";
 	private const string TERRAIN_NUM = "Terrain Num";
@@ -76,7 +76,7 @@ public class LevelEditorUI : MonoBehaviour {
 							GUIType.Label,
 							"label");
 		//Number of Terrains
-		gui.CreateGUIObject(NUMBER_OF_TERRAINS,
+		/*gui.CreateGUIObject(NUMBER_OF_TERRAINS,
 							"Number of Terrains : ",
 							new Rect((Screen.width/100)*20, (Screen.height/100)*25,(Screen.width/100)*50, (Screen.height/100)*5),
 							GUIType.Label,
@@ -95,7 +95,7 @@ public class LevelEditorUI : MonoBehaviour {
 							"+",
 							new Rect((Screen.width/100)*60, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
 							GUIType.Button,
-							"button");
+							"button");*/
 		//Reset
 		gui.CreateGUIObject(RESET,
 							"Reset",
@@ -110,7 +110,7 @@ public class LevelEditorUI : MonoBehaviour {
 							"box");
 		//Custom Game
 		gui.CreateGUIObject(CUSTOM_GAME,
-							"Custom Game",
+							"Custom",
 							new Rect((Screen.width/100) ,(94*(Screen.height/100)) ,(4*(Screen.width/10)) ,(15*(Screen.height/100))),
 							GUIType.Button,
 							"box");
@@ -256,9 +256,9 @@ public class LevelEditorUI : MonoBehaviour {
 							1.0f,
 							_alien_speed);
 		
-		gui.connect(NUMBER_OF_TERRAINS,MINUS1,PLUS1,CUSTOM_GAME,TERRAIN0);
-		gui.connect(TERRAIN0,TERRAIN1,TERRAIN1,NUMBER_OF_TERRAINS,TERRAIN2);
-		gui.connect(TERRAIN1,TERRAIN0,TERRAIN0,NUMBER_OF_TERRAINS,TERRAIN3);
+		
+		gui.connect(TERRAIN0,TERRAIN1,TERRAIN1,CUSTOM_GAME,TERRAIN2);
+		gui.connect(TERRAIN1,TERRAIN0,TERRAIN0,CUSTOM_GAME,TERRAIN3);
 		gui.connect(TERRAIN2,TERRAIN3,TERRAIN3,TERRAIN0,TERRAIN4);
 		gui.connect(TERRAIN3,TERRAIN2,TERRAIN2,TERRAIN1,TERRAIN5);
 		gui.connect(TERRAIN4,TERRAIN5,TERRAIN5,TERRAIN2,TERRAIN6);
@@ -272,9 +272,9 @@ public class LevelEditorUI : MonoBehaviour {
 		gui.connect(FORMAT,MINUS2,PLUS2,MULTIPLY,NUMBER_TO_WIN);
 		gui.connect(NUMBER_TO_WIN,MINUS3,PLUS3,FORMAT,ALIEN_SPEED);
 		gui.connect(ALIEN_SPEED,"","",NUMBER_TO_WIN,CUSTOM_GAME);
-		gui.connect(CUSTOM_GAME,RESET,SAVE,ALIEN_SPEED,NUMBER_OF_TERRAINS);
-		gui.connect(SAVE,CUSTOM_GAME,RESET,ALIEN_SPEED,NUMBER_OF_TERRAINS);
-		gui.connect(RESET,SAVE,CUSTOM_GAME,ALIEN_SPEED,NUMBER_OF_TERRAINS);
+		gui.connect(CUSTOM_GAME,RESET,SAVE,ALIEN_SPEED,TERRAIN0);
+		gui.connect(SAVE,CUSTOM_GAME,RESET,ALIEN_SPEED,TERRAIN0);
+		gui.connect(RESET,SAVE,CUSTOM_GAME,ALIEN_SPEED,TERRAIN0);
 		
 		
 		
@@ -286,7 +286,7 @@ public class LevelEditorUI : MonoBehaviour {
 		gui.connect(PLUS3,NUMBER_TO_WIN,"","","");
 		
 		
-		gui.pointer = NUMBER_OF_TERRAINS;
+		gui.pointer = TERRAIN0;
 	}
 	
 	void Update(){

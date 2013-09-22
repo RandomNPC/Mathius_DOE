@@ -122,6 +122,7 @@ public class PreferencesManager{
 	
 	public void set_SFXVolume(float volume){
 		_SFXVolume = volume;
+		SoundManager.SOUNDS.setVolume(_SFXVolume);
 		PlayerPrefs.SetFloat(SFXVOLUME,volume);
 		PlayerPrefs.Save();
 	}
