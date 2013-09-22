@@ -474,5 +474,23 @@ public class GameOverUI : MonoBehaviour {
 			default:
 				break;
 		}
+		
+		switch(guiInput.pointer){
+			case UP1:
+			case DOWN1:
+				_initial = InputInitial.ONE;
+				break;
+			case UP2:
+			case DOWN2:
+				_initial = InputInitial.TWO;
+				break;
+			case UP3:
+			case DOWN3:
+				_initial = InputInitial.THREE;
+				break;
+			default:
+				_initial = InputInitial.NONE;
+				break;
+		}
 	}
 }
