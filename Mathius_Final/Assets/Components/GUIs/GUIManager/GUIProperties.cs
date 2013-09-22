@@ -11,9 +11,10 @@ public class GUIProperties{
 	public float min{get; private set;}
 	public float max{get; private set;}
 	public float defaultVal{get; set;}
+	public bool show{get;set;}
 	
 
-	public GUIProperties(string name,Rect rect,GUIType type,string style,bool check,float min,float max, float defaultVal){
+	public GUIProperties(string name,Rect rect,GUIType type,string style,bool check,float min,float max, float defaultVal, bool show){
 		this.name = name;
 		this.rect = rect;
 		this.type = type;
@@ -22,5 +23,6 @@ public class GUIProperties{
 		this.max = max;
 		this.min = min;
 		this.defaultVal = defaultVal;
+		this.show = show;
 	}
 }

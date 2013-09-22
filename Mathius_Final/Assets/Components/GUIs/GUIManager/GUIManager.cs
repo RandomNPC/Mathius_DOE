@@ -56,8 +56,8 @@ public class GUIManager{
 	//min: minimum value for slider
 	//max: maximum value for slider
 	//defaultVal: default value for the slider at the start
-	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false, float min=0.0f, float max=0.0f, float defaultVal=0.0f){
-		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check,min,max,defaultVal));
+	public void CreateGUIObject(string tag,string name, Rect position, GUIType type, string style, bool check=false, float min=0.0f, float max=0.0f, float defaultVal=0.0f,bool show = true){
+		GUIObjects.Add(tag,new GUIProperties(name,position,type,style,check,min,max,defaultVal,show));
 	}
 			
 	public void RenderGUIObjects(GUIManager gui){ //warning, function must be called from onGUI.
@@ -72,6 +72,7 @@ public class GUIManager{
 			
 			switch(entry.Value.type){
 				case GUIType.Button:
+					if(!entry.Value.show) break;
 					if(GUI.Button(new Rect(entry.Value.rect),entry.Value.name,skin.GetStyle(entry.Value.style))){ 
 						OnClick(this,new ButtonName(entry.Key));
 					}
@@ -167,4 +168,9 @@ public class GUIManager{
 		GUIProperties prop = GUIObjects[tag];
 		prop.name = val;
 	}
+	
+	public void SetGUIVisibleProperty(string tag, bool val){
+		GUIProperties prop = GUIObjects[tag];
+		prop.show = val;
+	}	
 }

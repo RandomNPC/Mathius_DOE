@@ -9,11 +9,19 @@ public class GameOverUI : MonoBehaviour {
 		DISPLAY
 	};
 	
+	enum InputInitial{
+		ONE,
+		TWO,
+		THREE,
+		NONE
+	};
+	
 	public GUISkin thisMetalGUISkin;
 	private int _score;
 	private HighScoreManager _highScore;
 	private HighScoreInitials _hsi;
 	private State _state;
+	private InputInitial _initial;
 	private GUIManager guiInput;
 	private GUIManager guiDisplay;
 	private PCInterface pc;
@@ -25,8 +33,12 @@ public class GameOverUI : MonoBehaviour {
 	private const string ENTER = "Enter";
 	private const string LEFT = "Left";
 	private const string RIGHT = "Right";
-	private const string UP = "Up";
-	private const string DOWN = "Down";
+	private const string UP1 = "Up1";
+	private const string DOWN1 = "Down1";
+	private const string UP2 = "Up2";
+	private const string DOWN2 = "Down2";
+	private const string UP3 = "Up3";
+	private const string DOWN3 = "Down3";
 	
 	//Display state tags
 	private const string MAINMENU = "Main Menu";
@@ -36,6 +48,7 @@ public class GameOverUI : MonoBehaviour {
 	
 	
 	void Start(){
+		_initial = InputInitial.ONE;
 		MasterController.BRAIN.onEnterMenu();
 		pc = MasterController.BRAIN.pci();
 		pc.onGesturePerformed += HandlePconGesturePerformed;
@@ -73,6 +86,78 @@ public class GameOverUI : MonoBehaviour {
 								 new Rect((Screen.width/5),(45*(Screen.height/100)),(3*(Screen.width/5)),(10*(Screen.height/100))),
 								 GUIType.Label,
 								 "box");
+		
+		//left most
+		
+		guiInput.CreateGUIObject(UP1,
+								" /\\",
+								new Rect((Screen.width/100)*45, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),
+								GUIType.Button,
+							 	"button",
+								false,
+								0.0f,
+								0.0f,
+								0.0f,
+								false);
+		guiInput.CreateGUIObject(DOWN1,
+								 " \\/",
+								 new Rect((Screen.width/100)*45, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),
+								 GUIType.Button,
+								 "button",
+								 false,
+								 0.0f,
+								 0.0f,
+								 0.0f,
+								 false);
+		//---end left most
+		
+		//center
+		guiInput.CreateGUIObject(UP2,
+								 " /\\",
+								 new Rect((Screen.width/100)*50, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),
+								 GUIType.Button,
+								 "button",
+								 false,
+								 0.0f,
+								 0.0f,
+								 0.0f,
+								 false);
+		guiInput.CreateGUIObject(DOWN2,
+								 " \\/",
+								 new Rect((Screen.width/100)*50, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),
+								 GUIType.Button,
+								 "button",
+								 false,
+								 0.0f,
+								 0.0f,
+								 0.0f,
+								 false);
+		//---end center
+		
+		//far right
+		guiInput.CreateGUIObject(UP3,//right up button
+								 " /\\",
+								 new Rect((Screen.width/100)*54, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),
+								 GUIType.Button,
+								 "button",
+								 false,
+								 0.0f,
+								 0.0f,
+								 0.0f,
+								 false);
+		guiInput.CreateGUIObject(DOWN3, //right down button
+								 " \\/",
+								 new Rect((Screen.width/100)*54, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),
+								 GUIType.Button,
+								 "button",
+								 false,
+								 0.0f,
+								 0.0f,
+								 0.0f,
+								 false);
+		
+		//---end far right
+		
 		guiInput.CreateGUIObject(ENTER,
 								 "ENTER",
 								 new Rect((Screen.width/20) ,(90*(Screen.height/100)) ,(4*(Screen.width/10)) ,(15*(Screen.height/100))),
@@ -88,16 +173,7 @@ public class GameOverUI : MonoBehaviour {
 								 new Rect((Screen.width/100)*58, (Screen.height/100)*50,(Screen.width/100)*2, (Screen.height/100)*5),
 								 GUIType.Button,
 								 "button");
-		guiInput.CreateGUIObject(UP,//right up button
-								 "Up",
-								 new Rect((Screen.width/100)*54, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),
-								 GUIType.Button,
-								 "button");
-		guiInput.CreateGUIObject(DOWN, //right down button
-								 "Down",
-								 new Rect((Screen.width/100)*54, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),
-								 GUIType.Button,
-								 "button");
+
 		//Display
 		guiDisplay.OnClick += HandleGuiDisplayOnClick;
 		
@@ -122,12 +198,15 @@ public class GameOverUI : MonoBehaviour {
 								   GUIType.Label,
 								   "label");
 		
-		guiInput.connect(LEFT,LEFT,RIGHT,UP,DOWN);
-		guiInput.connect(UP,LEFT,RIGHT,UP,DOWN);
-		guiInput.connect(RIGHT,LEFT,RIGHT,UP,DOWN);
-		guiInput.connect(DOWN,LEFT,RIGHT,UP,ENTER);
-		guiInput.connect(ENTER,"","",DOWN,UP);
-		guiInput.pointer = LEFT;
+		guiInput.connect(UP1,ENTER,UP2,DOWN1,DOWN1);
+		guiInput.connect(UP2,UP1,UP3,DOWN2,DOWN2);
+		guiInput.connect(UP3,UP2,ENTER,DOWN3,DOWN3);
+		guiInput.connect(DOWN1,ENTER,DOWN2,UP1,UP1);
+		guiInput.connect(DOWN2,DOWN1,DOWN3,UP2,UP2);
+		guiInput.connect(DOWN3,DOWN2,ENTER,UP3,UP3);
+		guiInput.connect(ENTER,UP3,UP1,UP1,UP1);
+		
+		guiInput.pointer = UP1;
 		
 		guiDisplay.connect(REPLAY,MAINMENU,MAINMENU,"","");
 		guiDisplay.connect(MAINMENU,REPLAY,REPLAY,"","");
@@ -165,11 +244,15 @@ public class GameOverUI : MonoBehaviour {
 			case RIGHT:
 				_hsi.swipe(SwipeDirection.Right);
 				break;
-			case UP:
+			case UP1:
+			case UP2:
+			case UP3:
 				_hsi.swipe(SwipeDirection.Up);
 				guiInput.SetGUINameProperty(INITIALS,_hsi.initials());
 				break;
-			case DOWN:
+			case DOWN1:
+			case DOWN2:
+			case DOWN3:
 				_hsi.swipe(SwipeDirection.Down);
 				guiInput.SetGUINameProperty(INITIALS,_hsi.initials());
 				break;
@@ -200,11 +283,43 @@ public class GameOverUI : MonoBehaviour {
 				guiDisplay.RenderGUIObjects(guiDisplay);
 				break;
 			case State.INPUT:
-				guiInput.RenderGUIObjects(guiInput);;
-				GUI.Button(new Rect((Screen.width/100)*45, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Left UP 
-				GUI.Button(new Rect((Screen.width/100)*45, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Left Right
-				GUI.Button(new Rect((Screen.width/100)*50, (Screen.height/100)*45,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Center UP 
-				GUI.Button(new Rect((Screen.width/100)*50, (Screen.height/100)*55,(Screen.width/100)*2, (Screen.height/100)*5),"Up",GUI.skin.GetStyle("button"));//Center Right
+				guiInput.RenderGUIObjects(guiInput);
+				switch(_initial){
+					case InputInitial.ONE:
+						guiInput.SetGUIVisibleProperty(UP1,true);
+						guiInput.SetGUIVisibleProperty(UP2,false);
+						guiInput.SetGUIVisibleProperty(UP3,false);
+						guiInput.SetGUIVisibleProperty(DOWN1,true);
+						guiInput.SetGUIVisibleProperty(DOWN2,false);
+						guiInput.SetGUIVisibleProperty(DOWN3,false);
+						break;
+					case InputInitial.TWO:
+						guiInput.SetGUIVisibleProperty(UP1,false);
+						guiInput.SetGUIVisibleProperty(UP2,true);
+						guiInput.SetGUIVisibleProperty(UP3,false);
+						guiInput.SetGUIVisibleProperty(DOWN1,false);
+						guiInput.SetGUIVisibleProperty(DOWN2,true);
+						guiInput.SetGUIVisibleProperty(DOWN3,false);
+						break;
+					case InputInitial.THREE:
+						guiInput.SetGUIVisibleProperty(UP1,false);
+						guiInput.SetGUIVisibleProperty(UP2,false);
+						guiInput.SetGUIVisibleProperty(UP3,true);
+						guiInput.SetGUIVisibleProperty(DOWN1,false);
+						guiInput.SetGUIVisibleProperty(DOWN2,false);
+						guiInput.SetGUIVisibleProperty(DOWN3,true);
+						break;
+					case InputInitial.NONE:
+						guiInput.SetGUIVisibleProperty(UP1,false);
+						guiInput.SetGUIVisibleProperty(UP2,false);
+						guiInput.SetGUIVisibleProperty(UP3,false);
+						guiInput.SetGUIVisibleProperty(DOWN1,false);
+						guiInput.SetGUIVisibleProperty(DOWN2,false);
+						guiInput.SetGUIVisibleProperty(DOWN3,false);
+						break;
+					default:
+						break;
+				}
 				break;
 			default:
 				break;
@@ -228,6 +343,7 @@ public class GameOverUI : MonoBehaviour {
 			switch(_state){
 				case State.INPUT:
 					guiInput.swipe(Direction.Left);
+					if(_initial != InputInitial.NONE) _hsi.swipe(SwipeDirection.Left);
 					break;
 				case State.DISPLAY:
 					guiDisplay.swipe(Direction.Left);
@@ -252,6 +368,7 @@ public class GameOverUI : MonoBehaviour {
 			switch(_state){
 				case State.INPUT:
 					guiInput.swipe(Direction.Right);
+					if(_initial != InputInitial.NONE) _hsi.swipe(SwipeDirection.Right);
 					break;
 				case State.DISPLAY:
 					guiDisplay.swipe(Direction.Right);
@@ -272,7 +389,24 @@ public class GameOverUI : MonoBehaviour {
 					break;
 			}
 		}
-	}
+		switch(guiInput.pointer){
+			case UP1:
+			case DOWN1:
+				_initial = InputInitial.ONE;
+				break;
+			case UP2:
+			case DOWN2:
+				_initial = InputInitial.TWO;
+				break;
+			case UP3:
+			case DOWN3:
+				_initial = InputInitial.THREE;
+				break;
+			default:
+				_initial = InputInitial.NONE;
+				break;
+		}
+}
 
 	void HandlePconGesturePerformed (object sender, PCGesture e)
 	{
