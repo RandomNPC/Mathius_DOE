@@ -56,7 +56,7 @@ public class PerCVoice : MonoBehaviour {
 												//This array is used to set voice commands into the pipeline
 	private string[]							commands = new string[]{
 												"zero","one","two","three","four","five","six","seven",
-												"ate","nine","left","right","up","down","select","cancel","pause","do a barrel roll"	
+												"ate","nine","left","right","up","down","select","cancel","pause","do a barrel roll", "Restart Perceptual"	
 												};
 	private bool[] 								numbers;//bool list i'll check to flag a number being called.
 	private bool[]								options;//bool list i'll check to flag a command being called.
@@ -65,6 +65,9 @@ public class PerCVoice : MonoBehaviour {
 	private bool								commandsSet = false;//bool for determining if the voice commands were set
 	private bool								keepLooping = false;//bool to let the thread know to keep looping for query
 	private bool								initiated = false;
+	private bool debugging = true;
+	
+	private bool restarter = false;
 	
 	//this system object only exists so I can use it for the lock command later.
 	private System.Object						lockObj = new System.Object();
@@ -98,6 +101,10 @@ public class PerCVoice : MonoBehaviour {
 		
 	}
 	
+	void Update(){
+		if(restarter){restart();restarter = false;}
+	}
+	
 	void OnDisable(){
 		//shut down the thread
 		if(myThread!=null){
@@ -124,11 +131,12 @@ public class PerCVoice : MonoBehaviour {
 			if(myPipe.QueryVoiceRecognized(out voice)){//the out keyword causes the the function to change the original voice var
 				lock(lockObj){						   //lockObj esists only for this purpose, making this critical section
 					dictated = "Voice Heard! Label: "+voice.label+", text: "+voice.dictation+", confidence: "+voice.confidence+"\n";
-					Debug.Log(dictated);//the label is the index in the commands array of the heard command.
+					if(debugging)Debug.Log(dictated);//the label is the index in the commands array of the heard command.
 										//the dictation holds the string value at that position in the array.
 										//confidence is for reference, 
 					if(voice.label>-1 && voice.label<10)numbers[voice.label] = true;
 					if(voice.label >9 && voice.label < 18)options[voice.label-10] = true;
+					if(voice.label == 18)restarter = true;
 				}
 			}
 			myPipe.ReleaseFrame();//must release the frame or you will never get any responses.

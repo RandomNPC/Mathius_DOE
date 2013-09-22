@@ -47,18 +47,22 @@ public class PerCGesture : MonoBehaviour {
 	private bool thumbUp;
 	private bool thumbDown;
 	private bool initiated;
+	//bools for turning on and off debugs, tracking shows hand loc, debugging
+	//shows change in movement.
+	private bool debugging = false;
+	private bool tracking = false;
 	
-	private bool moveRight;
-	private bool moveLeft;
-	private bool moveUp;
-	private bool moveDown;
-	private bool centeredX;
-	private bool centeredY;
+	private bool moveRight = false;
+	private bool moveLeft = false;
+	private bool moveUp = false;
+	private bool moveDown = false;
+	private bool centeredX = false;
+	private bool centeredY = false;
 	
 	private float centerX = 157.0f;
 	private float centerY = 121.0f;
-	private float zoneX = 40.0f;
-	private float zoneY = 40.0f;
+	private float zoneX = 30.0f;
+	private float zoneY = 20.0f;
 
 	void Start () {
 		xy = new float[2]{157.0f,121.0f};
@@ -92,10 +96,10 @@ public class PerCGesture : MonoBehaviour {
 												//first acquiring the frame
 		
 		if(myPipe.QueryGeoNode(trackedLimb,out nodeInfo)){//out causes the function to change the data within nodeInfo
-			//Debug.Log ("hand found!"+" X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
+			if(tracking)Debug.Log ("hand found!"+" X="+nodeInfo.positionImage.x+" y="+nodeInfo.positionImage.y + ",res:"+resolution[0]+","+resolution[1]);
 		}
 		
-		//the following code will perform the event sending for movement.
+		///the following code will perform the event sending for movement.
 		//basically we only want to send an event if your hand position
 		//changes mathius' movement. that is, if you decided to move Mathius
 		//from the current movement to another. 
@@ -106,37 +110,37 @@ public class PerCGesture : MonoBehaviour {
 		//will fire, but move your hand to the centered area and we fire a stop.
 		if(centeredX){
 			//shouldn't short circuit from centered, made some cases not get caugh
-			if(nodeInfo.positionImage.x>(centerX+zoneX)){
+			if(nodeInfo.positionImage.x<(centerX-zoneX)){
 				/*Perform event to move right*/
 				centeredX = false;
 				moveRight = true;
-				Debug.Log("Move Right");
+				if(debugging)Debug.Log("Move Right");
 			}
-			if(nodeInfo.positionImage.x<(centerX-zoneX)){
+			if(nodeInfo.positionImage.x>(centerX+zoneX)){
 				centeredX = false;
 				moveLeft = true;
 				/*Perform event to move left*/
-				Debug.Log("Move Left");
+				if(debugging)Debug.Log("Move Left");
 			}
 		}
 		if(centeredY){
-			if(nodeInfo.positionImage.y>(centerY+zoneY)){
+			if(nodeInfo.positionImage.y<(centerY-zoneY)){
 				/*Perform event to move up*/
 				centeredY = false;
 				moveUp = true;
-				Debug.Log("Move Up");
+				if(debugging)Debug.Log("Move Up");
 			}
-			if(nodeInfo.positionImage.y<(centerY-zoneY)){
+			if(nodeInfo.positionImage.y>(centerY+zoneY)){
 				/*Perform event to move down*/				
-				Debug.Log("Move Down");
+				if(debugging)Debug.Log("Move Down");
 				centeredY = false;
 				moveDown = true;				
 			}
 		}
 		if(moveUp){
 			//have to set all moves to false when going centered.
-			if(nodeInfo.positionImage.y<(centerY-zoneY)){
-				Debug.Log("Move Down, Stop Up");
+			if(nodeInfo.positionImage.y>(centerY+zoneY)){
+				if(debugging)Debug.Log("Move Down, Stop Up");
 				moveUp = false;
 				moveDown = true;
 				/*Perform event to move down*/
@@ -146,32 +150,32 @@ public class PerCGesture : MonoBehaviour {
 			else if(nodeInfo.positionImage.y<(centerY+zoneY) && nodeInfo.positionImage.y > (centerY-zoneY)){
 				//perform event stop on move up, centeredY  = true	
 				//moveup false
-				Debug.Log("Y Centered, Stop Moving up/down");
+				if(debugging)Debug.Log("Y Centered, Stop Moving up/down");
 				moveUp = false;
 				centeredY = true;
 			}
 		}
 		if(moveDown){
-			if(nodeInfo.positionImage.y>(centerY+zoneY)){
-				Debug.Log("Move Up, Stop down");
+			if(nodeInfo.positionImage.y<(centerY-zoneY)){
+				if(debugging)Debug.Log("Move Up, Stop down");
 				moveDown = false;
 				moveUp = true;
 				/*Perform event to move up*/
 				//send stop on move down
 				//send go on move up
 				//moveup true
-				//movdown false
+				//movedown false
 			}
 			else if(nodeInfo.positionImage.y<(centerY+zoneY) && nodeInfo.positionImage.y > (centerY-zoneY)){
 				//perform event to stop move down,centered Y true
-				Debug.Log("Y Centered, Stop Moving up/down");
+				if(debugging)Debug.Log("Y Centered, Stop Moving up/down");
 				moveDown = false;
 				centeredY = true;
 			}
 		}
 		if(moveRight){
-			if(nodeInfo.positionImage.x<(centerX-zoneX)){
-				Debug.Log("Move Left, Stop Right");
+			if(nodeInfo.positionImage.x>(centerX+zoneX)){
+				if(debugging)Debug.Log("Move Left, Stop Right");
 				moveRight = false;
 				moveLeft = true;
 				/*Perform event to move left*/
@@ -181,7 +185,7 @@ public class PerCGesture : MonoBehaviour {
 				//moveleft true
 			}
 			else if(nodeInfo.positionImage.x<(centerX+zoneX) && nodeInfo.positionImage.x > (centerX-zoneX)){
-				Debug.Log("X Centered, Stop Moving left/right");
+				if(debugging)Debug.Log("X Centered, Stop Moving left/right");
 				moveRight = false;
 				centeredX = true;
 				//stop on move right and move left
@@ -190,8 +194,8 @@ public class PerCGesture : MonoBehaviour {
 			}
 		}
 		if(moveLeft){
-			if(nodeInfo.positionImage.x>(centerX+zoneX)){
-				Debug.Log("Move right, Stop left");
+			if(nodeInfo.positionImage.x<(centerX-zoneX)){
+				if(debugging)Debug.Log("Move right, Stop left");
 				moveLeft = false;
 				moveRight = true;
 				/*Perform event to move right*/
@@ -201,7 +205,7 @@ public class PerCGesture : MonoBehaviour {
 				//moveleft false
 			}
 			else if(nodeInfo.positionImage.x<(centerX+zoneX) && nodeInfo.positionImage.x > (centerX-zoneX)){
-				Debug.Log("X Centered, Stop Moving left/right");
+				if(debugging)Debug.Log("X Centered, Stop Moving left/right");
 				moveLeft = false;
 				centeredX = true;
 				//stop on move right and move left
