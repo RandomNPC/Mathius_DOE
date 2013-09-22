@@ -65,7 +65,6 @@ public class MasterController : MonoBehaviour {
 	}
 	
 	public void onGameStart(){
-		
 		SoundManager.SOUNDS.playSound(SoundManager.UI_CLICK,UI_MAIN_MENU);
 		tHelper.setTerrains(gameObject.GetComponent<TerrainManager>().get_terrains(MasterController.BRAIN.pm().get_terrains()));
 		Vector3 cam = GameObject.Find("MathiusEarthCam").transform.position;
