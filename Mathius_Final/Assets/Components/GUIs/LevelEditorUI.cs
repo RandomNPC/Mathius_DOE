@@ -75,27 +75,6 @@ public class LevelEditorUI : MonoBehaviour {
 							new Rect((Screen.width/5)/2,(3*(Screen.height/100)),(4*(Screen.width/5)),(18*(Screen.height/100))),
 							GUIType.Label,
 							"label");
-		//Number of Terrains
-		/*gui.CreateGUIObject(NUMBER_OF_TERRAINS,
-							"Number of Terrains : ",
-							new Rect((Screen.width/100)*20, (Screen.height/100)*25,(Screen.width/100)*50, (Screen.height/100)*5),
-							GUIType.Label,
-							"button");
-		gui.CreateGUIObject(MINUS1,
-							"-",
-							new Rect((Screen.width/100)*50, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
-							GUIType.Button,
-							"button");
-		gui.CreateGUIObject(TERRAIN_NUM,
-							_terrain_num.ToString(),
-							new Rect((Screen.width/100)*55, (Screen.height/100)*26,(Screen.width/100)*50, (Screen.height/100)*5),
-							GUIType.Label,
-							"nobox");
-		gui.CreateGUIObject(PLUS1,
-							"+",
-							new Rect((Screen.width/100)*60, (Screen.height/100)*25,(Screen.width/100)*5, (Screen.height/100)*5),
-							GUIType.Button,
-							"button");*/
 		//Reset
 		gui.CreateGUIObject(RESET,
 							"Reset",

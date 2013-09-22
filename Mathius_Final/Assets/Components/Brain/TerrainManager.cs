@@ -6,6 +6,7 @@ public class TerrainManager : MonoBehaviour {
 	
 	private List<GameObject> terrains;
 	public GameObject[] terrain;
+	public static TerrainManager TMANAGER;
 	
 	public const byte TERRAIN_1 = 0x01;
 	public const byte TERRAIN_2 = 0x02;
@@ -16,6 +17,10 @@ public class TerrainManager : MonoBehaviour {
 	public const byte TERRAIN_7 = 0x40;
 	public const byte TERRAIN_8 = 0x80;
 	
+	
+	void Start(){
+		TMANAGER = gameObject.GetComponent<TerrainManager>();
+	}
 	
 	public GameObject[] get_terrains(byte _terrains){
 		if(terrains == null) terrains = new List<GameObject>();
