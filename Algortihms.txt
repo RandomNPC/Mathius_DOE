@@ -1,0 +1,171 @@
+Algorithms
+
+--------------
+Moving Mathius
+--------------
+
+Mathius, the ship is constrained by the camera view. The ship is allowed only to travel within the camera view.
+If the ship is out of range of the camera field of vision, the following algorithm is applied:
+
+We are given the field of vision and the aspect ratio of the camera.
+
+1. Measure the distance between the camera and the ship. This is the distance in z.
+2. Take the distance from 1 and multiply the Tangent of the camera's field of vision. This is half of the
+y distance.
+3. Take the distance in y found in the previous step  and multiply the aspect ratio for x
+
+The two important values are x and y which the game's main plane is on. Z is for the background.
+From these values, the border is a distance from the camera to the end. If the ship exceeds the calculated x or y
+value, the algorithm will restrict the ship within the camera view.
+
+-----------------------
+Interaction with aliens
+-----------------------
+
+Mathius is equipped with a number bullet system to shoot aliens with equations. The algorithm can detect when the
+correct or wrong answer collided with the alien.
+
+We are given that the aliens have an equation and a solution here.
+
+When the alien gets shot with a number bullet, the following algorithm takes place.
+1. Obtain the answer from the shot alien
+2. Check to see if the answer from the shot alien is equal to the solution of the equation
+3a. If the solution of the alien is equal to the number bullet shot at the alien, destroy the alien and award points for a successful shot,
+plus bonus points for the operation involved. A correct answer event is passed to the ScoreManager.
+3b. If the solution of the alien is not the same number as the number bullet, the alien will change its path movement and survive the shot.
+You lost points here. A wrong answer event is passed on to the ScoreManager.
+
+When the ship crashes into an alien, the following algorithm is applied:
+
+Mathius is a number bullet as well. This number is randomly generated at spawning.
+
+1. Check to see if the ship's solution the same as the alien's solution?
+2a. Ship and alien solution match, then the alien gets destroyed and will drop a powerup. An extra life is awarded to the player
+2b. Ship and alien solution dont match
+	-If Mathius does not have a shield powerup, then the ship is set to crash.
+	-Else the alien ship is destroyed and the shield removed.
+
+-----------------
+Mathius crashing
+-----------------
+
+When we worked for the first time with Unity, Mathius crashing into the alien and then on a crash collision
+course with the terrain was awesome. This feature takes advantage of this awesome feature.
+
+Continues off where Mathius crashes into an alien with the wrong answer.
+
+1. Add force downwards to simulate a crash landing. Note this is more realistic than translating the ship
+towards the ground as if gravity took effect over the ship.
+2. Once Mathius hits the ground, destroy the ship and place an explosion at the crash site.
+3. If Mathius has more than zero lives, then respawn Mathius.
+
+-----------------
+Item Drop System
+-----------------
+
+We wanted a way to simulate a drop table in which percentages and odds were considered in determining
+a drop. To do so..
+
+1. Alien gets destroyed and will trigger the item drop call
+2. Generate a random float from 0 to 1.
+3. Sum up the total odds of all powerups
+4. Multiply the random float by the total odds.
+5. Iterate thru the entire powerup list
+6. If the odds are less than the product of the random float and total odds, drop the item.
+7. Else continue until list has been traversed. Subtract the chances of that item from the
+total.
+
+--------------
+Powerup System
+--------------
+
+The powerup system allows Mathius to obtain powerups which enhances one of three parts of the game:
+-Mathius
+-Score
+-Aliens
+
+The algorithm for the Powerup system is as follows:
+1. Mathius collects a powerup
+2. Attach powerup to the ship
+3. Run the script attached to the powerup. I call this dormant scripting since the script activates only
+when it is attached to an active gameobject such as Mathius.
+
+-----------------
+Terrain Generator
+-----------------
+
+Takes in a set of terrains and will stitch them together when Mathius triggers a new area.
+
+Algorithm:
+
+1. Mathius triggers a collider to begin generating land.
+2. Get the current land dimensions
+3. Get the next land dimensions
+4. Take half of the length in current land and the length in the next land. This is the x position.
+5. The width and height positions stay constant. Mathius goes thru a straight line thru the maps.
+6. Spawn the next land in.
+
+---------------
+Map Properties
+---------------
+
+This allows each map to have a custom settings aside from the terrain itself. This is attached to each
+land piece.
+
+Each terrain has a map property module to control if buildings should be added and to the sounds needed to
+play in the map itself.
+
+Algorithm:
+
+1. When Mathius triggers the new area, map properties get read into a helper class
+2. Helper will then assign values to the game based on the settings put in.
+3. Destroy the map properties as it is no longer going to be read.
+
+----------------
+Skybox Day/Night
+----------------
+
+Increase the number of combinations of maps twofold. This allows the map to have a day/night skybox.
+
+Algorithm:
+
+1. Mathius enters a terrain. trigger skybox change
+2. Check to see if terrain has been used in the current game session
+3a. If so, change the skybox to the next skybox
+3b. If not, add the key/value pair to the SkyBoxManager. Change the skybox here.
+
+-------------
+SoundManager
+-------------
+
+Because we are dealing with a lot of sounds, we created a class to map audio clips to tags to call later.
+
+Algorithm:
+
+1. At the start of the program, the sounds are added to a dictionary. Their name is they key and the sound is the value.
+2. When the function to play sound gets called the Dictionary value will retrieve the sound based on the tag. The sound
+gets played then.
+
+Note: To make sure that the sound exists, there is a catch statement that will not execute the sound if it doesnt exist.
+
+----------------
+You got a Highscore!
+----------------
+
+Once the game has ended, the highscore gets displayed. If the player gets a highscore in the top 10
+that player can enter their intials and submit to the local high score board.
+
+Algorithm:
+1. Add score into a list of highscores
+2. Check for the lowest highscore. Delete that score.
+3. Check to see if highscore exist. If so, player will enter name on highscore list.
+
+
+---------------
+Preferences
+---------------
+
+This games uses PlayerPrefs, Unity's system of saving persistant data such as UI information to save
+and retrieve information for the game. The class wraps Playerprefs with getters and setters. When an
+attribute gets changed, it is immediately applied to the pertaining game objects.
+
