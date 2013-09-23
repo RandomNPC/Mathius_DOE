@@ -8,6 +8,9 @@ Contents:
 
 Installation:
  Extract the files from a .zip folder to any location on your computer. The folder and executable must stay together.
+
+Mac and Linux Users:
+  Mac and Linux users must have MONO installed, this will allow the use of the .NET framework.
  
 Controls:
   No Perceptual:
@@ -46,4 +49,4 @@ Gameplay:
 	Level Editor - Change any properties to the game or create a custom game
 	Options - Setting to use perceptual and sounds
 	Highscore - Displays the top 10 scores. 
-    
+

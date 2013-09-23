@@ -1,0 +1,58 @@
+Aug 1:
+-Created framework to based off a brain
+
+Aug 2:
+-Using Unity's playerprefs model, I created a class to load and save the settings from the UI.
+-Begin backend coding for perceptual coding module
+
+Aug 4:
+-Added Sound Manager to play the sounds thru a class method from anywhere in the game.
+
+Aug 5:
+-Terrains are generated based on the selection in the Level Editor
+
+Aug 6:
+-Implemented a streak feature to gain more points the more aliens shot down.
+-Created backend coding to support entering high score initials.
+
+Aug 8:
+-Added a Powerup Manager to control the drop rates of items from the destruction of aliens.
+
+Aug 9:
+-Added a pause menu to the game
+-Added a condition for the game to end: Solve x amount of equations
+-Added bonus mechanics based on the operation involved in solving the equation
+
+Aug 11:
+-Extended Map Properties to determine if buildings should spawn.
+-Added GUI screen of the alien's math problem to solve
+
+Aug 12:
+-Implemented changing the game speed
+
+Aug 13:
+-Added Day/Night cycles based on how many times you were on the map.
+
+Aug 14:
+-Created powerups (Model and script) to work with the ItemDrop Manager.
+
+Aug 15:
+-Reworked collision mechanics to circumvent an conflicting issue
+
+Aug 16:
+-Added background music/sfx for the main game
+
+Aug 17:
+-Created a splashscreen before the game starts
+
+Aug 18:
+-Improved the GUI code with GUIManager that also extends perceptual handling
+
+Aug 28:
+-Added new number models to work with.
+
+
+
+
+
+

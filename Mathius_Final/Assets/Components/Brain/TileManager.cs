@@ -72,5 +72,6 @@ public class TileManager : Object {
 		_prev_terrain = "";
 		_next_terrain = "";
 		_current_terrain = "";
+		_map = null;
 	}
 }
