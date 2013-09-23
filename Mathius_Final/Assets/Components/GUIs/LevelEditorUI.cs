@@ -14,7 +14,7 @@ public class LevelEditorUI : MonoBehaviour {
 	private float _alien_speed;
 	
 	private bool[] toggleTerrain = {false,false,false,false,false,false,false,false};
-	private string[] terrainNames = {"Island","Forest","Desert","Moon","Snow","Volcano","Forest","Zack's Map"};
+	private string[] terrainNames = {"Island","Forest1","Desert","Moon","Snow","Volcano","Forest2","Zack's Map"};
 	private bool[] toggleOperation = {false,false,false,false};
 	private string[] formatArray = {"Arithmetic","Algebra","Mixed"};
 	
