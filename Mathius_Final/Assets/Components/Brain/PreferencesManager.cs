@@ -58,12 +58,14 @@ public class PreferencesManager{
 	}
 	
 	public void set_terrains(byte terrains){
+		if(terrains == 0x0) terrains = 0x1;
 		_terrains = terrains;
 		PlayerPrefs.SetInt(TERRAINS,(int)terrains);
 		PlayerPrefs.Save();
 	}
 	public byte get_terrains(){return _terrains;}
 	public void set_operations(byte operations){
+		if(operations == 0x0) operations = 0x1;
 		_operations = operations;
 		PlayerPrefs.SetInt(OPERATIONS,(int)operations);
 		PlayerPrefs.Save();
