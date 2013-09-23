@@ -148,11 +148,13 @@ public class CreditsUI : MonoBehaviour {
 				GUI.Label(titleRect, ("Credits"),GUI.skin.GetStyle("label"));
 				GUI.Label(new Rect(widthDivider*15, intDivider* 22, widthDivider * 70, intDivider *20),"Lead QA Tester Video Editor",GUI.skin.GetStyle("button"));
 				GUI.Label(new Rect(widthDivider*20, intDivider* 25, widthDivider * 70, intDivider *10),"Gabe Tanenhaus",GUI.skin.GetStyle("box"));
-				GUI.Label(new Rect(widthDivider*15, intDivider* 36, widthDivider * 70, intDivider *20),"World Builder QA Tester",GUI.skin.GetStyle("button"));
-				GUI.Label(new Rect(widthDivider*20, intDivider* 39, widthDivider * 70, intDivider *10),"Zackery Arne",GUI.skin.GetStyle("box"));
-				GUI.Label(new Rect(widthDivider*15, intDivider* 50, widthDivider * 70, intDivider *20),"Special Thanks to our Families Especially:",GUI.skin.GetStyle("button"));
-				GUI.Label(new Rect(widthDivider*20, intDivider* 53, widthDivider * 70, intDivider *10),"Diana Vergil",GUI.skin.GetStyle("box"));
-				GUI.Label(new Rect(widthDivider*20, intDivider* 64, widthDivider * 70, intDivider *10),"Marilou Matias",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 36, widthDivider * 70, intDivider *20),"Video Editor QA Tester",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 39, widthDivider * 70, intDivider *10),"Edward Thang",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 50, widthDivider * 70, intDivider *20),"World Builder QA Tester",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 53, widthDivider * 70, intDivider *10),"Zackery Arne",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*15, intDivider* 64, widthDivider * 70, intDivider *20),"Special Thanks to our Families Especially:",GUI.skin.GetStyle("button"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 67, widthDivider * 70, intDivider *10),"Diana Vergil",GUI.skin.GetStyle("box"));
+				GUI.Label(new Rect(widthDivider*20, intDivider* 78, widthDivider * 70, intDivider *10),"Marilou Matias",GUI.skin.GetStyle("box"));
 				
 				
 				break;
