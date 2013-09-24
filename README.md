@@ -12,7 +12,7 @@ Camera: Creative Gesture Cam
 
 Installation Instructions:
 
-* Go to https://github.com/RandomNPC/Mathius_DOE/tree/Release-Builds
+* Go to https://github.com/RandomNPC/Mathius_DOE/tree/Release-Builds/Executables
 * Download the zip file
 * After downloading, go to Executables and extract the latest version. The latest version is the highest number.
 * Extract the rar file and run the executable.
