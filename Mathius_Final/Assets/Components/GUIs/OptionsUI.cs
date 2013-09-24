@@ -324,7 +324,7 @@ public class OptionsUI : MonoBehaviour {
 		switch(e.name){
 			case PERCEPTUAL_DISPLAY:
 				_perceptual = e.state;
-				prefs.set_usePerceptual(_perceptual);
+				prefs.set_usePerceptual(false);
 				break;
 			case MUTE_DISPLAY:
 				_mute = e.state;

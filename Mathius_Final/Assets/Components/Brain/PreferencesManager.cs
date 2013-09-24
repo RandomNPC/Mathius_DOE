@@ -106,7 +106,7 @@ public class PreferencesManager{
 	
 	public void set_usePerceptual(bool use){
 		_usePerceptual = use;
-		MasterController.BRAIN.pci().set_using_PCI(use);
+		//MasterController.BRAIN.pci().set_using_PCI(use);
 		int mode = (use) ? 1 : 0;
 		PlayerPrefs.SetInt(USEPERCEPTUAL,mode);
 		PlayerPrefs.Save();
